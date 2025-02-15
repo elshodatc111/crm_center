@@ -1,5 +1,5 @@
 @extends('layouts.app02')
-@section('title','Tizim sozlamalari')
+@section('title','SMS sozlamalari')
 @section('content')
 @if ($errors->any())
     <div class="alert alert-danger">

@@ -210,7 +210,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="{{ route('sadmin_time') }}">
                 <i class="bi bi-circle"></i><span>Dars vaqtlari</span>
               </a>
             </li>

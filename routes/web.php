@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\sadmin\sSettingController;
 use App\Http\Controllers\sadmin\sSmsSettingController;
+use App\Http\Controllers\sadmin\sTimeController;
 
 Auth::routes();
 
@@ -19,4 +20,8 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/sms', [sSmsSettingController::class, 'index'])->name('sadmin_sms');
     Route::post('s/message_status', [sSmsSettingController::class, 'message_status'])->name('sadmin_message_status');
     Route::post('s/message_mavjud', [sSmsSettingController::class, 'message_mavjud'])->name('sadmin_message_mavjud');
+    
+    Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
+    Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
+    Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
 });

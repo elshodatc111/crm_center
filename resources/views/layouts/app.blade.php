@@ -98,16 +98,17 @@
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-inboxes"></i>
-          <span>Varonka</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
           <i class="bi bi-menu-button-wide"></i>
           <span>Guruhlar</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="bi bi-inboxes"></i>
+          <span>Varonka</span>
+        </a>
+      </li>
+      @if(auth()->user()->type === 'sAdmin' || auth()->user()->type === 'admin')
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Hisobot</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -186,6 +187,31 @@
           </li>
         </ul>
       </li>
+      @endif
+      @if(auth()->user()->type === 'sAdmin')
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-gear"></i><span>Sozlamalar 3</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="gear-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="#">
+                        <i class="bi bi-circle"></i><span>Kunlik Sozlamalar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bi bi-circle"></i><span>Oylik Sozlamalar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bi bi-circle"></i><span>Sozlamalar</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+      @endif
     </ul>
   </aside>
   

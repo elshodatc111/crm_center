@@ -25,7 +25,7 @@ class LoginController extends Controller{
             ]);
         }
         $Setting = Setting::first();
-        if (in_array($user->type, ['admin', 'meneger']) && optional($Setting)->boronvhi !== 'true') {
+        if (in_array($user->type, ['admin', 'meneger']) && optional($Setting)->status !== 'true') {
             Auth::logout();
             return redirect()->route('login')->withErrors([
                 'email' => 'Tizim bloklangan, administrator bilan bog‘laning!',

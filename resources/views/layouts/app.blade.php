@@ -190,23 +190,23 @@
       @endif
       @if(auth()->user()->type === 'sAdmin')
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-gear"></i><span>Sozlamalar 3</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" data-bs-target="#setting-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-gear"></i><span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="gear-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <ul id="setting-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="#">
-                        <i class="bi bi-circle"></i><span>Kunlik Sozlamalar</span>
+                        <i class="bi bi-circle"></i><span>Tizim Haqida</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="bi bi-circle"></i><span>Oylik Sozlamalar</span>
+                        <i class="bi bi-circle"></i><span>Tizim sozlamalari</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="bi bi-circle"></i><span>Sozlamalar</span>
+                        <i class="bi bi-circle"></i><span>SMS paketlari</span>
                     </a>
                 </li>
             </ul>

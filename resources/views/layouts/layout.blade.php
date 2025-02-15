@@ -60,7 +60,7 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('home') }}">
+        <a class="nav-link {{ request()->routeIs(['home', 'dashboard']) ? '' : 'collapsed' }}" href="{{ route('home') }}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -200,22 +200,22 @@
       @endif
       @if(auth()->user()->type === 'sAdmin')
         <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#setting-nav" data-bs-toggle="collapse" href="#">
+          <a class="nav-link {{ request()->routeIs(['sadmin_setting', 'sadmin_sms', 'sadmin_time']) ? '' : 'collapsed' }}" data-bs-target="#setting-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-gear"></i><span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
-          <ul id="setting-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <ul id="setting-nav" class="nav-content collapse {{ request()->routeIs(['sadmin_setting', 'sadmin_sms', 'sadmin_time']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
             <li>
-              <a href="{{ route('sadmin_setting') }}">
+              <a href="{{ route('sadmin_setting') }}" class="{{ request()->routeIs(['sadmin_setting']) ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Tizim sozlamalari</span>
               </a>
             </li>
             <li>
-              <a href="{{ route('sadmin_time') }}">
+              <a href="{{ route('sadmin_time') }}" class="{{ request()->routeIs(['sadmin_time']) ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Dars vaqtlari</span>
               </a>
             </li>
             <li>
-              <a href="{{ route('sadmin_sms') }}">
+              <a href="{{ route('sadmin_sms') }}" class="{{ request()->routeIs(['sadmin_sms']) ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>SMS paketlari</span>
               </a>
             </li>

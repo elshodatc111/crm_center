@@ -1,6 +1,15 @@
 @extends('layouts.app02')
-@section('title','SMS sozlamalari')
+@section('title','SMS paketlari')
 @section('content')
+    <div class="pagetitle">
+        <h1>SMS paketlari</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                <li class="breadcrumb-item">SMS paketlari</li>
+            </ol>
+        </nav>
+    </div>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

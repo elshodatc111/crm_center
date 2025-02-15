@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\SettingObserver;
+
 class Setting extends Model{
     protected $fillable = [
         'name',
@@ -27,4 +29,9 @@ class Setting extends Model{
         'update_pass_sms',
         'birthday_sms',
     ];
+    
+    protected static function boot() {
+        parent::boot();
+        static::observe(SettingObserver::class);
+    }
 }

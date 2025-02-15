@@ -21,7 +21,7 @@ return new class extends Migration{
             $table->integer('social_banner')->default(0);
             $table->integer('social_tanish')->default(0);
             $table->integer('social_boshqa')->default(0);
-            $table->boolean('message_mavjud')->default(false);
+            $table->integer('message_mavjud')->default(false);
             $table->integer('message_count')->default(0);
             $table->boolean('message_status')->default(false);
             $table->boolean('new_student_sms')->default(false);

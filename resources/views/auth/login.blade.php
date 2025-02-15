@@ -25,7 +25,6 @@
                                             <input type="text" name="email" 
                                                 class="form-control @error('email') is-invalid @enderror" 
                                                 value="{{ old('email') }}" id="yourUsername" required autofocus>
-                                            <div class="invalid-feedback">Login kiritish majburiy.</div>
                                             @error('email')
                                                 <div class="invalid-feedback d-block">
                                                     <strong>{{ $message }}</strong>
@@ -38,7 +37,6 @@
                                         <input type="password" name="password" 
                                             class="form-control @error('password') is-invalid @enderror" 
                                             id="yourPassword" required autocomplete="current-password">
-                                        <div class="invalid-feedback">Parol kiritish majburiy</div>
                                         @error('password')
                                             <div class="invalid-feedback d-block">
                                                 <strong>{{ $message }}</strong>

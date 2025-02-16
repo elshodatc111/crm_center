@@ -33,7 +33,7 @@
                 <div class="col-3 card-title">
                     <form action="{{ route('setting_holiday_update') }}" method="POST">
                         @csrf
-                        <button class="btn btn-danger w-100" type="submit">Yangilash</button>
+                        <button class="btn btn-success w-100" type="submit"><i class="bi bi-upload"></i> Yangilash</button>
                     </form>
                 </div>
             </div>

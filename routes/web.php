@@ -6,6 +6,7 @@ use App\Http\Controllers\sadmin\sSettingController;
 use App\Http\Controllers\sadmin\sSmsSettingController;
 use App\Http\Controllers\sadmin\sTimeController;
 use App\Http\Controllers\admin\setting\HolidayController;
+use App\Http\Controllers\admin\setting\SmsSettingController;
 
 Auth::routes();
 
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/holiday', [HolidayController::class, 'index'])->name('setting_holiday');
     Route::post('setting/holiday/update', [HolidayController::class, 'update'])->name('setting_holiday_update');
-    
+    Route::get('setting/sms', [SmsSettingController::class, 'index'])->name('setting_sms');
+    Route::post('/setting/sms/update', [SmsSettingController::class, 'update'])->name('settings_sms_update');
 });
 

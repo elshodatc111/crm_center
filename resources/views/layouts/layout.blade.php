@@ -171,7 +171,7 @@
         </a>
         <ul id="gear-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
+            <a href="{{ route('setting_sms') }}">
               <i class="bi bi-circle"></i><span>SMS sozlamalari</span>
             </a>
           </li>

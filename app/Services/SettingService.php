@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Models\SettingPaymart;
 use App\Models\SettingChegirma;
+use App\Models\SettingRoom;
 
 class SettingService{
 
@@ -70,5 +71,16 @@ class SettingService{
         $SettingChegirma->status = 'delete';
         return $SettingChegirma->save();
     }
-
+    public function getRooms(){
+        return SettingRoom::where('status','true')->get();
+    }
+    public function createRoom(array $data){
+        $data['user_id'] = auth()->id();
+        return SettingRoom::create($data);
+    }
+    public function roomDelete(int $id){
+        $SettingRoom = SettingRoom::find($id);
+        $SettingRoom->status = 'delete';
+        return $SettingRoom->save();
+    }
 }

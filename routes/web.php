@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\setting\HolidayController;
 use App\Http\Controllers\admin\setting\SmsSettingController;
 use App\Http\Controllers\admin\setting\PaymartSettingController;
 use App\Http\Controllers\admin\setting\ChegirmaSettingController;
+use App\Http\Controllers\admin\setting\RoomSettingController;
 
 Auth::routes();
 
@@ -41,5 +42,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/chegirma', [ChegirmaSettingController::class, 'index'])->name('setting_chegirma');
     Route::post('/setting/chegirma/create', [ChegirmaSettingController::class, 'store'])->name('setting_chegirma_create');
     Route::post('/setting/chegirma/update', [ChegirmaSettingController::class, 'update'])->name('setting_chegirma_update');
+    Route::get('setting/rooms', [RoomSettingController::class, 'index'])->name('setting_rooms');
+    Route::post('/setting/rooms/create', [RoomSettingController::class, 'store'])->name('setting_room_create');
+    Route::post('/setting/rooms/delete', [RoomSettingController::class, 'delete'])->name('setting_room_delete');
 });
 

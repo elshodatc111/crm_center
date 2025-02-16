@@ -1,12 +1,12 @@
 @extends('layouts.app02')
-@section('title','SMS sozlamalari')
+@section('title','Chegirmali to\'lovlar')
 @section('content')
     <div class="pagetitle">
-        <h1>SMS sozlamalari</h1>
+        <h1>Chegirmali to'lovlar</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                <li class="breadcrumb-item">SMS sozlamalari</li>
+                <li class="breadcrumb-item">Chegirmali to'lovlar</li>
             </ol>
             <p class="text-danger">Chegirmali to'lov faqat bittasi aktiv bo'lishi mumkun</p>
         </nav>
@@ -83,7 +83,9 @@
                                 </td>
                             </tr>
                             @empty
-
+                            <tr>
+                                <td colspan=6 class="text-center">Chegirmalar mavjud emas.</td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>

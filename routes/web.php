@@ -7,6 +7,7 @@ use App\Http\Controllers\sadmin\sSmsSettingController;
 use App\Http\Controllers\sadmin\sTimeController;
 use App\Http\Controllers\admin\setting\HolidayController;
 use App\Http\Controllers\admin\setting\SmsSettingController;
+use App\Http\Controllers\admin\setting\PaymartSettingController;
 
 Auth::routes();
 
@@ -33,5 +34,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('setting/holiday/update', [HolidayController::class, 'update'])->name('setting_holiday_update');
     Route::get('setting/sms', [SmsSettingController::class, 'index'])->name('setting_sms');
     Route::post('/setting/sms/update', [SmsSettingController::class, 'update'])->name('settings_sms_update');
+    Route::get('setting/paymart', [PaymartSettingController::class, 'index'])->name('setting_paymart');
+    Route::post('/setting/paymart/create', [PaymartSettingController::class, 'store'])->name('settings_paymart_create');
+    Route::post('/setting/paymart/update', [PaymartSettingController::class, 'update'])->name('settings_paymart_update');
 });
 

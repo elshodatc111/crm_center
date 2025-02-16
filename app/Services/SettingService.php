@@ -4,7 +4,9 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\Setting;
+use App\Models\User;
 use Carbon\Carbon;
+use App\Models\SettingPaymart;
 
 class SettingService{
 
@@ -25,6 +27,34 @@ class SettingService{
             'birthday_sms' => isset($data['birthday_sms']) ? 1 : 0,
         ]);
         return true;
+    }
+    public function createPaymart(array $data): SettingPaymart{
+        $data['user_id'] = auth()->id();
+        return SettingPaymart::create($data);
+    }
+    public function getPaymart(){
+        $SettingPaymart = SettingPaymart::where('status','true')->get();
+        $res = array();
+        foreach ($SettingPaymart as $key => $value) {
+            $res[$key]['id'] = $value->id;
+            $res[$key]['amount'] = $value->amount;
+            $res[$key]['chegirma'] = $value->chegirma;
+            $res[$key]['admin_chegirma'] = $value->admin_chegirma;
+            $res[$key]['user_id'] = User::find($value->id)->user_name;
+        }
+        return $res;
+    }
+    public function getPaymartDelete(){
+        $SettingPaymart = SettingPaymart::where('status','delete')->get();
+        $res = array();
+        foreach ($SettingPaymart as $key => $value) {
+            $res[$key]['id'] = $value->id;
+            $res[$key]['amount'] = $value->amount;
+            $res[$key]['chegirma'] = $value->chegirma;
+            $res[$key]['admin_chegirma'] = $value->admin_chegirma;
+            $res[$key]['user_id'] = User::find($value->id)->user_name;
+        }
+        return $res;
     }
 
 }

@@ -166,10 +166,10 @@
         </ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['setting_sms', 'setting_holiday']) ? '' : 'collapsed' }}" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['setting_sms', 'setting_holiday','setting_paymart']) ? '' : 'collapsed' }}" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gear"></i><span>Sozlamalar</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="gear-nav" class="nav-content collapse {{ request()->routeIs(['setting_sms', 'setting_holiday']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="gear-nav" class="nav-content collapse {{ request()->routeIs(['setting_sms', 'setting_holiday','setting_paymart']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('setting_sms') }}" class="{{ request()->routeIs(['setting_sms']) ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>SMS sozlamalari</span>
@@ -181,7 +181,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{{ route('setting_paymart') }}" class="{{ request()->routeIs(['setting_paymart']) ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>To'lov sozlamalari</span>
             </a>
           </li>

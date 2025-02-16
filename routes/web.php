@@ -10,6 +10,9 @@ use App\Http\Controllers\admin\setting\SmsSettingController;
 use App\Http\Controllers\admin\setting\PaymartSettingController;
 use App\Http\Controllers\admin\setting\ChegirmaSettingController;
 use App\Http\Controllers\admin\setting\RoomSettingController;
+use App\Http\Controllers\admin\cours\CoursController;
+use App\Http\Controllers\admin\cours\TestController;
+use App\Http\Controllers\admin\cours\VideoController;
 
 Auth::routes();
 
@@ -45,5 +48,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/rooms', [RoomSettingController::class, 'index'])->name('setting_rooms');
     Route::post('/setting/rooms/create', [RoomSettingController::class, 'store'])->name('setting_room_create');
     Route::post('/setting/rooms/delete', [RoomSettingController::class, 'delete'])->name('setting_room_delete');
+    Route::get('setting/cours', [CoursController::class, 'index'])->name('setting_cours');
+    Route::post('setting/cours/create', [CoursController::class, 'store'])->name('setting_cours_create');
+    Route::post('setting/cours/update', [CoursController::class, 'update'])->name('setting_cours_update');
+    
+    Route::get('setting/test/{id}', [TestController::class, 'index'])->name('setting_cours_test');
+    Route::get('setting/video/{id}', [VideoController::class, 'index'])->name('setting_cours_video');
+    Route::post('setting/video/create', [VideoController::class, 'store'])->name('setting_video_create');
+    Route::post('setting/video/delete', [VideoController::class, 'delete'])->name('setting_video_delete');
 });
 

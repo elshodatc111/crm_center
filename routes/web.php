@@ -53,6 +53,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('setting/cours/update', [CoursController::class, 'update'])->name('setting_cours_update');
     
     Route::get('setting/test/{id}', [TestController::class, 'index'])->name('setting_cours_test');
+    Route::post('setting/test/create', [TestController::class, 'store'])->name('setting_test_create');
+    Route::post('setting/test/delete', [TestController::class, 'delete'])->name('setting_test_delete');
     Route::get('setting/video/{id}', [VideoController::class, 'index'])->name('setting_cours_video');
     Route::post('setting/video/create', [VideoController::class, 'store'])->name('setting_video_create');
     Route::post('setting/video/delete', [VideoController::class, 'delete'])->name('setting_video_delete');

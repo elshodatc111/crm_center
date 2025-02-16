@@ -46,7 +46,11 @@ class CoursService{
     }
     
     public function getAllTest(int $cours_id){
-        return CoursTest::where('cours_id',$cours_id)->orderBy('id','DESC')->get();
+        return CoursTest::where('cours_id',$cours_id)->orderBy('id','ASC')->get();
+    }
+    public function createTest(array $data){
+        $data['user_id'] = auth()->id();
+        return CoursTest::create($data);
     }
 
 

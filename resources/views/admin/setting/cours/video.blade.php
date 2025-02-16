@@ -1,5 +1,5 @@
 @extends('layouts.app03')
-@section('title','Kurs sozlamalari')
+@section('title','Kurs video darslar')
 @section('content')
     <div class="pagetitle">
         <h1>{{ $cours['cours_name'] }}</h1>

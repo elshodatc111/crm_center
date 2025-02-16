@@ -35,4 +35,11 @@ class User extends Authenticatable{
             'password' => 'hashed',
         ];
     }
+    public function isAdmin(): bool{
+        return in_array($this->type, ['admin', 'sAdmin']);
+    }
+
+    public function isSuperAdmin(): bool{
+        return $this->type === 'sAdmin';
+    }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\sadmin\sSettingController;
 use App\Http\Controllers\sadmin\sSmsSettingController;
 use App\Http\Controllers\sadmin\sTimeController;
+use App\Http\Controllers\admin\setting\HolidayController;
 
 Auth::routes();
 
@@ -24,4 +25,10 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
     Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
     Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
+});
+
+Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
+    Route::get('setting/holiday', [HolidayController::class, 'index'])->name('setting_holiday');
+    Route::post('setting/holiday/update', [HolidayController::class, 'update'])->name('setting_holiday_update');
+    
 });

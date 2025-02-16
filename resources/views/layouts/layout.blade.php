@@ -176,7 +176,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{{ route('setting_holiday') }}">
               <i class="bi bi-circle"></i><span>Dam olish va bayram kunlari</span>
             </a>
           </li>
@@ -187,7 +187,12 @@
           </li>
           <li>
             <a href="#">
-              <i class="bi bi-circle"></i><span>Dars konalari</span>
+              <i class="bi bi-circle"></i><span>Chegirmali to'lovlar</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Dars xonalari</span>
             </a>
           </li>
           <li>

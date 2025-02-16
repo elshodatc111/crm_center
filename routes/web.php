@@ -51,7 +51,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/cours', [CoursController::class, 'index'])->name('setting_cours');
     Route::post('setting/cours/create', [CoursController::class, 'store'])->name('setting_cours_create');
     Route::post('setting/cours/update', [CoursController::class, 'update'])->name('setting_cours_update');
-    
     Route::get('setting/test/{id}', [TestController::class, 'index'])->name('setting_cours_test');
     Route::post('setting/test/create', [TestController::class, 'store'])->name('setting_test_create');
     Route::post('setting/test/delete', [TestController::class, 'delete'])->name('setting_test_delete');

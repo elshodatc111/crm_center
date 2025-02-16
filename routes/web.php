@@ -11,8 +11,9 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
-
+Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
+     
+});
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/setting', [sSettingController::class, 'index'])->name('sadmin_setting');
@@ -21,14 +22,14 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/sms', [sSmsSettingController::class, 'index'])->name('sadmin_sms');
     Route::post('s/message_status', [sSmsSettingController::class, 'message_status'])->name('sadmin_message_status');
     Route::post('s/message_mavjud', [sSmsSettingController::class, 'message_mavjud'])->name('sadmin_message_mavjud');
-    
     Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
     Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
     Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
 });
 
-Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/holiday', [HolidayController::class, 'index'])->name('setting_holiday');
     Route::post('setting/holiday/update', [HolidayController::class, 'update'])->name('setting_holiday_update');
     
 });
+

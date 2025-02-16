@@ -8,6 +8,7 @@ use App\Http\Controllers\sadmin\sTimeController;
 use App\Http\Controllers\admin\setting\HolidayController;
 use App\Http\Controllers\admin\setting\SmsSettingController;
 use App\Http\Controllers\admin\setting\PaymartSettingController;
+use App\Http\Controllers\admin\setting\ChegirmaSettingController;
 
 Auth::routes();
 
@@ -37,5 +38,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/paymart', [PaymartSettingController::class, 'index'])->name('setting_paymart');
     Route::post('/setting/paymart/create', [PaymartSettingController::class, 'store'])->name('settings_paymart_create');
     Route::post('/setting/paymart/update', [PaymartSettingController::class, 'update'])->name('settings_paymart_update');
+    Route::get('setting/chegirma', [ChegirmaSettingController::class, 'index'])->name('setting_chegirma');
+    Route::post('/setting/chegirma/create', [ChegirmaSettingController::class, 'store'])->name('setting_chegirma_create');
+    Route::post('/setting/chegirma/update', [ChegirmaSettingController::class, 'update'])->name('setting_chegirma_update');
 });
 

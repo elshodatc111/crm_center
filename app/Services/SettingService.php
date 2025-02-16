@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\SettingPaymart;
+use App\Models\SettingChegirma;
 
 class SettingService{
 
@@ -55,6 +56,19 @@ class SettingService{
             $res[$key]['user_id'] = User::find($value->id)->user_name;
         }
         return $res;
+    }
+    public function createChegirma(array $data){
+        $data['user_id'] = auth()->id();
+        SettingChegirma::where('status','true')->update(['status' => 'delete']);
+        return SettingChegirma::create($data);
+    }
+    public function getChegirma(){
+        return SettingChegirma::orderBy('id', 'desc')->get();
+    }
+    public function chegirmaUpdate(int $id){
+        $SettingChegirma = SettingChegirma::find($id);
+        $SettingChegirma->status = 'delete';
+        return $SettingChegirma->save();
     }
 
 }

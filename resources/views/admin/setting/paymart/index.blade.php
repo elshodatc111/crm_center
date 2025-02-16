@@ -25,7 +25,7 @@
         </div>
     @endif
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Yangi to'lov qo'shish</h3>
@@ -49,6 +49,8 @@
                     </form>     
                 </div>
             </div>
+        </div>
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title">Aktiv to'lov summasi</h2>

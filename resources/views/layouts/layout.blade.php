@@ -166,10 +166,10 @@
         </ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['setting_sms', 'setting_holiday','setting_paymart']) ? '' : 'collapsed' }}" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['setting_sms', 'setting_holiday','setting_paymart','setting_chegirma']) ? '' : 'collapsed' }}" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gear"></i><span>Sozlamalar</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="gear-nav" class="nav-content collapse {{ request()->routeIs(['setting_sms', 'setting_holiday','setting_paymart']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="gear-nav" class="nav-content collapse {{ request()->routeIs(['setting_sms', 'setting_holiday','setting_paymart','setting_chegirma']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('setting_sms') }}" class="{{ request()->routeIs(['setting_sms']) ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>SMS sozlamalari</span>
@@ -186,8 +186,8 @@
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Chegirmali to'lovlar</span>
+            <a href="{{ route('setting_chegirma') }}"  class="{{ request()->routeIs(['setting_chegirma']) ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Chegirmali to'lov</span>
             </a>
           </li>
           <li>

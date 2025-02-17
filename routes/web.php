@@ -13,13 +13,14 @@ use App\Http\Controllers\admin\setting\RoomSettingController;
 use App\Http\Controllers\admin\cours\CoursController;
 use App\Http\Controllers\admin\cours\TestController;
 use App\Http\Controllers\admin\cours\VideoController;
+use App\Http\Controllers\student\StudentController;
 
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
-     
+    Route::get('student', [StudentController::class, 'index'])->name('all_student');
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

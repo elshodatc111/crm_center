@@ -1,69 +1,174 @@
 @extends('layouts.app01')
 @section('title','Tashriflar')
 @section('content')
-
-    <div class="row justify-content-center">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title row">
-                    <div class="col-6">
-                        Tashriflar
-                    </div>
-                    <div class="col-6" style="text-align:right">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tashrifModal">
-                            <i class="bi bi-plus"></i> Yangi tashrif
-                        </button>
-                    </div>
+    <div class="pagetitle">
+        <h1>Tashriflar</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                <li class="breadcrumb-item">Tashriflar</li>
+            </ol>
+        </nav>
+    </div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    <div class="card">
+        <div class="card-body">
+            <div class="row card-title">
+                <div class="col-6">Tashriflar</div>
+                <div class="col-6" style="text-align:right">
+                    <!-- Yangi tashrif uchun modalni ochish -->
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVisitModal"><i class="bi bi-plus"></i> Yangi Tashrif</button>
                 </div>
-                <table class="table text-center" style="font-size:14px;">
+            </div>
+            <form action="{{ route('all_student') }}" method="get">
+                <input type="text" name="search" class="form-control mb-3" placeholder="Ism yoki telefon raqamini kiriting...">
+            </form>
+            <div id="userTable">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Tashrif nomi</th>
-                            <th>Sana</th>
-                            <th>Tavsif</th>
-                            <th>Amallar</th>
+                            <th>Ism</th>
+                            <th>Telefon</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Ma'lumotlar bu yerda chiqariladi -->
+                        @foreach ($users as $index => $user)
+                            <tr>
+                                <td>{{ $users->firstItem() + $index }}</td>
+                                <td>{{ $user->user_name }}</td>
+                                <td>{{ $user->phone1 }}</td>
+                                <td>{{ $user->email }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                    {{ $users->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="tashrifModal" tabindex="-1" aria-labelledby="tashrifModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addVisitModal" tabindex="-1" aria-labelledby="addVisitModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tashrifModalLabel">Yangi tashrif qo'shish</h5>
+                    <h5 class="modal-title" id="addVisitModalLabel">Yangi Tashrif qo'shish</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Tashrif nomi</label>
-                            <input type="text" class="form-control" id="name" required>
+                    <form action="{{ route('student_store') }}" method="POST" id="visitForm">
+                        @csrf
+                        <div class="mb-1">
+                            <label for="user_name" class="form-label">Ism Familya</label>
+                            <input type="text" class="form-control" id="user_name" name="user_name" value="{{ old('user_name') }}" required>
+                            @error('user_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="date" class="form-label">Sana</label>
-                            <input type="date" class="form-control" id="date" required>
+                        <div class="mb-1">
+                            <label for="phone1" class="form-label">Telefon raqam 1</label>
+                            <input type="text" class="form-control phone" name="phone1" value="{{ old('phone2')==null?'+998':old('phone2') }}" required id="phone1">
+                            @error('phone1')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Tavsif</label>
-                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        <div class="mb-1">
+                            <label for="phone2" class="form-label">Telefon raqam 2</label>
+                            <input type="text" class="form-control phone" name="phone2" value="{{ old('phone2')==null?'+998':old('phone2') }}" id="phone2">
+                            @error('phone2')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+                        <div class="mb-1">
+                            <label for="address" class="form-label">Yashash manzili</label>
+                            <select class="form-select" name="address" required>
+                                <option value="" disabled selected>Shahar yoki Tumanni tanlang</option>
+                                <!-- Shaharlar va tumanlar -->
+                                <option value="Shahrisabz_sh" @if(old('address') == 'Shahrisabz_sh') selected @endif>Shahrisabz shaxar</option>
+                                <option value="Qarshi_sh" @if(old('address') == 'Qarshi_sh') selected @endif>Qarshi shaxar</option>
+                                <option value="G'uzor" @if(old('address') == 'G\'uzor') selected @endif>G'uzor</option>
+                                <option value="Kasbi" @if(old('address') == 'Kasbi') selected @endif>Kasbi</option>
+                                <!-- Qo'shimcha shaharlar -->
+                            </select>
+                            @error('address')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-1">
+                            <label for="birthday" class="form-label">Tug'ilgan sana</label>
+                            <input type="date" class="form-control" id="birthday" name="birthday" value="{{ old('birthday') }}" required>
+                            @error('birthday')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-1">
+                            <label for="about" class="form-label">Tashrif haqida</label>
+                            <textarea class="form-control" id="about" name="about">{{ old('about') }}</textarea>
+                            @error('about')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="submit-btn">Tashrifni saqlash</button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="button" class="btn btn-primary">Saqlash</button>
                 </div>
             </div>
         </div>
     </div>
 
-@endsection
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+    <script>
+        $(".phone").inputmask("+998 99 999 9999");
+        $('#phone1').on('blur', function() {
+            var phone1 = $(this).val();
+            $.ajax({
+                url: '{{ route('checkPhoneExist') }}',
+                type: 'GET',
+                data: { phone1: phone1 },
+                success: function(response) {
+                    if (response.exists) {
+                        $('#phone1-error').show();
+                        $('#phone1').addClass('is-invalid');
+                    } else {
+                        $('#phone1-error').hide();
+                        $('#phone1').removeClass('is-invalid');
+                    }
+                }
+            });
+        });
 
+        $('#birthday').on('change', function() {
+            var birthday = $(this).val();
+            var birthDate = new Date(birthday);
+            var currentDate = new Date();
+            var age = currentDate.getFullYear() - birthDate.getFullYear();
+            var m = currentDate.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && currentDate.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            if (age < 12) {
+                $('#birthday-error').show();
+                $('#submit-btn').prop('disabled', true);
+            } else {
+                $('#birthday-error').hide();
+                $('#submit-btn').prop('disabled', false);
+            }
+        });
+    </script>
+@endsection

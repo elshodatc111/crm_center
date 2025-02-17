@@ -35,6 +35,11 @@ class User extends Authenticatable{
             'password' => 'hashed',
         ];
     }
+    
+    public function isMineger(): bool{
+        return in_array($this->type, ['admin', 'sAdmin','meneger']);
+    }
+
     public function isAdmin(): bool{
         return in_array($this->type, ['admin', 'sAdmin']);
     }

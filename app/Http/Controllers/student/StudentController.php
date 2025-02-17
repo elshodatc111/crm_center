@@ -4,9 +4,44 @@ namespace App\Http\Controllers\student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Requests\StoreVisitRequest;
+use App\Services\StudentService;
 
 class StudentController extends Controller{
-    public function index(){
-        return view('student.index');
+
+    private StudentService $studentService;
+    public function __construct(StudentService $studentService){
+        $this->studentService = $studentService;
+        $this->middleware('admin');
     }
+
+
+    public function checkPhoneExist(Request $request){
+        $phone1 = $request->input('phone1');
+        $exists = User::where('phone1', $phone1)->where('type', 'student')->exists();
+        return response()->json(['exists' => $exists]);
+    }
+
+
+    public function index(Request $request){
+        if ($request->search) {
+            $users = User::where('type', 'student')
+                            ->where('user_name', 'like', '%' . $request->search . '%')
+                            ->orWhere('phone1', 'like', '%' . $request->search . '%')
+                            ->paginate(10);
+        } else {
+            $users = User::where('type', 'student')
+                         ->orderBy('id', 'desc')
+                         ->paginate(10);
+        }
+        return view('student.index', compact('users'));
+    }
+
+    public function store(StoreVisitRequest $request){
+        $cours = $this->studentService->createStudent($request->validated());
+        return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
+    }
+
+
 }

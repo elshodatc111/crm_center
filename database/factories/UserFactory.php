@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory{
     protected static ?string $password;
     public function definition(): array{
+        
         return [
             'user_name' => $this->faker->name(),
             'phone1' => $this->faker->unique()->phoneNumber(),

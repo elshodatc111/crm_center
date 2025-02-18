@@ -45,5 +45,4 @@ class StudentController extends Controller{
         return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
     }
 
-
 }

@@ -40,6 +40,7 @@ class SendMessageWork implements ShouldQueue {
         }
 
         $phone = str_replace(' ', '', $User->phone1);
+
         if ($Setting->message_status == 1) {
             if ($this->type == 'new_student_sms' && $Setting->new_student_sms == 1) {
                 $text = "SMS Xabar Yuborlimoqda";
@@ -58,15 +59,16 @@ class SendMessageWork implements ShouldQueue {
             }
         }
         // SMS Yuborish
+        
         $smsService = new SmsService();
-        $response = $smsService->sendSingleMessage($phone, $text);
-
+        $response = $smsService->sendSms($phone, $text);
         if ($response['success']) {
             Log::info("SMS jo'natildi: Telefon: {$phone}, Xabar: {$text}");
             $this->saveSmsHistory($phone, $text, $this->admin_id);
-        } else {
+        }else{
             Log::error("SMS jo'natishda xatolik: " . $response['message']);
         }
+
     }
 
     private function saveSmsHistory(string $phone, string $message, int $admin_id): void {

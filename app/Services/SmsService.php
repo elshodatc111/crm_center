@@ -1,62 +1,41 @@
 <?php
-
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class SmsService{
-    private string $server;
-    private string $apiKey;
+    public $smsService;
 
-    public function __construct(){
-        $this->server = env('SMS_SERVER', 'https://smsapp.uz/new');
-        $this->apiKey = env('SMS_API_KEY', 'your_api_key_here');
-    }
 
-    public function sendSingleMessage($number, $message, $device = 0, $schedule = null, $isMMS = false, $attachments = '', $prioritize = false){
-        $payload = [
-            'number' => $number,
-            'message' => $message,
-            'device' => $device,
-            'schedule' => $schedule,
-            'isMMS' => $isMMS,
-            'attachments' => $attachments,
-            'prioritize' => $prioritize,
-        ];
+    protected string $baseUrl = 'https://notify.eskiz.uz/api';
 
-        return $this->sendRequest('/messages/send', $payload);
-    }
-
-    public function sendBulkMessages(array $messages, $option = 'use_specified', array $devices = [], $schedule = null, $useRandomDevice = false){
-        $payload = [
-            'messages' => $messages,
-            'option' => $option,
-            'devices' => $devices,
-            'schedule' => $schedule,
-            'useRandomDevice' => $useRandomDevice,
-        ];
-
-        return $this->sendRequest('/messages/send/bulk', $payload);
-    }
-
-    public function getMessageById($id){
-        return $this->sendRequest("/messages/{$id}");
-    }
-
-    public function getBalance(){
-        return $this->sendRequest('/account/balance');
-    }
-
-    private function sendRequest($endpoint, $data = []){
+    public function sendSms(string $phone, string $message){
+        $token = $this->getToken();
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
-            'Content-Type' => 'application/json'
-        ])->post($this->server . $endpoint, $data);
+            'Authorization' => 'Bearer ' . $token,
+        ])->post("notify.eskiz.uz/api/message/sms/send", [
+            'mobile_phone' => $phone,
+            'message' => $message,
+            'from' => '4546',
+        ]);
+        return $response->json();
+    }
 
-        if ($response->successful()) {
-            return $response->json();
+    public function getToken(){
+        $token = Cache::get('eskiz_api_token');
+        if (!$token) {
+            $response = Http::post("notify.eskiz.uz/api/auth/login", [
+                'email' => 'MENEJER-77@MAIL.RU',
+                'password' => 'oncq32Eg8mL0zEdrktW7vNB2amdNzwJtg2oKwJHS',
+            ]);
+            if ($response->successful()) {
+                $token = $response['data']['token'];
+                Cache::put('eskiz_api_token', $token, now()->addDays(30));
+            } else {
+                throw new \Exception('Eskiz API authentication failed');
+            }
         }
-
-        return ['error' => 'Request failed', 'status' => $response->status()];
+        return $token;
     }
 }

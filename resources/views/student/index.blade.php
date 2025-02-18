@@ -29,7 +29,6 @@
             <div class="row card-title">
                 <div class="col-6">Tashriflar</div>
                 <div class="col-6" style="text-align:right">
-                    <!-- Yangi tashrif uchun modalni ochish -->
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVisitModal"><i class="bi bi-plus"></i> Yangi Tashrif</button>
                 </div>
             </div>
@@ -93,10 +92,12 @@
                         </div>
                         <div class="mb-1">
                             <label for="phone1" class="form-label">Telefon raqam 1</label>
-                            <input type="text" class="form-control phone" name="phone1" value="{{ old('phone2')==null?'+998':old('phone2') }}" required id="phone1">
+                            <input type="text" class="form-control phone" 
+                            name="phone1" value="{{ old('phone2')==null?'+998':old('phone2') }}" required id="phone1">
                             @error('phone1')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <span id="phone1-error" class="text-danger" style="display:none;">Bu telefon raqami oldin ro'yxatdan o'tgan!</span>
                         </div>
                         <div class="mb-1">
                             <label for="phone2" class="form-label">Telefon raqam 2</label>
@@ -109,12 +110,20 @@
                             <label for="address" class="form-label">Yashash manzili</label>
                             <select class="form-select" name="address" required>
                                 <option value="" disabled selected>Shahar yoki Tumanni tanlang</option>
-                                <!-- Shaharlar va tumanlar -->
-                                <option value="Shahrisabz_sh" @if(old('address') == 'Shahrisabz_sh') selected @endif>Shahrisabz shaxar</option>
-                                <option value="Qarshi_sh" @if(old('address') == 'Qarshi_sh') selected @endif>Qarshi shaxar</option>
-                                <option value="G'uzor" @if(old('address') == 'G\'uzor') selected @endif>G'uzor</option>
-                                <option value="Kasbi" @if(old('address') == 'Kasbi') selected @endif>Kasbi</option>
-                                <!-- Qo'shimcha shaharlar -->
+                                <option value="Qarshi_sh" @if(old('address') == 'Qarshi_sh') selected @endif>Qarshi shahar</option>
+                                <option value="Shahrisabz_sh" @if(old('address') == 'Shahrisabz_sh') selected @endif>Shahrisabz shahar</option>
+                                <option value="Dehqonobod" @if(old('address') == 'Dehqonobod') selected @endif>Dehqonobod tumani</option>
+                                <option value="G'uzor" @if(old('address') == "G'uzor") selected @endif>G'uzor tumani</option>
+                                <option value="Kasbi" @if(old('address') == 'Kasbi') selected @endif>Kasbi tumani</option>
+                                <option value="Kitob" @if(old('address') == 'Kitob') selected @endif>Kitob tumani</option>
+                                <option value="Koson" @if(old('address') == 'Koson') selected @endif>Koson tumani</option>
+                                <option value="Mirishkor" @if(old('address') == 'Mirishkor') selected @endif>Mirishkor tumani</option>
+                                <option value="Muborak" @if(old('address') == 'Muborak') selected @endif>Muborak tumani</option>
+                                <option value="Nishon" @if(old('address') == 'Nishon') selected @endif>Nishon tumani</option>
+                                <option value="Qamashi" @if(old('address') == 'Qamashi') selected @endif>Qamashi tumani</option>
+                                <option value="Yakkabog'" @if(old('address') == "Yakkabog'") selected @endif>Yakkabog' tumani</option>
+                                <option value="Chiroqchi" @if(old('address') == 'Chiroqchi') selected @endif>Chiroqchi tumani</option>
+                                <option value="Shahrisabz" @if(old('address') == 'Shahrisabz') selected @endif>Shahrisabz tumani</option>
                             </select>
                             @error('address')
                                 <span class="text-danger">{{ $message }}</span>
@@ -126,6 +135,8 @@
                             @error('birthday')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            
+                            <span id="birthday-error" class="text-danger" style="display:none;">Bu foydalanuvchi 10 yoshdan kichik!</span>
                         </div>
                         <div class="mb-1">
                             <label for="about" class="form-label">Tashrif haqida</label>
@@ -172,7 +183,7 @@
             if (m < 0 || (m === 0 && currentDate.getDate() < birthDate.getDate())) {
                 age--;
             }
-            if (age < 12) {
+            if (age < 10) {
                 $('#birthday-error').show();
                 $('#submit-btn').prop('disabled', true);
             } else {

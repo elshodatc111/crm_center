@@ -29,46 +29,34 @@ class SendMessageWork implements ShouldQueue {
     public function handle(): void {
         $Setting = Setting::first();
         if (!$Setting) {
-            Log::error("SMS xatosi: Sozlamalar topilmadi.");
             return;
         }
-
         $User = User::find($this->user_id);
         if (!$User) {
-            Log::error("SMS xatosi: Foydalanuvchi topilmadi.");
             return;
         }
-
-        $phone = str_replace(' ', '', $User->phone1);
-
+        $phone = str_replace('+','',str_replace(' ', '', $User->phone1));
         if ($Setting->message_status == 1) {
             if ($this->type == 'new_student_sms' && $Setting->new_student_sms == 1) {
-                $text = "SMS Xabar Yuborlimoqda";
+                $text = "Hurmatli ".$User->user_name." Siz bizming ".env('APP_NAME')." o\'quv markazimizga tashrifingizdan hursandmiz. Sizning login: ".$User->email." Parol: password. websayt: ".env('APP_URL');
             } elseif ($this->type == 'new_hodim_sms' && $Setting->new_hodim_sms == 1) {
-                $text = "SMS Xabar Yuborlimoqda";
-            } elseif ($this->type == 'pay_student_sms' && $Setting->pay_student_sms == 1) {
-                $text = "SMS Xabar Yuborlimoqda";
-            } elseif ($this->type == 'pay_hodim_sms' && $Setting->pay_hodim_sms == 1) {
-                $text = "SMS Xabar Yuborlimoqda";
+                $text = "Hurmatli ".$User->user_name." Siz bizming ".env('APP_NAME')." o\'quv markazimizga ishga olindingiz. Sizning login: ".$User->email." Parol: password. websayt: ".env('APP_URL');
             } elseif ($this->type == 'update_pass_sms' && $Setting->update_pass_sms == 1) {
-                $text = "SMS Xabar Yuborlimoqda";
+                $text = "Hurmatli ".$User->user_name." ".env('APP_NAME')." o\'quv markazi shaxsiy profilingiz paroli qayta tiklandi. Sizning login: ".$User->email." Parol: password. websayt: ".env('APP_URL');
             } elseif ($this->type == 'birthday_sms' && $Setting->birthday_sms == 1) {
-                $text = "SMS Xabar Yuborlimoqda";
+                $text = "Hurmatli ".$User->user_name." Sizni ".env('APP_NAME')." o\'quv markazi jamosi tug'ilgan kuningiz bilan tabriklaymiz. Kelgusi ishlaringizga omad tilaymiz. websayt: ".env('APP_URL');
             } else {
                 return;
             }
         }
-        // SMS Yuborish
-        
+        Log::info($text);
         $smsService = new SmsService();
         $response = $smsService->sendSms($phone, $text);
-        if ($response['success']) {
-            Log::info("SMS jo'natildi: Telefon: {$phone}, Xabar: {$text}");
+        if ($response['status']=='waiting') {
             $this->saveSmsHistory($phone, $text, $this->admin_id);
         }else{
-            Log::error("SMS jo'natishda xatolik: " . $response['message']);
+            Log::error("SMS jo'natishda xatolik: " . $response);
         }
-
     }
 
     private function saveSmsHistory(string $phone, string $message, int $admin_id): void {

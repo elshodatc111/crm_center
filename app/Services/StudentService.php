@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\Setting;
 use App\Models\UserHistory;
+use App\Models\MenegerChart;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,16 @@ class StudentService{
             'type_commit' => 'new Student', 
             'admin_id' => auth()->user()->id,
         ]);
+        $MenegerChart = MenegerChart::where('user_id',auth()->user()->id)->first();
+        if($MenegerChart){
+            $MenegerChart->create_student = $MenegerChart->create_student + 1;
+            $MenegerChart->save();
+        }else{
+            MenegerChart::create([
+                'user_id' => auth()->user()->id,
+                'create_student' => 1
+            ]);
+        }
         return $User;
     }
 

@@ -37,22 +37,32 @@
                 <input type="text" name="search" class="form-control mb-3" placeholder="Ism yoki telefon raqamini kiriting...">
             </form>
             <div id="userTable">
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="font-size:14px;">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>#</th>
                             <th>Ism</th>
                             <th>Telefon</th>
-                            <th>Email</th>
+                            <th>Manzil</th>
+                            <th>Balans</th>
+                            <th>Guruhlar</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $index => $user)
                             <tr>
-                                <td>{{ $users->firstItem() + $index }}</td>
-                                <td>{{ $user->user_name }}</td>
+                                <td class="text-center">{{ $users->firstItem() + $index }}</td>
+                                <td><a href="#">{{ $user->user_name }}</a></td>
                                 <td>{{ $user->phone1 }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->address }}</td>
+                                <td class="text-center">
+                                    @if($user['balans']>=0)
+                                        <b class="text-success">{{ number_format($user['balans'], 0, '.', ' ') }} so'm</b>
+                                    @else
+                                        <b class="text-danger">{{ number_format($user['balans'], 0, '.', ' ') }} so'm</b>
+                                    @endif
+                                </td>
+                                <td class="text-center">{{ $user->group_count }}</td>
                             </tr>
                         @endforeach
                     </tbody>

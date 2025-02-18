@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\StoreVisitRequest;
 use App\Services\StudentService;
-use App\Jobs\SendMessage;
+use App\Jobs\SendMessageWork;
 
 class StudentController extends Controller{
 
@@ -42,8 +42,8 @@ class StudentController extends Controller{
     public function store(StoreVisitRequest $request){
         $users = $this->studentService->createStudent($request->validated());
 
-        dispatch(new SendMessage($users->id, 'new_student_sms'));
-        
+        dispatch(new SendMessageWork($users->id, 'new_student_sms'));
+
         return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
     }
 

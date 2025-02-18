@@ -8,9 +8,12 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Queue\Queueable;
 use App\Models\User;
+use App\Models\SendMessage;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 
-class SendMessage implements ShouldQueue {
+
+class SendMessageWork implements ShouldQueue {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $user_id;
@@ -31,7 +34,7 @@ class SendMessage implements ShouldQueue {
             return;
         }
         $phone = str_replace(' ', '', $User->phone1);
-        $text = "Sms Matni";
+        $text = "SMS Xabar Yuborlimoqda";
 
         if ($Setting->message_status == 1) {
             if ($this->type == 'new_student_sms' && $Setting->new_student_sms == 1) {
@@ -54,6 +57,16 @@ class SendMessage implements ShouldQueue {
         }
     }
     private function sendSms(string $phone, string $message): void {
+        $user = Auth::user();
+        if (!$user) {
+            \Log::error("Tizimga kirgan foydalanuvchi topilmadi.");
+            return;
+        }
+        SendMessage::create([
+            'phone' => $phone,
+            'message' => $message,
+            'user_id' => $user->id,
+        ]);
         \Log::info("SMS jo'natildi: Telefon: {$phone}, Xabar: {$message}");
     }
 }

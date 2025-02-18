@@ -13,7 +13,7 @@ class StudentController extends Controller{
     private StudentService $studentService;
     public function __construct(StudentService $studentService){
         $this->studentService = $studentService;
-        $this->middleware('admin');
+        $this->middleware('meneger');
     }
 
 

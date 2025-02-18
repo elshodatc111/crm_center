@@ -10,8 +10,8 @@ use Illuminate\Foundation\Queue\Queueable;
 use App\Models\User;
 use App\Models\SendMessage;
 use App\Models\Setting;
-use Illuminate\Support\Facades\Auth;
-
+use App\Services\SmsService;
+use Illuminate\Support\Facades\Log;
 
 class SendMessageWork implements ShouldQueue {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -29,12 +29,16 @@ class SendMessageWork implements ShouldQueue {
     public function handle(): void {
         $Setting = Setting::first();
         if (!$Setting) {
+            Log::error("SMS xatosi: Sozlamalar topilmadi.");
             return;
         }
+
         $User = User::find($this->user_id);
         if (!$User) {
+            Log::error("SMS xatosi: Foydalanuvchi topilmadi.");
             return;
         }
+
         $phone = str_replace(' ', '', $User->phone1);
         if ($Setting->message_status == 1) {
             if ($this->type == 'new_student_sms' && $Setting->new_student_sms == 1) {
@@ -52,15 +56,20 @@ class SendMessageWork implements ShouldQueue {
             } else {
                 return;
             }
+        }
+        // SMS Yuborish
+        $smsService = new SmsService();
+        $response = $smsService->sendSingleMessage($phone, $text);
 
-            $this->sendSms($phone, $text, $this->admin_id);  // SMS tarixiga yozish
-            // SMS yuborish logikasini tayyorlash kerak  // php artisan queue:work
-            \Log::info("SMS jo'natishga tayyor: Telefon: {$phone}, Xabar: {$text}");
+        if ($response['success']) {
+            Log::info("SMS jo'natildi: Telefon: {$phone}, Xabar: {$text}");
+            $this->saveSmsHistory($phone, $text, $this->admin_id);
         } else {
-            return;
+            Log::error("SMS jo'natishda xatolik: " . $response['message']);
         }
     }
-    private function sendSms(string $phone, string $message, int $admin_id): void {
+
+    private function saveSmsHistory(string $phone, string $message, int $admin_id): void {
         SendMessage::create([
             'phone' => $phone,
             'message' => $message,

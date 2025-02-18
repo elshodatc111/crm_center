@@ -39,25 +39,21 @@ class SendMessageWork implements ShouldQueue {
         if ($Setting->message_status == 1) {
             if ($this->type == 'new_student_sms' && $Setting->new_student_sms == 1) {
                 $text = "SMS Xabar Yuborlimoqda";
-                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'new_hodim_sms' && $Setting->new_hodim_sms == 1) {
                 $text = "SMS Xabar Yuborlimoqda";
-                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'pay_student_sms' && $Setting->pay_student_sms == 1) {
                 $text = "SMS Xabar Yuborlimoqda";
-                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'pay_hodim_sms' && $Setting->pay_hodim_sms == 1) {
                 $text = "SMS Xabar Yuborlimoqda";
-                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'update_pass_sms' && $Setting->update_pass_sms == 1) {
                 $text = "SMS Xabar Yuborlimoqda";
-                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'birthday_sms' && $Setting->birthday_sms == 1) {
                 $text = "SMS Xabar Yuborlimoqda";
-                $this->sendSms($phone, $text, $this->admin_id);
             } else {
                 return;
             }
+
+            $this->sendSms($phone, $text, $this->admin_id);  // SMS tarixiga yozish
             // SMS yuborish logikasini tayyorlash kerak  // php artisan queue:work
             \Log::info("SMS jo'natishga tayyor: Telefon: {$phone}, Xabar: {$text}");
         } else {

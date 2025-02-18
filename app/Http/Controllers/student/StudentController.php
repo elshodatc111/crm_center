@@ -41,9 +41,7 @@ class StudentController extends Controller{
 
     public function store(StoreVisitRequest $request){
         $users = $this->studentService->createStudent($request->validated());
-
-        dispatch(new SendMessageWork($users->id, 'new_student_sms'));
-
+        dispatch(new SendMessageWork($users->id, 'new_student_sms',auth()->user()->id)); // SendMessageWork(user_id, message_type, admin_id)
         return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
     }
 

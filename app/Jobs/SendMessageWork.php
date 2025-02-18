@@ -18,10 +18,12 @@ class SendMessageWork implements ShouldQueue {
 
     public $user_id;
     public $type;
+    public $admin_id;
 
-    public function __construct(int $user_id, string $type) {
+    public function __construct(int $user_id, string $type, int $admin_id) {
         $this->user_id = $user_id;
         $this->type = $type;
+        $this->admin_id = $admin_id;
     }
 
     public function handle(): void {
@@ -34,39 +36,39 @@ class SendMessageWork implements ShouldQueue {
             return;
         }
         $phone = str_replace(' ', '', $User->phone1);
-        $text = "SMS Xabar Yuborlimoqda";
-
         if ($Setting->message_status == 1) {
             if ($this->type == 'new_student_sms' && $Setting->new_student_sms == 1) {
-                $this->sendSms($phone, $text);
+                $text = "SMS Xabar Yuborlimoqda";
+                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'new_hodim_sms' && $Setting->new_hodim_sms == 1) {
-                $this->sendSms($phone, $text);
+                $text = "SMS Xabar Yuborlimoqda";
+                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'pay_student_sms' && $Setting->pay_student_sms == 1) {
-                $this->sendSms($phone, $text);
+                $text = "SMS Xabar Yuborlimoqda";
+                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'pay_hodim_sms' && $Setting->pay_hodim_sms == 1) {
-                $this->sendSms($phone, $text);
+                $text = "SMS Xabar Yuborlimoqda";
+                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'update_pass_sms' && $Setting->update_pass_sms == 1) {
-                $this->sendSms($phone, $text);
+                $text = "SMS Xabar Yuborlimoqda";
+                $this->sendSms($phone, $text, $this->admin_id);
             } elseif ($this->type == 'birthday_sms' && $Setting->birthday_sms == 1) {
-                $this->sendSms($phone, $text);
+                $text = "SMS Xabar Yuborlimoqda";
+                $this->sendSms($phone, $text, $this->admin_id);
             } else {
                 return;
             }
+            // SMS yuborish logikasini tayyorlash kerak  // php artisan queue:work
+            \Log::info("SMS jo'natishga tayyor: Telefon: {$phone}, Xabar: {$text}");
         } else {
             return;
         }
     }
-    private function sendSms(string $phone, string $message): void {
-        $user = Auth::user();
-        if (!$user) {
-            \Log::error("Tizimga kirgan foydalanuvchi topilmadi.");
-            return;
-        }
+    private function sendSms(string $phone, string $message, int $admin_id): void {
         SendMessage::create([
             'phone' => $phone,
             'message' => $message,
-            'user_id' => $user->id,
+            'user_id' => $admin_id,
         ]);
-        \Log::info("SMS jo'natildi: Telefon: {$phone}, Xabar: {$message}");
     }
 }

@@ -51,7 +51,7 @@
                         @foreach ($users as $index => $user)
                             <tr>
                                 <td class="text-center">{{ $users->firstItem() + $index }}</td>
-                                <td><a href="#">{{ $user->user_name }}</a></td>
+                                <td><a href="{{ route('student_show', $user->id ) }}">{{ $user->user_name }}</a></td>
                                 <td>{{ $user->phone1 }}</td>
                                 <td>{{ $user->address }}</td>
                                 <td class="text-center">
@@ -109,7 +109,7 @@
                         <div class="mb-1">
                             <label for="address" class="form-label">Yashash manzili</label>
                             <select class="form-select" name="address" required>
-                                <option value="" disabled selected>Shahar yoki Tumanni tanlang</option>
+                                <option value="" disabled selected>Tanlang...</option>
                                 <option value="Qarshi_sh" @if(old('address') == 'Qarshi_sh') selected @endif>Qarshi shahar</option>
                                 <option value="Shahrisabz_sh" @if(old('address') == 'Shahrisabz_sh') selected @endif>Shahrisabz shahar</option>
                                 <option value="Dehqonobod" @if(old('address') == 'Dehqonobod') selected @endif>Dehqonobod tumani</option>
@@ -124,6 +124,22 @@
                                 <option value="Yakkabog'" @if(old('address') == "Yakkabog'") selected @endif>Yakkabog' tumani</option>
                                 <option value="Chiroqchi" @if(old('address') == 'Chiroqchi') selected @endif>Chiroqchi tumani</option>
                                 <option value="Shahrisabz" @if(old('address') == 'Shahrisabz') selected @endif>Shahrisabz tumani</option>
+                            </select>
+                            @error('address')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-1">
+                            <label for="about_me" class="form-label">Biz haqimizda</label>
+                            <select class="form-select" name="about_me" required>
+                                <option value="" disabled selected>Tanlang...</option>
+                                <option value="social_telegram" @if(old('about_me') == 'social_telegram') selected @endif>Telegram</option>
+                                <option value="social_instagram" @if(old('about_me') == 'social_instagram') selected @endif>Instagram</option>
+                                <option value="social_facebook" @if(old('about_me') == 'social_facebook') selected @endif>Facebook</option>
+                                <option value="social_youtube" @if(old('about_me') == 'social_youtube') selected @endif>Youtube</option>
+                                <option value="social_banner" @if(old('about_me') == 'social_banner') selected @endif>Bannerlar</option>
+                                <option value="social_tanish" @if(old('about_me') == 'social_tanish') selected @endif>Tabishlar</option>
+                                <option value="social_boshqa" @if(old('about_me') == 'social_boshqa') selected @endif>Boshqa</option>
                             </select>
                             @error('address')
                                 <span class="text-danger">{{ $message }}</span>

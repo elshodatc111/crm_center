@@ -23,6 +23,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('student', [StudentController::class, 'index'])->name('all_student'); 
     Route::get('/check-phone-exist', [StudentController::class, 'checkPhoneExist'])->name('checkPhoneExist');
     Route::post('/student/create', [StudentController::class, 'store'])->name('student_store');
+    Route::get('/student/show/{id}', [StudentController::class, 'show'])->name('student_show');
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

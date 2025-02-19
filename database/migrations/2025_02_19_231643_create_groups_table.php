@@ -21,6 +21,8 @@ return new class extends Migration{
             $table->unsignedBigInteger('lessen_times_id');
             $table->unsignedBigInteger('user_id');
             $table->string('next');
+            $table->string('techer_paymart');
+            $table->string('techer_bonus');
             $table->timestamps();
             $table->foreign('cours_id')->references('id')->on('cours')->onDelete('cascade');
             $table->foreign('setting_rooms_id')->references('id')->on('setting_rooms')->onDelete('cascade');

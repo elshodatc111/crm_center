@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\cours\CoursController;
 use App\Http\Controllers\admin\cours\TestController;
 use App\Http\Controllers\admin\cours\VideoController;
 use App\Http\Controllers\student\StudentController;
+use App\Http\Controllers\student\GroupsController;
 
 Auth::routes();
 
@@ -27,6 +28,9 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/student/update/about', [StudentController::class, 'update_about'])->name('student_update_about');
     Route::post('/student/update/password', [StudentController::class, 'update_password'])->name('student_update_password');
     Route::post('/student/update/student', [StudentController::class, 'update'])->name('student_update');
+
+    
+    Route::get('groups', [GroupsController::class, 'index'])->name('all_groups'); 
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

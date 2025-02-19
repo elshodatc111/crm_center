@@ -20,6 +20,8 @@ class Group extends Model{
         'lessen_times_id', 
         'user_id',
         'next',
+        'techer_paymart',
+        'techer_bonus',
     ];
     public function course(){
         return $this->belongsTo(Cours::class, 'cours_id');

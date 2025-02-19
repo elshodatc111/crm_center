@@ -121,7 +121,7 @@
                                 <option value="Muborak" @if(old('address') == 'Muborak') selected @endif>Muborak tumani</option>
                                 <option value="Nishon" @if(old('address') == 'Nishon') selected @endif>Nishon tumani</option>
                                 <option value="Qamashi" @if(old('address') == 'Qamashi') selected @endif>Qamashi tumani</option>
-                                <option value="Yakkabog'" @if(old('address') == "Yakkabog'") selected @endif>Yakkabog' tumani</option>
+                                <option value="Yakkabog'" @if(old('address') == "Yakkabog") selected @endif>Yakkabog' tumani</option>
                                 <option value="Chiroqchi" @if(old('address') == 'Chiroqchi') selected @endif>Chiroqchi tumani</option>
                                 <option value="Shahrisabz" @if(old('address') == 'Shahrisabz') selected @endif>Shahrisabz tumani</option>
                             </select>

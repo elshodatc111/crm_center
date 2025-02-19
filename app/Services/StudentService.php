@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\UserHistory;
 use App\Models\MenegerChart;
 use App\Models\User;
+use App\Models\Social;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +22,9 @@ class StudentService{
         $data['balans'] = 0;
         $data['password'] = Hash::make('password');
         $User = User::create($data);
+        $Social = Social::where('name',$User->address)->first();
+        $Social->count = $Social->count + 1;
+        $Social->save();
         UserHistory::create([
             'user_id' => $User['id'], 
             'type' => 'visited', 
@@ -37,7 +41,7 @@ class StudentService{
                 'create_student' => 1
             ]);
         }
-        return $User;
+        return $User; 
     }
 
     public function getStudents($search = null){

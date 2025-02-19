@@ -24,6 +24,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('/check-phone-exist', [StudentController::class, 'checkPhoneExist'])->name('checkPhoneExist');
     Route::post('/student/create', [StudentController::class, 'store'])->name('student_store');
     Route::get('/student/show/{id}', [StudentController::class, 'show'])->name('student_show');
+    Route::post('/student/update/about', [StudentController::class, 'update_about'])->name('student_update_about');
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

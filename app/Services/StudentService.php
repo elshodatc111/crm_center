@@ -15,7 +15,7 @@ class StudentService{
     
     public function createStudent(array $data){
         $data['group_count'] = 0;
-        $data['email'] = time().'user@gmail.com';
+        $data['email'] = time().'@login.com';
         $data['type'] = 'student';
         $data['status'] = 'true';
         $data['balans'] = 0;
@@ -24,7 +24,7 @@ class StudentService{
         UserHistory::create([
             'user_id' => $User['id'], 
             'type' => 'visited', 
-            'type_commit' => 'new Student', 
+            'type_commit' => 'Markazga tashrif', 
             'admin_id' => auth()->user()->id,
         ]);
         $MenegerChart = MenegerChart::where('user_id',auth()->user()->id)->first();
@@ -72,6 +72,25 @@ class StudentService{
         }
         return $Setting->save();
     }
+
+    public function getShow(int $id){
+        return User::where('type', 'student')->findOrFail($id);
+    }
+
+    public function getShowHistory(int $id){
+        return UserHistory::where('user_id', $id)
+            ->orderby('user_histories.created_at','desc')
+            ->join('users','user_histories.admin_id','=','users.id')
+            ->select('users.id','users.user_name','user_histories.type','user_histories.type_commit','user_histories.created_at')
+            ->get();
+    }   
+
+    public function updateAbout(int $id, String $about){
+        $User = User::find($id);
+        $User->about = $about;
+        return $User->save();
+    }
+
 
 
 }

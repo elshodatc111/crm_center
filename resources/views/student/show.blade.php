@@ -34,28 +34,30 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#paymentModal">
-                            <i class="bi bi-credit-card"></i> To'lov qilish
+                            <i class="bi bi-credit-card"></i> TO'LOV QILISH
                         </button>
                         <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#discountPaymentModal">
-                            <i class="bi bi-percent"></i> Chegirmali to'lov
+                            <i class="bi bi-percent"></i> CHEGIRMALI TO'LOV
                         </button>
                         <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#refundModal">
                             <i class="bi bi-arrow-counterclockwise"></i> To'lovni qaytarish
                         </button>
-                        <button class="btn btn-info w-100 mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-                            <i class="bi bi-people"></i> Guruhga qo'shish
+                        <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+                            <i class="bi bi-people"></i> GURUHGA QO'SHISH
                         </button>
-                        <button class="btn btn-warning w-100 mb-2" data-bs-toggle="modal" data-bs-target="#discountModal">
-                            <i class="bi bi-tag"></i> Chegirma
+                        <button class="btn btn-warning w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#discountModal">
+                            <i class="bi bi-tag"></i> GURUHDAN O'CHIRISH
                         </button>
+                        @if(auth()->user()->type!='meneger')
                         <button class="btn btn-dark w-100 mb-2" data-bs-toggle="modal" data-bs-target="#adminDiscountModal">
-                            <i class="bi bi-shield-lock"></i> Admin chegirma
+                            <i class="bi bi-shield-lock"></i> ADMIN CHEGIRMA
                         </button>
+                        @endif
                         <button class="btn btn-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <i class="bi bi-pencil"></i> Tahrirlash
+                            <i class="bi bi-pencil"></i> TAXRIRLASH
                         </button>
                         <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
-                            <i class="bi bi-key"></i> Parolni yangilash
+                            <i class="bi bi-key"></i> PAROLNI YANGILASH
                         </button>
                     </div>
                 </div>
@@ -94,57 +96,62 @@
                             <div class="tab-pane fade show active" id="profile-overview">
                                 <div class="row">
                                     <div class="col-6 text-center">
-                                        <h5 class="card-title">Elshod Musurmonov</h5>
+                                        <h5 class="card-title">{{ $student['user_name'] }}</h5>
                                     </div>
                                     <div class="col-6 text-center">
-                                        <h5 class="card-title">Balans: 154 000 so'm</h5>
+                                        <h5 class="card-title">Balans: 
+                                        @if($student['balans']==0)
+                                            {{ number_format($student['balans'], 0, '.', ' ') }}
+                                        @elseif($student['balans']>0)   
+                                            <b class="text-success">{{ number_format($student['balans'], 0, '.', ' ') }}</b>
+                                        @else
+                                            <b class="text-danger">{{ number_format($student['balans'], 0, '.', ' ') }}</b>
+                                        @endif
+                                        so'm</h5>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Telefon raqam:</div>
-                                            <div class="col-lg-6 text-end">+998 90 123 45 67</div>
+                                            <div class="col-lg-6 text-end">{{ $student['phone1'] }}</div>
                                         </div>
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Qo'shimcha telefon:</div>
-                                            <div class="col-lg-6 text-end">+998 91 234 56 78</div>
+                                            <div class="col-lg-6 text-end">{{ $student['phone2'] }}</div>
                                         </div>
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Yashash manzili:</div>
-                                            <div class="col-lg-6 text-end">Toshkent, Yunusobod</div>
+                                            <div class="col-lg-6 text-end">{{ $student['address'] }}</div>
                                         </div>
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Tug'ilgan kuni:</div>
-                                            <div class="col-lg-6 text-end">2000-01-01</div>
+                                            <div class="col-lg-6 text-end">{{ $student['birthday'] }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Guruhlar soni:</div>
-                                            <div class="col-lg-6 text-end">+998 90 123 45 67</div>
+                                            <div class="col-lg-6 text-end">{{ $student['group_count'] }}</div>
                                         </div>
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Login:</div>
-                                            <div class="col-lg-6 text-end">+998 91 234 56 78</div>
+                                            <div class="col-lg-6 text-end">{{ $student['email'] }}</div>
                                         </div>
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Ro'yhatga olindi:</div>
-                                            <div class="col-lg-6 text-end">Toshkent, Yunusobod</div>
+                                            <div class="col-lg-6 text-end">{{ $student['created_at'] }}</div>
                                         </div>
                                         <div class="row px-2">
-                                            <div class="col-lg-6 label">Meneger:</div>
-                                            <div class="col-lg-6 text-end">2000-01-01</div>
+                                            <div class="col-lg-6 label">Oxirgi yangilanish:</div>
+                                            <div class="col-lg-6 text-end">{{ $student['updated_at'] }}</div>
                                         </div>
                                     </div>
                                 </div>
-                                <form action="#" class="row mt-3">
-                                    <div class="col-lg-9">
-                                        <input type="text" class="form-control" placeholder="Talaba haqida eslatma" required>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <button class="btn btn-primary w-100">Saqlash</button>
-                                    </div>
+                                <form id="studentAboutForm" action="{{ route('student_update_about') }}" method="post" class="mt-3">
+                                    @csrf 
+                                    <input type="hidden" name="id" value="{{ $student['id'] }}">
+                                    <textarea type="text" class="form-control" id="aboutInput" name="about" placeholder="Talaba haqida eslatma">{{ $student['about'] }}</textarea>
                                 </form>
                             </div>
 
@@ -191,7 +198,6 @@
                                 </table>
                             </div>
 
-                            <!-- Talaba tarixi -->
                             <div class="tab-pane fade" id="profile-history">
                                 <h5 class="card-title">Talaba tarixi</h5>
                                 <table class="table table-bordered text-center" style="font-size:12px;">
@@ -201,16 +207,26 @@
                                             <th>Hodisa vaqti</th>
                                             <th>Hodisa</th>
                                             <th>Hodisa haqida</th>
+                                            <th>Meneger</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse($history as $item)
                                         <tr>
-                                            <td colspan="4">Ma'lumot mavjud emas</td>
+                                            <td>{{ $loop->index+1 }}</td>
+                                            <td>{{ $item['created_at'] }}</td>
+                                            <td>{{ $item['type'] }}</td>
+                                            <td>{{ $item['type_commit'] }}</td>
+                                            <td>{{ $item['user_name'] }}</td>
                                         </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="4">Ma'lumot mavjud emas.</td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -227,12 +243,27 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <label>To'lov summasi:</label>
-                        <input type="number" class="form-control" required>
+                        <label for="paymentAmount" class="form-label mt-2">To'lov summa</label>
+                        <input type="text" class="form-control" id="paymentAmount" required>
+
+                        <label for="groupSelect" class="form-label">Guruhni tanlang</label>
+                        <select class="form-select" name="about_me" id="groupSelect" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            <option value="social_telegram">Guruh nomi</option>
+                        </select>
+
+                        <label for="paymentInfo" class="form-label mt-2">To'lov haqida</label>
+                        <textarea type="text" class="form-control" id="paymentInfo" required></textarea>
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">To'lov qilish</button>
+                            </div>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary">To'lov qilish</button>
                 </div>
             </div>
         </div>
@@ -247,23 +278,36 @@
                 </div>
                 <div class="modal-body">
                     <form id="discountPaymentForm">
-                        <div class="mb-3">
-                            <label for="paymentAmount" class="form-label">To'lov summasi</label>
-                            <input type="number" class="form-control" id="paymentAmount" required>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <b>Chegirma nomi</b>
+                            </div>
+                            <div class="col-6">
+                                <label for="editName" class="form-label mt-2">Chegirmali to'lov summasi</label>
+                                <input type="text" class="form-control" value="250000" disabled required>
+                            </div>
+                            <div class="col-6">
+                                <label for="editName" class="form-label mt-2">To'lov chegirmasi</label>
+                                <input type="text" class="form-control" value="50000" disabled required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="discountAmount" class="form-label">Chegirma miqdori (%)</label>
-                            <input type="number" class="form-control" id="discountAmount" min="0" max="100" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="finalAmount" class="form-label">Chegirmadan keyin to'lov</label>
-                            <input type="text" class="form-control" id="finalAmount" readonly>
+                        <label for="editName" class="form-label">To'lov turi</label>
+                        <select class="form-select mt-2" name="about_me" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            <option value="social_telegram">Naqt</option>
+                            <option value="social_telegram">Plastik</option>
+                        </select>
+                        <label for="editName" class="form-label mt-2">To'lov haqida</label>
+                        <textarea type="text" class="form-control" required></textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">To'lov qilish</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="submit" class="btn btn-primary" id="applyDiscount">Tasdiqlash</button>
                 </div>
             </div>
         </div>
@@ -278,19 +322,19 @@
                 </div>
                 <div class="modal-body">
                     <form id="refundForm">
-                        <div class="mb-3">
-                            <label for="refundAmount" class="form-label">Qaytarish summasi</label>
-                            <input type="number" class="form-control" id="refundAmount" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="refundReason" class="form-label">Qaytarish sababi</label>
-                            <textarea class="form-control" id="refundReason" rows="3" required></textarea>
+                        <label for="editName" class="form-label mt-2">Qaytariladigan summa</label>
+                        <input type="text" class="form-control"  id="paymentAmount1" required>
+                        <label for="editName" class="form-label mt-2">Qaytariladigan summa haqida</label>
+                        <textarea type="text" class="form-control" required></textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Qaytarish</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="submit" class="btn btn-danger" id="processRefund">Qaytarish</button>
                 </div>
             </div>
         </div>
@@ -305,24 +349,22 @@
                 </div>
                 <div class="modal-body">
                     <form id="addGroupForm">
-                        <div class="mb-3">
-                            <label for="groupSelect" class="form-label">Guruhni tanlang</label>
-                            <select class="form-select" id="groupSelect" required>
-                                <option value="">Guruhni tanlang...</option>
-                                <option value="group1">1-guruh</option>
-                                <option value="group2">2-guruh</option>
-                                <option value="group3">3-guruh</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="userName" class="form-label">Foydalanuvchi nomi</label>
-                            <input type="text" class="form-control" id="userName" required>
+                        <label for="editName" class="form-label">Guruhni tanlang</label>
+                        <select class="form-select" name="about_me" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            <option value="social_telegram">Guruh nomi</option>
+                        </select>
+                        <label for="editName" class="form-label mt-2">Guruhdan qo'shish haqida</label>
+                        <textarea type="text" class="form-control" required></textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="submit" class="btn btn-primary" id="addToGroup">Qo'shish</button>
                 </div>
             </div>
         </div>
@@ -332,24 +374,29 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="discountModalLabel">Chegirma qo'shish</h5>
+                    <h5 class="modal-title" id="discountModalLabel">Talabani guruhdan o'chirish</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="discountForm">
-                        <div class="mb-3">
-                            <label for="discountAmount" class="form-label">Chegirma foizi (%)</label>
-                            <input type="number" class="form-control" id="discountAmount" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="discountReason" class="form-label">Chegirma sababi</label>
-                            <textarea class="form-control" id="discountReason" rows="3" required></textarea>
+                        <label for="editName" class="form-label">Guruhni tanlang</label>
+                        <select class="form-select" name="about_me" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            <option value="social_telegram">Guruh nomi</option>
+                        </select>
+                        <label for="editName" class="form-label mt-2">Jarima summasi</label>
+                        <input type="text" class="form-control"  id="paymentAmount2" required>
+                        <label for="editName" class="form-label mt-2">Guruhdan o'chirish haqida</label>
+                        <textarea type="text" class="form-control" required></textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="submit" class="btn btn-primary" id="applyDiscount">Qo'llash</button>
                 </div>
             </div>
         </div>
@@ -364,23 +411,24 @@
                 </div>
                 <div class="modal-body">
                     <form id="adminDiscountForm">
-                        <div class="mb-3">
-                            <label for="adminDiscountAmount" class="form-label">Chegirma foizi (%)</label>
-                            <input type="number" class="form-control" id="adminDiscountAmount" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="adminDiscountReason" class="form-label">Chegirma sababi</label>
-                            <textarea class="form-control" id="adminDiscountReason" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="adminPassword" class="form-label">Admin paroli</label>
-                            <input type="password" class="form-control" id="adminPassword" required>
+                        <label for="editName" class="form-label">Guruhni tanlang</label>
+                        <select class="form-select" name="about_me" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            <option value="social_telegram">Guruh nomi</option>
+                        </select>
+                        <label for="paymentAmount2" class="form-label mt-2">Chegirma summasi</label>
+                        <input type="text" class="form-control"  id="paymentAmount3" required>
+                        <label for="editName" class="form-label mt-2">Chegirma haqida</label>
+                        <textarea type="text" class="form-control" required></textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="submit" class="btn btn-danger" id="applyAdminDiscount">Qo'llash</button>
                 </div>
             </div>
         </div>
@@ -394,19 +442,25 @@
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
-                        <div class="mb-3">
-                            <label for="editName" class="form-label">Ism</label>
-                            <input type="text" class="form-control" id="editName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="editEmail" required>
+                        <label for="editName" class="form-label">FIO</label>
+                        <input type="text" class="form-control" required>
+                        <label for="editName" class="form-label mt-2">Telefon raqam</label>
+                        <input type="text" class="form-control" required>
+                        <label for="editName" class="form-label mt-2">Qo'shimcha telefon raqam</label>
+                        <input type="text" class="form-control" required>
+                        <label for="editEmail" class="form-label mt-2">Tug'ilgan kun</label>
+                        <input type="date" class="form-control"  required>
+                        <label for="editName" class="form-label mt-2">Manzil</label>
+                        <input type="text" class="form-control" required>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="submit" class="btn btn-primary" id="saveEdit">Saqlash</button>
                 </div>
             </div>
         </div>
@@ -415,28 +469,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updatePasswordModalLabel">Parolni yangilash</h5>
+                    <h5 class="modal-title" id="updatePasswordModalLabel">Talabaning parolini yangilamoqchimisiz?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="updatePasswordForm">
-                        <div class="mb-3">
-                            <label for="currentPassword" class="form-label">Joriy parol</label>
-                            <input type="password" class="form-control" id="currentPassword" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="newPassword" class="form-label">Yangi parol</label>
-                            <input type="password" class="form-control" id="newPassword" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Yangi parolni tasdiqlash</label>
-                            <input type="password" class="form-control" id="confirmPassword" required>
+                        <p>Talabaning yangi paroli : <b>password</b></p>
+                        <div class="row">
+                            <div class="col-6"><button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button></div>
+                            <div class="col-6"><button type="submit" class="btn btn-primary w-100" id="updatePassword">Yangilash</button></div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <button type="submit" class="btn btn-primary" id="updatePassword">Yangilash</button>
                 </div>
             </div>
         </div>
@@ -450,5 +493,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
     <script>
         $(".phone").inputmask("+998 99 999 9999");
+        $(document).ready(function() {
+            $('#aboutInput').on('input', function() {
+                let formData = $('#studentAboutForm').serialize(); // Form ma'lumotlarini olish
+
+                $.ajax({
+                    url: $('#studentAboutForm').attr('action'), // Form action URL
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        console.log("Ma'lumot saqlandi:", response);
+                    },
+                    error: function(xhr) {
+                        console.error("Xatolik:", xhr.responseText);
+                    }
+                });
+            });
+        });
+        document.getElementById('paymentAmount').addEventListener('input', function(event) {
+            let input = event.target.value.replace(/\D/g, ''); // Faqat raqamlarni olish
+            let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " "); // 3 xonadan bo‘lib chiqarish
+            event.target.value = formatted;
+        });
+        document.getElementById('paymentAmount1').addEventListener('input', function(event) {
+            let input = event.target.value.replace(/\D/g, ''); // Faqat raqamlarni olish
+            let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " "); // 3 xonadan bo‘lib chiqarish
+            event.target.value = formatted;
+        });
+        document.getElementById('paymentAmount2').addEventListener('input', function(event) {
+            let input = event.target.value.replace(/\D/g, ''); // Faqat raqamlarni olish
+            let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " "); // 3 xonadan bo‘lib chiqarish
+            event.target.value = formatted;
+        });
+        document.getElementById('paymentAmount3').addEventListener('input', function(event) {
+            let input = event.target.value.replace(/\D/g, ''); // Faqat raqamlarni olish
+            let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " "); // 3 xonadan bo‘lib chiqarish
+            event.target.value = formatted;
+        });
     </script>
 @endsection

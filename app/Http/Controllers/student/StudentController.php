@@ -9,6 +9,7 @@ use App\Http\Requests\StoreVisitRequest;
 use App\Services\StudentService;
 use App\Jobs\SendMessageWork;
 use App\Http\Requests\ShowStudentRequest;
+use App\Http\Requests\UserAboutUpdateRequest;
 
 class StudentController extends Controller{
 
@@ -38,9 +39,14 @@ class StudentController extends Controller{
     }
 
     public function show(ShowStudentRequest $request, $id){
-        $student = User::where('type', 'student')->findOrFail($id);
-        //dd($student);
-        return view('student.show', compact('student'));
+        $student = $this->studentService->getShow($id);
+        $history = $this->studentService->getShowHistory($id);
+        return view('student.show', compact('student','history'));
+    }
+
+    public function update_about(UserAboutUpdateRequest $request){
+        $this->studentService->updateAbout($request->id, $request->about);
+        return redirect()->back()->with('success', 'Saqlandi.');
     }
 
 

@@ -283,16 +283,16 @@
                                 <b>Chegirma nomi</b>
                             </div>
                             <div class="col-6">
-                                <label for="editName" class="form-label mt-2">Chegirmali to'lov summasi</label>
-                                <input type="text" class="form-control" value="250000" disabled required>
+                                <label for="editName" class="form-label">Chegirmali to'lov summasi</label>
+                                <p class="form-control m-0">250 000<p>
                             </div>
                             <div class="col-6">
-                                <label for="editName" class="form-label mt-2">To'lov chegirmasi</label>
-                                <input type="text" class="form-control" value="50000" disabled required>
+                                <label for="editName" class="form-label">To'lov chegirmasi</label>
+                                <p class="form-control m-0">50 000<p>
                             </div>
                         </div>
                         <label for="editName" class="form-label">To'lov turi</label>
-                        <select class="form-select mt-2" name="about_me" required>
+                        <select class="form-select" name="about_me" required>
                             <option value="" disabled selected>Tanlang...</option>
                             <option value="social_telegram">Naqt</option>
                             <option value="social_telegram">Plastik</option>

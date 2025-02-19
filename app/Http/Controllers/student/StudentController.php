@@ -10,6 +10,7 @@ use App\Services\StudentService;
 use App\Jobs\SendMessageWork;
 use App\Http\Requests\ShowStudentRequest;
 use App\Http\Requests\UserAboutUpdateRequest;
+use App\Http\Requests\UpdateStudentRequest;
 
 class StudentController extends Controller{
 
@@ -47,6 +48,17 @@ class StudentController extends Controller{
     public function update_about(UserAboutUpdateRequest $request){
         $this->studentService->updateAbout($request->id, $request->about);
         return redirect()->back()->with('success', 'Saqlandi.');
+    }
+
+    public function update_password(Request $request){
+        $this->studentService->updatePassword($request->user_id);
+        dispatch(new SendMessageWork($request->user_id, 'update_pass_sms',auth()->user()->id));
+        return redirect()->back()->with('success', 'Parol yangilandi.');
+    }
+
+    public function update(UpdateStudentRequest $request){
+        $this->studentService->updateStudent($request->validated());
+        return redirect()->back()->with('success', 'Talaba ma’lumotlari yangilandi.');
     }
 
 

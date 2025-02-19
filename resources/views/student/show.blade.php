@@ -433,6 +433,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -441,17 +442,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editForm">
-                        <label for="editName" class="form-label">FIO</label>
-                        <input type="text" class="form-control" required>
-                        <label for="editName" class="form-label mt-2">Telefon raqam</label>
-                        <input type="text" class="form-control" required>
-                        <label for="editName" class="form-label mt-2">Qo'shimcha telefon raqam</label>
-                        <input type="text" class="form-control" required>
-                        <label for="editEmail" class="form-label mt-2">Tug'ilgan kun</label>
-                        <input type="date" class="form-control"  required>
-                        <label for="editName" class="form-label mt-2">Manzil</label>
-                        <input type="text" class="form-control" required>
+                    <form id="editForm" method="POST" action="{{ route('student_update') }}">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <label for="user_name" class="form-label">FIO</label>
+                        <input type="text" id="user_name" name="user_name" class="form-control" value="{{ $student['user_name'] }}" required>
+                        <label for="phone1" class="form-label mt-2">Telefon raqam</label>
+                        <input type="text" id="phone1" name="phone1" class="form-control phone" value="{{ $student['phone1'] }}" required>
+                        <label for="phone2" class="form-label mt-2">Qo‘shimcha telefon raqam</label>
+                        <input type="text" id="phone2" name="phone2" class="form-control phone" value="{{ $student['phone2'] ?? '' }}">
+                        <label for="birthday" class="form-label mt-2">Tug‘ilgan kun</label>
+                        <input type="date" id="birthday" name="birthday" class="form-control" value="{{ $student['birthday'] }}" required>
+                        <label for="address" class="form-label mt-2">Manzil</label>
+                        <input type="text" id="address" name="address" class="form-control" value="{{ $student['address'] }}" required>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -465,6 +468,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="updatePasswordModal" tabindex="-1" aria-labelledby="updatePasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -473,7 +477,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="updatePasswordForm">
+                    <form id="updatePasswordForm" action="{{ route('student_update_password') }}" method="POST">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
                         <p>Talabaning yangi paroli : <b>password</b></p>
                         <div class="row">
                             <div class="col-6"><button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button></div>
@@ -484,10 +490,6 @@
             </div>
         </div>
     </div>
-
-
-
-    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>

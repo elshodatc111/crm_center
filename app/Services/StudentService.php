@@ -91,6 +91,36 @@ class StudentService{
         return $User->save();
     }
 
+    public function updatePassword(int $id){
+        $User = User::find($id);
+        $User->password = Hash::make('password');
+        UserHistory::create([
+            'user_id' => $User['id'], 
+            'type' => 'password_update', 
+            'type_commit' => 'Parol yangilandi', 
+            'admin_id' => auth()->user()->id,
+        ]);
+        return $User->save();
+    }
+
+    public function updateStudent($data){
+        $student = User::findOrFail($data['user_id']);
+        $student->update([
+            'user_name' => $data['user_name'],
+            'phone1' => $data['phone1'],
+            'phone2' => $data['phone2'] ?? null,
+            'birthday' => $data['birthday'],
+            'address' => $data['address'],
+        ]);
+        UserHistory::create([
+            'user_id' => $student['id'], 
+            'type' => 'password_update', 
+            'type_commit' => 'Profile ma\'lumotlari yangilandi', 
+            'admin_id' => auth()->user()->id,
+        ]);
+        return $student;
+    }
+
 
 
 }

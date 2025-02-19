@@ -25,6 +25,8 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/student/create', [StudentController::class, 'store'])->name('student_store');
     Route::get('/student/show/{id}', [StudentController::class, 'show'])->name('student_show');
     Route::post('/student/update/about', [StudentController::class, 'update_about'])->name('student_update_about');
+    Route::post('/student/update/password', [StudentController::class, 'update_password'])->name('student_update_password');
+    Route::post('/student/update/student', [StudentController::class, 'update'])->name('student_update');
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

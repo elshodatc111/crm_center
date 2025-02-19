@@ -22,9 +22,6 @@ class StudentService{
         $data['balans'] = 0;
         $data['password'] = Hash::make('password');
         $User = User::create($data);
-        $Social = Social::where('name',$User->address)->first();
-        $Social->count = $Social->count + 1;
-        $Social->save();
         UserHistory::create([
             'user_id' => $User['id'], 
             'type' => 'visited', 
@@ -125,6 +122,15 @@ class StudentService{
         return $student;
     }
 
+    public function getAddres(){
+        return Social::get();
+    }
+
+    public function countAddres(string $addres){
+        $Social = Social::where('name',$addres)->first();
+        $Social->count = $Social->count + 1;
+        return $Social->save();
+    }
 
 
 }

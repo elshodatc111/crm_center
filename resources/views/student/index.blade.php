@@ -110,20 +110,9 @@
                             <label for="address" class="form-label">Yashash manzili</label>
                             <select class="form-select" name="address" required>
                                 <option value="" disabled selected>Tanlang...</option>
-                                <option value="Qarshi_sh" @if(old('address') == 'Qarshi_sh') selected @endif>Qarshi shahar</option>
-                                <option value="Shahrisabz_sh" @if(old('address') == 'Shahrisabz_sh') selected @endif>Shahrisabz shahar</option>
-                                <option value="Dehqonobod" @if(old('address') == 'Dehqonobod') selected @endif>Dehqonobod tumani</option>
-                                <option value="G'uzor" @if(old('address') == "G'uzor") selected @endif>G'uzor tumani</option>
-                                <option value="Kasbi" @if(old('address') == 'Kasbi') selected @endif>Kasbi tumani</option>
-                                <option value="Kitob" @if(old('address') == 'Kitob') selected @endif>Kitob tumani</option>
-                                <option value="Koson" @if(old('address') == 'Koson') selected @endif>Koson tumani</option>
-                                <option value="Mirishkor" @if(old('address') == 'Mirishkor') selected @endif>Mirishkor tumani</option>
-                                <option value="Muborak" @if(old('address') == 'Muborak') selected @endif>Muborak tumani</option>
-                                <option value="Nishon" @if(old('address') == 'Nishon') selected @endif>Nishon tumani</option>
-                                <option value="Qamashi" @if(old('address') == 'Qamashi') selected @endif>Qamashi tumani</option>
-                                <option value="Yakkabog'" @if(old('address') == "Yakkabog") selected @endif>Yakkabog' tumani</option>
-                                <option value="Chiroqchi" @if(old('address') == 'Chiroqchi') selected @endif>Chiroqchi tumani</option>
-                                <option value="Shahrisabz" @if(old('address') == 'Shahrisabz') selected @endif>Shahrisabz tumani</option>
+                                @foreach($addres as $item)
+                                    <option value="{{ $item['name'] }}"> {{ $item['name'] }}</option>
+                                @endforeach
                             </select>
                             @error('address')
                                 <span class="text-danger">{{ $message }}</span>

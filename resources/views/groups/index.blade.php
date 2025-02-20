@@ -60,14 +60,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" id="visitForm">
+                    <form action="{{ route('create_groups') }}" method="POST" id="visitForm">
                         @csrf
-                        <label for="" class="mb-1">Yangi guruh nomi</label>
-                        <input type="text" name="sss" required class="form-control">
+                        @csrf
+                        <label for="group_name" class="mb-1">Yangi guruh nomi</label>
+                        <input type="text" name="group_name" required class="form-control">
                         <div class="row pt-2">
                             <div class="col-6">
-                                <label for="" class="mb-1">Guruh uchun kurs</label>
-                                <select name="" id="" class="form-select">
+                                <label for="cours_id" class="mb-1">Guruh uchun kurs</label>
+                                <select name="cours_id" class="form-select">
                                     <option value="" disabled selected>Tanlang...</option>
                                     @foreach($resours['cours'] as $item)
                                         <option value="{{ $item['id'] }}">{{ $item['cours_name'] }}</option>
@@ -75,14 +76,14 @@
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label for="" class="mb-1">Darslar soni</label>
-                                <input type="number" name="sss" value="12" min=9 max=31 required class="form-control">
+                                <label for="lessen_count" class="mb-1">Darslar soni</label>
+                                <input type="number" name="lessen_count" value="12" min=9 max=31 required class="form-control">
                             </div>
                         </div>
                         <div class="row pt-2">
                             <div class="col-6">
-                                <label for="" class="mb-1">Dars Xonasi</label>
-                                <select name="" id="" class="form-select">
+                                <label for="setting_rooms_id" class="mb-1">Dars Xonasi</label>
+                                <select name="setting_rooms_id" class="form-select">
                                     <option value="" disabled selected>Tanlang...</option>
                                     @foreach($resours['rooms'] as $item)
                                         <option value="{{ $item['id'] }}">{{ $item['room_name'] }}</option>
@@ -90,24 +91,24 @@
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label for="" class="mb-1">Boshlanish vaqti</label>
-                                <input type="date" id="dateInput" name="sss" required class="form-control" value="{{ date('Y-m-d') }}">
+                                <label for="lessen_start" class="mb-1">Boshlanish vaqti</label>
+                                <input type="date" id="dateInput" name="lessen_start" required class="form-control" value="{{ date('Y-m-d') }}">
                                 <div id="dateError" class="text-danger mt-2" style="display: none;">Boshlanish vaqti noto'g'ri</div>
                             </div>
                         </div>
                         <div class="row pt-2">
                             <div class="col-6">
-                                <label for="" class="mb-1">Guruh turi</label>
-                                <select name="" id="" class="form-select">
+                                <label for="weekday" class="mb-1">Guruh turi</label>
+                                <select name="weekday" id="" class="form-select">
                                     <option value="" disabled selected>Tanlang...</option>
-                                    <option value="">Haftaning toq kunlari</option>
-                                    <option value="">Haftaning juft kunlari</option>
-                                    <option value="">Har kuni</option>
+                                    <option value="tok_kun">Haftaning toq kunlari</option>
+                                    <option value="juft_kun">Haftaning juft kunlari</option>
+                                    <option value="har_kun">Har kuni</option>
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label for="" class="mb-1">Dars vaqti</label>
-                                <select name="" id="" class="form-select">
+                                <label for="lessen_times_id" class="mb-1">Dars vaqti</label>
+                                <select name="lessen_times_id" class="form-select">
                                     <option value="" disabled selected>Tanlang...</option>
                                     @foreach($resours['time'] as $item)
                                         <option value="{{ $item['id'] }}">{{ $item['time'] }}</option>
@@ -115,15 +116,15 @@
                                 </select>
                             </div>
                         </div>
-                        <label for="" class="pt-2 mb-1">To'lov summasi</label>
-                        <select name="" id="" class="form-select">
+                        <label for="setting_paymarts" class="pt-2 mb-1">To'lov summasi</label>
+                        <select name="setting_paymarts" class="form-select">
                             <option value="" disabled selected>Tanlang...</option>
                             @foreach($resours['paymarts'] as $item)
-                                <option value="{{ $item['id'] }}">To'lov: {{ number_format($item['amount'], 0, '.', ' ') }} Chegirma: {{ number_format($item['chegirma'], 0, '.', ' ') }}</option>
+                                <option value="{{ $item['id'] }}">To'lov: {{ number_format($item['amount'], 0, '.', ' ') }} so'm Chegirma: {{ number_format($item['chegirma'], 0, '.', ' ') }} so'm</option>
                             @endforeach
                         </select>
-                        <label for="" class="pt-2 mb-1">Guruh o'qituvchisi</label>
-                        <select name="" id="" class="form-select">
+                        <label for="techer_id" class="pt-2 mb-1">Guruh o'qituvchisi</label>
+                        <select name="techer_id" class="form-select">
                             <option value="" disabled selected>Tanlang...</option>
                             @foreach($resours['techers'] as $item)
                                 <option value="{{ $item['id'] }}">{{ $item['user_name'] }}</option>
@@ -131,12 +132,12 @@
                         </select>
                         <div class="row pt-2">
                             <div class="col-6">
-                                <label for="" class="mb-1">O'qituvchiga bonus</label>
-                                <input type="text" name="sss" value="0" id="paymentAmount" required class="form-control">
+                                <label for="techer_bonus" class="mb-1">O'qituvchiga bonus</label>
+                                <input type="text" name="techer_bonus" value="0" id="paymentAmount" required class="form-control">
                             </div>
                             <div class="col-6">
-                                <label for="" class="mb-1">O'qituvchiga to'lov</label>
-                                <input type="text" name="sss" value="0" id="paymentAmount1" required class="form-control">
+                                <label for="techer_paymart" class="mb-1">O'qituvchiga to'lov</label>
+                                <input type="text" name="techer_paymart" value="0" id="paymentAmount1" required class="form-control">
                             </div>
                         </div>
                         <hr>

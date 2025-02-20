@@ -10,6 +10,7 @@ use App\Models\SettingRoom;
 use App\Models\SettingPaymart;
 use App\Models\LessenTime;
 use App\Services\GroupService;
+use App\Http\Requests\StoreGroupRequest;
 
 
 class GroupsController extends Controller{
@@ -23,4 +24,10 @@ class GroupsController extends Controller{
         $resours = $this->groupService->getGroupResours();
         return view('groups.index',compact('resours'));
     }
+
+    public function store(StoreGroupRequest $request){
+        $this->groupService->createGroup($request->validated());
+        return redirect()->back()->with('success', 'Yangi guruh muvaffaqiyatli qo‘shildi!');
+    }
+
 }

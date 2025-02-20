@@ -111,10 +111,13 @@
                             <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#sendmessage">Talabalarga SMS</button>
                         </div>
                         <div class="col-lg-3 mt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage">Qarzdorlaega SMS</button>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage">Qarzdorlarga SMS</button>
                         </div>
                         <div class="col-lg-3 mt-2">
                             <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#updateGroups">Guruhni taxrirlash</button>
+                        </div>
+                        <div class="col-lg-3 mt-2">
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#deleteGroups">Guruhdan o'chirish</button>
                         </div>
                         @endif
                         <div class="col-lg-3 mt-2">
@@ -292,6 +295,24 @@
                         <label for="">SMS matni</label>
                         <textarea name="" required class="form-control mb-3 mt-2"></textarea>
                         <button type="submit" class="btn btn-primary w-100" id="submit-btn">SMS yuborish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteGroups" tabindex="-1" aria-labelledby="addVisitModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addVisitModalLabel">Guruhdan o'chirish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="@" method="POST" id="visitForm">
+                        @csrf
+                        <label for="">SMS matni</label>
+                        <textarea name="" required class="form-control mb-3 mt-2"></textarea>
+                        <button type="submit" class="btn btn-primary w-100" id="submit-btn">Guruhdan o'chirish</button>
                     </form>
                 </div>
             </div>

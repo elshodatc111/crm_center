@@ -22,6 +22,7 @@ class GroupsController extends Controller{
 
     public function index(){
         $resours = $this->groupService->getGroupResours();
+        
         return view('groups.index',compact('resours'));
     }
 

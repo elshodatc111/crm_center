@@ -33,9 +33,9 @@
                 </div>
             </div>
             <div id="userTable">
-                <table class="table table-bordered" style="font-size:14px;">
+                <table class="table table-bordered text-center" style="font-size:14px;">
                     <thead>
-                        <tr class="text-center">
+                        <tr>
                             <th>#</th>
                             <th>Guruh nomi</th>
                             <th>Boshlanish vaqati</th>
@@ -45,6 +45,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($resours['groups'] as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td><a href="#">{{ $item['group_name'] }}</a></td>
+                            <td>{{ $item['lessen_start'] }}</td>
+                            <td>{{ $item['lessen_end'] }}</td>
+                            <td>0</td>
+                            <td>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td cplspan=6 class="text-center">Guruhlar mavjud emas.</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 
@@ -61,7 +76,6 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('create_groups') }}" method="POST" id="visitForm">
-                        @csrf
                         @csrf
                         <label for="group_name" class="mb-1">Yangi guruh nomi</label>
                         <input type="text" name="group_name" required class="form-control">
@@ -152,41 +166,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
     <script>
         $(".phone").inputmask("+998 99 999 9999");
-        $('#phone1').on('blur', function() {
-            var phone1 = $(this).val();
-            $.ajax({
-                url: '{{ route('checkPhoneExist') }}',
-                type: 'GET',
-                data: { phone1: phone1 },
-                success: function(response) {
-                    if (response.exists) {
-                        $('#phone1-error').show();
-                        $('#phone1').addClass('is-invalid');
-                    } else {
-                        $('#phone1-error').hide();
-                        $('#phone1').removeClass('is-invalid');
-                    }
-                }
-            });
-        });
-
-        $('#birthday').on('change', function() {
-            var birthday = $(this).val();
-            var birthDate = new Date(birthday);
-            var currentDate = new Date();
-            var age = currentDate.getFullYear() - birthDate.getFullYear();
-            var m = currentDate.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && currentDate.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            if (age < 10) {
-                $('#birthday-error').show();
-                $('#submit-btn').prop('disabled', true);
-            } else {
-                $('#birthday-error').hide();
-                $('#submit-btn').prop('disabled', false);
-            }
-        });
         document.getElementById('paymentAmount').addEventListener('input', function(event) {
             let input = event.target.value.replace(/\D/g, ''); 
             let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");

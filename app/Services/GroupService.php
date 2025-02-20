@@ -16,6 +16,7 @@ class GroupService{
     
     public function getGroupResours(){
         return [
+            'groups' => Group::get(),
             'cours' => Cours::where('status', 'true')->select('id', 'cours_name')->get(),
             'rooms' => SettingRoom::where('status', 'true')->select('id', 'room_name')->get(),
             'paymarts' => SettingPaymart::where('status', 'true')->select('id', 'amount', 'chegirma', 'admin_chegirma')->get(),

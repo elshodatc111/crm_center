@@ -10,6 +10,7 @@ use App\Models\LessenTime;
 use App\Models\GroupDays;
 use App\Models\Group;
 use App\Models\Holiday;
+use App\Models\MenegerChart;
 use Carbon\Carbon;
 
 class GroupService{
@@ -27,9 +28,9 @@ class GroupService{
 
     protected function generateLessonDays($start, $lessen_count, $weekday){
         $daysOfWeek = [
-            'tok_kun' => [1, 3, 5], // Dushanba, Chorshanba, Juma
-            'juft_kun' => [2, 4, 6], // Seshanba, Payshanba, Shanba
-            'har_kun' => [1, 2, 3, 4, 5, 6], // Yakshanbadan tashqari har kuni
+            'tok_kun' => [1, 3, 5], 
+            'juft_kun' => [2, 4, 6], 
+            'har_kun' => [1, 2, 3, 4, 5, 6], 
         ];
     
         $holidayDates = array_map(function ($holiday) {
@@ -54,7 +55,12 @@ class GroupService{
     
         return $schedule;
     }
-
+    protected function createMenegerCart(){
+        return MenegerChart::firstOrCreate(
+            ['user_id' => auth()->user()->id],
+            ['create_group' => 0]
+        )->increment('create_group');
+    }
     protected function addGroupDays(int $group_id, int $room_id, array $days, int $time_id) {
         foreach ($days as $value) {
             $exists = GroupDays::where([
@@ -74,11 +80,8 @@ class GroupService{
         }
     }
 
-    public function createGroup(array $data){
-        $days = $this->generateLessonDays($data['lessen_start'], $data['lessen_count'], $data['weekday']);
-        $start = Carbon::parse($days[0]['date'])->format('Y-m-d');
-        $end = Carbon::parse($days[count($days) - 1]['date'])->format('Y-m-d');
-        $group = Group::create([
+    private function storeGroup(array $data, string $start, string $end) {
+        return Group::create([
             'cours_id' => $data['cours_id'], 
             'setting_rooms_id' => $data['setting_rooms_id'], 
             'techer_id' => $data['techer_id'], 
@@ -88,16 +91,25 @@ class GroupService{
             'weekday' => $data['weekday'], 
             'lessen_count' => $data['lessen_count'], 
             'lessen_start' => $start, 
-            'lessen_end' => $end.' 23:59:59', 
+            'lessen_end' => $end, 
             'lessen_times_id' => $data['lessen_times_id'], 
             'user_id' => auth()->user()->id, 
             'next' => 'new', 
             'techer_paymart' => $data['techer_paymart'], 
             'techer_bonus' => $data['techer_bonus'], 
         ]);
-        $this->addGroupDays($group->id,$data['setting_rooms_id'],$days,$data['lessen_times_id']);
+    }
+    
+    public function createGroup(array $data){
+        $days = $this->generateLessonDays($data['lessen_start'], $data['lessen_count'], $data['weekday']);
+        $start = Carbon::parse($days[0]['date'])->format('Y-m-d');
+        $end = Carbon::parse($days[count($days) - 1]['date'])->format('Y-m-d') . ' 23:59:59';
+        $group = $this->storeGroup($data, $start, $end);
+        $this->addGroupDays($group->id, $data['setting_rooms_id'], $days, $data['lessen_times_id']);
+        $this->createMenegerCart();
         return $group;
     }
+    
 
 
 }

@@ -16,8 +16,8 @@ return new class extends Migration{
             $table->unsignedBigInteger('setting_paymarts');
             $table->string('weekday');
             $table->integer('lessen_count');
-            $table->dateTime('lessen_start')->change();
-            $table->dateTime('lessen_end')->change();
+            $table->dateTime('lessen_start');
+            $table->dateTime('lessen_end');
             $table->unsignedBigInteger('lessen_times_id');
             $table->unsignedBigInteger('user_id');
             $table->string('next');

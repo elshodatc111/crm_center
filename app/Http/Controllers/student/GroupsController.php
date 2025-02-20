@@ -27,8 +27,13 @@ class GroupsController extends Controller{
     }
 
     public function store(StoreGroupRequest $request){
-        $this->groupService->createGroup($request->validated());
+        $this->groupService->createGroup($request->validated()); 
         return redirect()->back()->with('success', 'Yangi guruh muvaffaqiyatli qo‘shildi!');
+    }
+
+    public function show(int $id){
+        
+        return view('groups.show');
     }
 
 }

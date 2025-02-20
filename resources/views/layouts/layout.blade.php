@@ -72,7 +72,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['all_groups','all_groups']) ? '' : 'collapsed' }} " href="{{ route('all_groups') }}">
+        <a class="nav-link {{ request()->routeIs(['all_groups','create_show']) ? '' : 'collapsed' }} " href="{{ route('all_groups') }}">
           <i class="bi bi-menu-button-wide"></i>
           <span>Guruhlar</span>
         </a>

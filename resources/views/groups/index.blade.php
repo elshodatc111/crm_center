@@ -48,7 +48,7 @@
                         @forelse($resours['groups'] as $item)
                         <tr>
                             <td>{{ $loop->index+1 }}</td>
-                            <td><a href="#">{{ $item['group_name'] }}</a></td>
+                            <td><a href="{{ route('create_show',$item['id']) }}">{{ $item['group_name'] }}</a></td>
                             <td>{{ $item['lessen_start'] }}</td>
                             <td>{{ $item['lessen_end'] }}</td>
                             <td>0</td>
@@ -57,7 +57,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td cplspan=6 class="text-center">Guruhlar mavjud emas.</td>
+                            <td colspan=6 class="text-center">Guruhlar mavjud emas.</td>
                         </tr>
                         @endforelse
                     </tbody>

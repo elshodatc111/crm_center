@@ -4,10 +4,23 @@ namespace App\Http\Controllers\student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Cours;
+use App\Models\SettingRoom;
+use App\Models\SettingPaymart;
+use App\Models\LessenTime;
+use App\Services\GroupService;
 
-class GroupsController extends Controller
-{
+
+class GroupsController extends Controller{
+    protected $groupService;
+
+    public function __construct(GroupService $groupService){
+        $this->groupService = $groupService;
+    }
+
     public function index(){
-        return view('groups.index');
+        $resours = $this->groupService->getGroupResours();
+        return view('groups.index',compact('resours'));
     }
 }

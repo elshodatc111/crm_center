@@ -47,7 +47,6 @@ class StudentController extends Controller{
         $addGroups = $this->studentService->addStudentGroup($id);
         $student = $this->studentService->getShow($id);
         $history = $this->studentService->getShowHistory($id);
-        //dd($addGroups);
         return view('student.show', compact('student','history','addGroups'));
     }
 
@@ -68,7 +67,8 @@ class StudentController extends Controller{
     }
 
     public function addGroups(AddStudentToGroupRequest $request){
-        dd($request);
+        $this->studentService->addGroups($request->validated());
+        return redirect()->back()->with('success', 'Yangi guruhga qo\'shildi.');
     }
 
 }

@@ -9,12 +9,20 @@ use App\Models\MenegerChart;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Social;
+use App\Models\GroupUser;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use App\Repositories\groupAddUserRepository;
+
 class StudentService{
-    
+    protected $groupAddUserRepository;
+
+    public function __construct(groupAddUserRepository $groupAddUserRepository){
+        $this->groupAddUserRepository = $groupAddUserRepository;
+    }
+
     public function createStudent(array $data){
         $data['group_count'] = 0;
         $data['email'] = time().'@login.com';
@@ -144,6 +152,9 @@ class StudentService{
             ->toArray();
         $filteredGroups = $groups->whereNotIn('id', $excludedGroupIds);
         return $filteredGroups->values();
+    }
+    public function addGroups(array $data){
+        return $this->groupAddUserRepository->addGroups($data);
     }
 
 

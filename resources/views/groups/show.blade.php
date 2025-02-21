@@ -317,10 +317,30 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="@" method="POST" id="visitForm">
+                    <form action="{{ route('create_groups_remove_user') }}" method="POST" id="visitForm">
                         @csrf
-                        <label for="">SMS matni</label>
-                        <textarea name="" required class="form-control mb-3 mt-2"></textarea>
+                        <table class="table table-bordered text-center" style="font-size:14px;">
+                            <tr>
+                                <th>Guruh:</th>
+                                <td>{{ $response['group']['group'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Guruh narxi:</th>
+                                <td>{{ number_format($response['group']['price'], 0, '.', ' ') }}</td>
+                            </tr>
+                        </table>
+                        <input type="hidden" name="group_id" value="{{ $response['group']['id'] }}">
+                        <label for="user_id">O'chiradigan talabani tanlang</label>
+                        <select name="user_id" required class="form-select mb-3 mt-1">
+                            <option value="">Tanlang</option>
+                            @foreach($response['activ_user'] as $item)
+                                <option value="{{ $item['user_id'] }}">{{ $item['user_name'] }} (Balans: {{ number_format($item['balans'], 0, '.', ' ') }})</option>
+                            @endforeach
+                        </select>
+                        <label for="jarima">Jarima summasi</label>
+                        <input type="text" name="jarima" value="0" id="paymentAmount" class="form-control mt-2 mb-3" required>
+                        <label for="description">Guruhdan o'chirish sababi</label>
+                        <textarea name="description"  required class="form-control mb-3 mt-2"></textarea>
                         <button type="submit" class="btn btn-primary w-100" id="submit-btn">Guruhdan o'chirish</button>
                     </form>
                 </div>
@@ -371,16 +391,25 @@
             document.getElementById("seccond").style.display = "none";
             document.getElementById("first").style.display = "block";
         });
+
         document.getElementById('paymentAmount').addEventListener('input', function(event) {
             let input = event.target.value.replace(/\D/g, ''); 
             let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
             event.target.value = formatted;
         });
+
         document.getElementById('paymentAmount1').addEventListener('input', function(event) {
             let input = event.target.value.replace(/\D/g, ''); 
             let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " "); 
             event.target.value = formatted;
         });
+
+        document.getElementById('paymentAmount2').addEventListener('input', function(event) {
+            let input = event.target.value.replace(/\D/g, ''); 
+            let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            event.target.value = formatted;
+        });
+
         document.addEventListener("DOMContentLoaded", function() {
             let dateInput = document.getElementById('dateInput');
             let dateError = document.getElementById('dateError');

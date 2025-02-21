@@ -13,6 +13,7 @@ use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\Holiday;
 use App\Models\MenegerChart;
+use App\Models\UserHistory;
 use Carbon\Carbon;
 
 class GroupService{
@@ -166,6 +167,17 @@ class GroupService{
             ->get();
     }
 
+    protected function activeUsers($id){
+        return GroupUser::where('group_users.group_id', $id)
+            ->where('group_users.status', 1)
+            ->join('users as student', 'student.id', '=', 'group_users.user_id')
+            ->select(
+                'student.id as user_id',  
+                'student.user_name',
+                'student.balans'
+            )
+            ->get();
+    }
     public function groupsShow(int $id){
         return [
             'group' => $this->groupAbout($id),
@@ -173,6 +185,7 @@ class GroupService{
             'message_status' => Setting::first()->message_status,
             'cours' => $this->getCours(),
             'users' => $this->allGroupUsers($id),
+            'activ_user' => $this->activeUsers($id),
         ];
     }
 
@@ -183,6 +196,39 @@ class GroupService{
         return $Group->save();
     }
 
+    public function remoteGroupUser(array $data){
+        $data['jarima'] = (int) preg_replace('/\s+/', '', $data['jarima']);
+        $GroupUser = GroupUser::firstWhere([
+            'user_id' => $data['user_id'],
+            'group_id' => $data['group_id'],
+            'status' => 1
+        ]);
+        if (!$GroupUser) {
+            return false;
+        }
+        $GroupUser->update([
+            'end_meneger' => auth()->id(),
+            'end_discription' => $data['description'],
+            'status' => 0,
+            'jarima_id' => $data['jarima'],
+        ]);
+        $Group = Group::find($data['group_id']);
+        $type_commit = "{$Group->group_name} guruhdan o'chirildi. Jarima: {$data['jarima']} ({$data['description']})";
+        UserHistory::create([
+            'user_id' => $data['user_id'],
+            'type' => 'group_delete',
+            'type_commit' => $type_commit,
+            'admin_id' => auth()->id(),
+        ]);
+        $User = User::find($data['user_id']);
+        if ($User) {
+            $User->increment('balans', ($Group->price - $data['jarima']));
+        }
+        return true;
+    }
+
+
+    
 
 }
 

@@ -12,6 +12,7 @@ use App\Models\LessenTime;
 use App\Services\GroupService;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\GroupUpdateRequest;
+use App\Http\Requests\RemoveUserGroupsRequest;
 
 
 class GroupsController extends Controller{
@@ -34,13 +35,18 @@ class GroupsController extends Controller{
 
     public function show(int $id){
         $response = $this->groupService->groupsShow($id); 
-        //dd($response['users']);
+        //dd($response['activ_user']);
         return view('groups.show', compact('response'));
     }
 
     public function update(GroupUpdateRequest $request){
         $this->groupService->groupUpdate($request->validated()); 
         return redirect()->back()->with('success', 'Guruh malumotlari yangilandi!');
+    }
+
+    public function removeUser(RemoveUserGroupsRequest $request){
+        $this->groupService->remoteGroupUser($request->validated());   
+        return back()->with('success', 'Foydalanuvchi guruhdan muvaffaqiyatli o‘chirildi.');
     }
 
 }

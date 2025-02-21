@@ -172,6 +172,6 @@ class StudentService{
                 'group_users.status as status',
                 'group_users.updated_at as delete'
             )->get();
-    }
+    } 
 
 }

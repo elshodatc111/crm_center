@@ -35,6 +35,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('groups/create', [GroupsController::class, 'store'])->name('create_groups'); 
     Route::get('groups/{id}', [GroupsController::class, 'show'])->name('create_show'); 
     Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update'); 
+    Route::post('groups/remove/user', [GroupsController::class, 'removeUser'])->name('create_groups_remove_user'); 
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

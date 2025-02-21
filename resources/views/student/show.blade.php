@@ -45,9 +45,6 @@
                         <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
                             <i class="bi bi-people"></i> GURUHGA QO'SHISH
                         </button>
-                        <button class="btn btn-warning w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#discountModal">
-                            <i class="bi bi-tag"></i> GURUHDAN O'CHIRISH
-                        </button>
                         @if(auth()->user()->type!='meneger')
                         <button class="btn btn-dark w-100 mb-2" data-bs-toggle="modal" data-bs-target="#adminDiscountModal">
                             <i class="bi bi-shield-lock"></i> ADMIN CHEGIRMA
@@ -194,7 +191,6 @@
                                 </table>
                             </div>
 
-                            <!-- Talaba to'lovlari -->
                             <div class="tab-pane fade" id="profile-payments">
                                 <h5 class="card-title">Talaba to'lovlari</h5>
                                 <table class="table table-bordered text-center" style="font-size:12px;">
@@ -285,7 +281,7 @@
             </div>
         </div>
     </div>
-    <!-- Chegirmali to'lov Modal -->
+    
     <div class="modal fade" id="discountPaymentModal" tabindex="-1" aria-labelledby="discountPaymentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -329,7 +325,7 @@
             </div>
         </div>
     </div>
-    <!-- To'lovni qaytarish Modal -->
+    
     <div class="modal fade" id="refundModal" tabindex="-1" aria-labelledby="refundModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -356,7 +352,7 @@
             </div>
         </div>
     </div>
-    <!-- Guruhga qo'shish Modal -->
+    
     <div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -390,39 +386,7 @@
             </div>
         </div>
     </div>
-    <!-- Chegirma Modal -->
-    <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="discountModalLabel">Talabani guruhdan o'chirish</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="discountForm">
-                        <label for="editName" class="form-label">Guruhni tanlang</label>
-                        <select class="form-select" name="about_me" required>
-                            <option value="" disabled selected>Tanlang...</option>
-                            <option value="social_telegram">Guruh nomi</option>
-                        </select>
-                        <label for="editName" class="form-label mt-2">Jarima summasi</label>
-                        <input type="text" class="form-control"  id="paymentAmount2" required>
-                        <label for="editName" class="form-label mt-2">Guruhdan o'chirish haqida</label>
-                        <textarea type="text" class="form-control" required></textarea>
-                        <div class="row mt-3">
-                            <div class="col-6">
-                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
-                            </div>
-                            <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Admin chegirma Modal -->
+    
     <div class="modal fade" id="adminDiscountModal" tabindex="-1" aria-labelledby="adminDiscountModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

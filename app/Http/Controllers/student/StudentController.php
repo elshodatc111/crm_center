@@ -48,7 +48,6 @@ class StudentController extends Controller{
         $student = $this->studentService->getShow($id);
         $history = $this->studentService->getShowHistory($id);
         $user_groups = $this->studentService->studentGroups($id);
-        
         return view('student.show', compact('student','history','addGroups','user_groups'));
     }
 

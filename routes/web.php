@@ -33,6 +33,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('groups', [GroupsController::class, 'index'])->name('all_groups'); 
     Route::post('groups/create', [GroupsController::class, 'store'])->name('create_groups'); 
     Route::get('groups/{id}', [GroupsController::class, 'show'])->name('create_show'); 
+    Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update'); 
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

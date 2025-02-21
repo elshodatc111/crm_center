@@ -11,6 +11,7 @@ use App\Models\SettingPaymart;
 use App\Models\LessenTime;
 use App\Services\GroupService;
 use App\Http\Requests\StoreGroupRequest;
+use App\Http\Requests\GroupUpdateRequest;
 
 
 class GroupsController extends Controller{
@@ -35,6 +36,11 @@ class GroupsController extends Controller{
         $response = $this->groupService->groupsShow($id); 
         //dd($response['message_status']);
         return view('groups.show', compact('response'));
+    }
+
+    public function update(GroupUpdateRequest $request){
+        $this->groupService->groupUpdate($request->validated()); 
+        return redirect()->back()->with('success', 'Guruh malumotlari yangilandi!');
     }
 
 }

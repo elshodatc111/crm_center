@@ -289,11 +289,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="@" method="POST" id="visitForm">
+                    <form action="{{ route('create_groups_update') }}" method="POST" id="visitForm">
                         @csrf
-                        <label for="">SMS matni</label>
-                        <textarea name="" required class="form-control mb-3 mt-2"></textarea>
-                        <button type="submit" class="btn btn-primary w-100" id="submit-btn">SMS yuborish</button>
+                        <input type="hidden" name="id" value="{{ $response['group']['id'] }}">
+                        <label for="group_name">Guruhning nomi</label>
+                        <input name="group_name" required value="{{ $response['group']['group'] }}" class="form-control mb-3 mt-2">
+                        <label for="cours_id">Guruh Kursi</label>
+                        <select name="cours_id" class="form-select mb-3 mt-2" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            @foreach($response['cours'] as $item)
+                                <option value="{{ $item['id'] }}">{{ $item['cours_name'] }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary w-100" id="submit-btn">Saqlash</button>
                     </form>
                 </div>
             </div>

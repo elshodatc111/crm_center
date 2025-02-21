@@ -128,7 +128,9 @@ class GroupService{
                 'groups.lessen_start as start',
                 'groups.lessen_end as end',
                 'groups.next',
+                'setting_rooms.id as room_id', 
                 'setting_rooms.room_name as room', 
+                'teachers.id as techer_id',
                 'teachers.user_name as techer',
                 'groups.techer_paymart',
                 'groups.techer_bonus',
@@ -143,12 +145,24 @@ class GroupService{
         return GroupDays::where('group_id', $id)->pluck('date')->toArray();
     }
 
+    protected function getCours(){
+        return Cours::where('status','true')->select('id','cours_name')->get();
+    }
+
     public function groupsShow(int $id){
         return [
             'group' => $this->groupAbout($id),
             'group_day' => $this->groupDays($id),
             'message_status' => Setting::first()->message_status,
+            'cours' => $this->getCours(),
         ];
+    }
+
+    public function groupUpdate(array $data){
+        $Group = Group::find($data['id']);
+        $Group->group_name = $data['group_name'];
+        $Group->cours_id = $data['cours_id'];
+        return $Group->save();
     }
 
 

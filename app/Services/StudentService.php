@@ -83,7 +83,7 @@ class StudentService{
         }
         return $Setting->save();
     }
-
+ 
     public function getShow(int $id){
         return User::where('type', 'student')->findOrFail($id);
     }

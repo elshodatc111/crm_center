@@ -166,24 +166,26 @@
                                     <th>Guruhga qo'shildi</th>
                                     <th>Meneger</th>
                                     <th>Izoh</th>
-                                    <th>Guruhdan o'chirildi</th>
-                                    <th>Meneger</th>
-                                    <th>Izoh</th>
+                                    <th>Status</th>
                                     <th>Balans</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($response['users'] as $item)
                                 <tr>
-                                    <th>@</th>
-                                    <th><a href="#">FIO</a></th>
-                                    <td>15</td>
-                                    <td>10</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
+                                    <th>{{ $loop->index+1 }}</th>
+                                    <th style="text-align:left"><a href="{{ route('student_show',$item['id']) }}">{{ $item['user_name'] }}</a></th>
+                                    <td>{{ $item['created_at'] }}</td>
+                                    <td>{{ $item['meneger'] }}</td>
+                                    <td>{{ $item['start_discription'] }}</td>
+                                    <td>{{ $item['status'] }}</td>
+                                    <td>{{ $item['balans'] }}</td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=7 class="text-center">Guruh talabalari mavjud emas!</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\LessenTime;
 use App\Models\GroupDays;
 use App\Models\Group;
+use App\Models\GroupUser;
 use App\Models\Holiday;
 use App\Models\MenegerChart;
 use Carbon\Carbon;
@@ -149,12 +150,29 @@ class GroupService{
         return Cours::where('status','true')->select('id','cours_name')->get();
     }
 
+    protected function allGroupUsers($id){
+        return GroupUser::where('group_users.group_id', $id)
+            ->join('users as student', 'student.id', '=', 'group_users.user_id')
+            ->join('users as meneger', 'meneger.id', '=', 'group_users.start_meneger') 
+            ->select(
+                'student.id', 
+                'student.user_name',
+                'group_users.created_at',
+                'meneger.user_name as meneger',
+                'group_users.start_discription',
+                'group_users.status',
+                'student.balans'
+            )
+            ->get();
+    }
+
     public function groupsShow(int $id){
         return [
             'group' => $this->groupAbout($id),
             'group_day' => $this->groupDays($id),
             'message_status' => Setting::first()->message_status,
             'cours' => $this->getCours(),
+            'users' => $this->allGroupUsers($id),
         ];
     }
 

@@ -128,7 +128,7 @@
                                             <div class="col-lg-6 label">Tug'ilgan kuni:</div>
                                             <div class="col-lg-6 text-end">{{ $student['birthday'] }}</div>
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="col-lg-6">
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Guruhlar soni:</div>
@@ -173,7 +173,7 @@
                                         @forelse($user_groups as $item)
                                             <tr>
                                                 <td>{{ $loop->index+1 }}</td>
-                                                <td>{{ $item['name'] }}</td>
+                                                <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['name'] }}</a></td>
                                                 <td>{{ $item['add_plus'] }}</td>
                                                 <td>{{ $item['meneger_add'] }}</td>
                                                 <td>{{ $item['description'] }}</td>

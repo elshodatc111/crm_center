@@ -6,6 +6,7 @@ use App\Models\Cours;
 use App\Models\SettingRoom;
 use App\Models\SettingPaymart;
 use App\Models\User;
+use App\Models\Setting;
 use App\Models\LessenTime;
 use App\Models\GroupDays;
 use App\Models\Group;
@@ -55,12 +56,14 @@ class GroupService{
     
         return $schedule;
     }
+
     protected function createMenegerCart(){
         return MenegerChart::firstOrCreate(
             ['user_id' => auth()->user()->id],
             ['create_group' => 0]
         )->increment('create_group');
     }
+
     protected function addGroupDays(int $group_id, int $room_id, array $days, int $time_id) {
         foreach ($days as $value) {
             $exists = GroupDays::where([
@@ -110,6 +113,43 @@ class GroupService{
         return $group;
     }
     
+    protected function groupAbout(int $id){
+        return Group::where('groups.id', $id)
+            ->join('users as teachers', 'groups.techer_id', '=', 'teachers.id')
+            ->join('setting_rooms', 'groups.setting_rooms_id', '=', 'setting_rooms.id')
+            ->join('users as managers', 'groups.user_id', '=', 'managers.id')
+            ->join('cours', 'groups.cours_id', '=', 'cours.id')
+            ->join('lessen_times', 'groups.lessen_times_id', '=', 'lessen_times.id')
+            ->select(
+                'groups.id',
+                'groups.group_name as group',
+                'groups.price',
+                'groups.weekday',
+                'groups.lessen_start as start',
+                'groups.lessen_end as end',
+                'groups.next',
+                'setting_rooms.room_name as room', 
+                'teachers.user_name as techer',
+                'groups.techer_paymart',
+                'groups.techer_bonus',
+                'managers.user_name as meneger',
+                'cours.cours_name',
+                'lessen_times.time',
+            )
+            ->first();
+    }
+
+    protected function groupDays(int $id){
+        return GroupDays::where('group_id', $id)->pluck('date')->toArray();
+    }
+
+    public function groupsShow(int $id){
+        return [
+            'group' => $this->groupAbout($id),
+            'group_day' => $this->groupDays($id),
+            'message_status' => Setting::first()->message_status,
+        ];
+    }
 
 
 }

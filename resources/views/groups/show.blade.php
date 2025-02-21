@@ -52,30 +52,30 @@
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
                 <div class="tab-pane fade show active pt-2" id="guruh-haqida" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="card-title w-100 text-center">Guruhning nomi</h3>
+                    <h3 class="card-title w-100 text-center">{{ $response['group']['group'] }}</h3>
                     <div class="row">
                         <div class="col-lg-6">
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <th>Guruh narxi:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ number_format($response['group']['price'], 0, '.', ' ') }}</td>
                                     </tr>
                                     <tr>
                                         <th>O'qituvchi:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ $response['group']['techer'] }}</td>
                                     </tr>
                                     <tr>
                                         <th>O'qituvchiga to'lov:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ number_format($response['group']['techer_paymart'], 0, '.', ' ') }}</td>
                                     </tr>
                                     <tr>
                                         <th>O'qituvchiga bonus:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ number_format($response['group']['techer_bonus'], 0, '.', ' ') }}</td>
                                     </tr>
                                     <tr>
                                         <th>Darslar boshlanish sanasi:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ \Carbon\Carbon::parse($response['group']['start'])->format('Y-m-d') }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -85,74 +85,73 @@
                                 <tbody>
                                     <tr>
                                         <th>Kurs:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ $response['group']['cours_name'] }}</td>
                                     </tr>
                                     <tr>
                                         <th>Dars xonasi:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ $response['group']['room'] }}</td>
                                     </tr>
                                     <tr>
                                         <th>Dars vaqti:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ $response['group']['time'] }}</td>
                                     </tr>
                                     <tr>
                                         <th>Meneger:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ $response['group']['meneger'] }}</td>
                                     </tr>
                                     <tr>
                                         <th>Darslar tugash vaqti:</th>
-                                        <td style="text-align:right">15.01.2025</td>
+                                        <td style="text-align:right">{{ \Carbon\Carbon::parse($response['group']['end'])->format('Y-m-d') }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         @if(auth()->user()->type=='admin' OR auth()->user()->type=='sAdmin')
-                        <div class="col-lg-3 mt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#sendmessage">Talabalarga SMS</button>
-                        </div>
-                        <div class="col-lg-3 mt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage">Qarzdorlarga SMS</button>
-                        </div>
-                        <div class="col-lg-3 mt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#updateGroups">Guruhni taxrirlash</button>
-                        </div>
-                        <div class="col-lg-3 mt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#deleteGroups">Guruhdan o'chirish</button>
-                        </div>
+                            @if($response['message_status']==1)
+                                <div class="col-lg-3 mt-2">
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#sendmessage">Talabalarga SMS</button>
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage">Qarzdorlarga SMS</button>
+                                </div>
+                            @endif
+                            <div class="col-lg-3 mt-2">
+                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#updateGroups">Guruhni taxrirlash</button>
+                            </div>
+                            <div class="col-lg-3 mt-2">
+                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#deleteGroups">Guruhdan o'chirish</button>
+                            </div>
                         @endif
-                        <div class="col-lg-3 mt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#nextGroup">Guruhni davom ettirish</button>
-                        </div>
+                        @if($response['group']['next']=='new')
+                            <div class="col-lg-3 mt-2">
+                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#nextGroup">Guruhni davom ettirish</button>
+                            </div>
+                        @else 
+                            <div class="col-lg-3 mt-2">
+                                <a href="#" class="btn btn-primary w-100">Guruhning davomi</button>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="tab-pane fade pt-2" id="dars-kunlari" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive">
                         <table class="table table-bordered" style="font-size:12px;">
                             <tbody>
-                                <tr>
-                                    <th>1-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                    <th>2-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                    <th>1-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                </tr>
-                                <tr>
-                                    <th>4-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                    <th>5-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                    <th>6-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                </tr>
-                                <tr>
-                                    <th>7-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                    <th>8-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                    <th>9-dars</th>
-                                    <td style="text-align:right">15.01.2025</td>
-                                </tr>
+                                @php
+                                    $dates = $response['group_day'];
+                                    $count = count($dates);
+                                @endphp
+
+                                @for ($i = 0; $i < $count; $i += 3)
+                                    <tr>
+                                        @for ($j = 0; $j < 3; $j++)
+                                            @if(isset($dates[$i + $j]))  
+                                                <th>{{ ($i + $j + 1) }}-dars</th>
+                                                <td style="text-align:right">{{ \Carbon\Carbon::parse($dates[$i + $j])->format('d.m.Y') }}</td>
+                                            @endif
+                                        @endfor
+                                    </tr>
+                                @endfor
                             </tbody>
                         </table>
                     </div>

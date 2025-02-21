@@ -32,8 +32,9 @@ class GroupsController extends Controller{
     }
 
     public function show(int $id){
-        
-        return view('groups.show');
+        $response = $this->groupService->groupsShow($id); 
+        //dd($response['message_status']);
+        return view('groups.show', compact('response'));
     }
 
 }

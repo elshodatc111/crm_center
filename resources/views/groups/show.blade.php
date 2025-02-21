@@ -178,7 +178,13 @@
                                     <td>{{ $item['created_at'] }}</td>
                                     <td>{{ $item['meneger'] }}</td>
                                     <td>{{ $item['start_discription'] }}</td>
-                                    <td>{{ $item['status'] }}</td>
+                                    <td>
+                                        @if($item['status']==1)
+                                            Aktiv
+                                        @else
+                                            O'chirilgan
+                                        @endif
+                                    </td>
                                     <td>{{ $item['balans'] }}</td>
                                 </tr>
                                 @empty

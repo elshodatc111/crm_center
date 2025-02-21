@@ -170,9 +170,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse($user_groups as $item)
+                                            <tr>
+                                                <td>{{ $loop->index+1 }}</td>
+                                                <td>{{ $item['name'] }}</td>
+                                                <td>{{ $item['add_plus'] }}</td>
+                                                <td>{{ $item['meneger_add'] }}</td>
+                                                <td>{{ $item['description'] }}</td>
+                                                <td>
+                                                    @if($item['status']==1)
+                                                        Aktive
+                                                    @else
+                                                        O'chirildi: {{ $item['delete'] }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
                                         <tr>
                                             <td colspan="6">Ma'lumot mavjud emas</td>
                                         </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>

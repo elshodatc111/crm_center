@@ -47,7 +47,9 @@ class StudentController extends Controller{
         $addGroups = $this->studentService->addStudentGroup($id);
         $student = $this->studentService->getShow($id);
         $history = $this->studentService->getShowHistory($id);
-        return view('student.show', compact('student','history','addGroups'));
+        $user_groups = $this->studentService->studentGroups($id);
+        
+        return view('student.show', compact('student','history','addGroups','user_groups'));
     }
 
     public function update_about(UserAboutUpdateRequest $request){

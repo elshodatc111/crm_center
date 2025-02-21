@@ -154,9 +154,24 @@ class StudentService{
         $filteredGroups = $groups->whereNotIn('id', $excludedGroupIds);
         return $filteredGroups->values();
     }
+
     public function addGroups(array $data){
         return $this->groupAddUserRepository->addGroups($data);
     }
 
+    public function studentGroups($id){
+        return GroupUser::where('group_users.user_id', $id)
+            ->join('groups', 'groups.id', '=', 'group_users.group_id')
+            ->join('users as meneger_start', 'group_users.start_meneger', '=', 'meneger_start.id')
+            ->select(
+                'groups.id as group_id',
+                'groups.group_name as name',
+                'group_users.created_at as add_plus',
+                'meneger_start.user_name as meneger_add',
+                'group_users.start_discription as description',
+                'group_users.status as status',
+                'group_users.updated_at as delete'
+            )->get();
+    }
 
 }

@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\UserHistory;
 use App\Models\MenegerChart;
 use App\Models\User;
+use App\Models\Group;
 use App\Models\Social;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -130,6 +131,19 @@ class StudentService{
         $Social = Social::where('name',$addres)->first();
         $Social->count = $Social->count + 1;
         return $Social->save();
+    }
+
+    public function addStudentGroup(int $id){
+        $groups = Group::where('lessen_end', '>=', Carbon::today()->toDateString())
+        ->join('users','users.id','groups.techer_id')
+        ->select('groups.id','groups.group_name','groups.lessen_start','users.user_name')->get();
+        $excludedGroupIds = DB::table('group_users')
+            ->where('user_id', $id)
+            ->where('status', true)
+            ->pluck('group_id')
+            ->toArray();
+        $filteredGroups = $groups->whereNotIn('id', $excludedGroupIds);
+        return $filteredGroups->values();
     }
 
 

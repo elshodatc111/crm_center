@@ -28,6 +28,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/student/update/about', [StudentController::class, 'update_about'])->name('student_update_about');
     Route::post('/student/update/password', [StudentController::class, 'update_password'])->name('student_update_password');
     Route::post('/student/update/student', [StudentController::class, 'update'])->name('student_update');
+    Route::post('/student/add/group', [StudentController::class, 'addGroups'])->name('student_add_group');
 
     
     Route::get('groups', [GroupsController::class, 'index'])->name('all_groups'); 

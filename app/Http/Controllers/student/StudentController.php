@@ -12,6 +12,7 @@ use App\Jobs\SendMessageWork;
 use App\Http\Requests\ShowStudentRequest;
 use App\Http\Requests\UserAboutUpdateRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Http\Requests\AddStudentToGroupRequest;
 
 class StudentController extends Controller{
 
@@ -43,9 +44,11 @@ class StudentController extends Controller{
     }
 
     public function show(ShowStudentRequest $request, $id){
+        $addGroups = $this->studentService->addStudentGroup($id);
         $student = $this->studentService->getShow($id);
         $history = $this->studentService->getShowHistory($id);
-        return view('student.show', compact('student','history'));
+        //dd($addGroups);
+        return view('student.show', compact('student','history','addGroups'));
     }
 
     public function update_about(UserAboutUpdateRequest $request){
@@ -64,6 +67,8 @@ class StudentController extends Controller{
         return redirect()->back()->with('success', 'Talaba ma’lumotlari yangilandi.');
     }
 
-
+    public function addGroups(AddStudentToGroupRequest $request){
+        dd($request);
+    }
 
 }

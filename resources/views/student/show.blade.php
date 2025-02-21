@@ -346,16 +346,20 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="addGroupModalLabel">Guruhga qo'shish</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                </div> 
                 <div class="modal-body">
-                    <form id="addGroupForm">
-                        <label for="editName" class="form-label">Guruhni tanlang</label>
-                        <select class="form-select" name="about_me" required>
+                    <form action="{{ route('student_add_group') }}" method="POST" id="addGroupForm">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <label for="group_id" class="form-label">Guruhni tanlang</label>
+                        <select class="form-select" name="group_id" required>
                             <option value="" disabled selected>Tanlang...</option>
-                            <option value="social_telegram">Guruh nomi</option>
+                            @foreach($addGroups as $item)  
+                                <option value="{{ $item['id'] }}">{{ $item['group_name'].' ('.\Carbon\Carbon::parse($item['lessen_start'])->format('Y-m-d')." - ".$item['user_name'].")" }}</option>
+                            @endforeach
                         </select>
-                        <label for="editName" class="form-label mt-2">Guruhdan qo'shish haqida</label>
-                        <textarea type="text" class="form-control" required></textarea>
+                        <label for="start_discription" class="form-label mt-2">Guruhdan qo'shish haqida</label>
+                        <textarea type="text" name="start_discription" class="form-control" required></textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>

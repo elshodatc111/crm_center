@@ -33,15 +33,15 @@
                         @csrf 
                         <div class="mb-1">
                             <label for="amount" class="form-label">Miqdor (amount)</label>
-                            <input type="number" step="0.01" class="form-control" id="amount" name="amount" required>
+                            <input type="text" class="form-control" id="paymentAmount" name="amount" required>
                         </div>
                         <div class="mb-1">
                             <label for="chegirma" class="form-label">Chegirma (chegirma)</label>
-                            <input type="number" step="0.01" class="form-control" id="chegirma" name="chegirma">
+                            <input type="text" class="form-control" id="paymentAmount1" name="chegirma">
                         </div>
                         <div class="mb-2">
                             <label for="admin_chegirma" class="form-label">Admin chegirma (admin_chegirma)</label>
-                            <input type="number" step="0.01" class="form-control" id="admin_chegirma" name="admin_chegirma">
+                            <input type="text" class="form-control" id="paymentAmount2" name="admin_chegirma">
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary w-50">Saqlash</button>
@@ -124,5 +124,21 @@
             </div>
         </div>
     </div>
-
+<script>
+    document.getElementById('paymentAmount').addEventListener('input', function(event) {
+        let input = event.target.value.replace(/\D/g, ''); 
+        let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        event.target.value = formatted;
+    });
+    document.getElementById('paymentAmount1').addEventListener('input', function(event) {
+        let input = event.target.value.replace(/\D/g, ''); 
+        let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        event.target.value = formatted;
+    });
+    document.getElementById('paymentAmount2').addEventListener('input', function(event) {
+        let input = event.target.value.replace(/\D/g, ''); 
+        let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        event.target.value = formatted;
+    });
+</script>
 @endsection

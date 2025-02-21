@@ -11,9 +11,9 @@ class SettingPaymartRequest extends FormRequest{
 
     public function rules(): array{
         return [
-            'amount' => 'required|numeric|min:0',
-            'chegirma' => 'nullable|numeric|min:0',
-            'admin_chegirma' => 'nullable|numeric|min:0',
+            'amount' => 'required|min:0',
+            'chegirma' => 'nullable|min:0',
+            'admin_chegirma' => 'nullable|min:0',
         ];
     }
 }

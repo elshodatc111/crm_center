@@ -10,8 +10,8 @@ class StoreSettingChegirmaRequest extends FormRequest{
     }
     public function rules(): array{
         return [
-            'amount'   => 'required|numeric|min:1',
-            'chegirma' => 'required|numeric|min:1',
+            'amount'   => 'required|string|min:1',
+            'chegirma' => 'required|string|min:1',
             'comment'  => 'required|string|max:255',
         ];
     }

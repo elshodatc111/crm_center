@@ -18,9 +18,18 @@ use Carbon\Carbon;
 
 class GroupService{
     
-    public function getGroupResours(){
+    public function getGroupResours($search = null){
+        $query = Group::whereDate('lessen_end', '>=', Carbon::now()->subDays(30))
+        ->withCount(['groupUsers' => function ($query) {
+            $query->where('status', 1);
+        }])->orderBy('lessen_start', 'desc');
+
+        //dd($query);
+        if ($search) {
+            $query->where('group_name', 'LIKE', '%' . $search . '%');
+        }
         return [
-            'groups' => Group::get(),
+            'groups' => $query->paginate(10),
             'cours' => Cours::where('status', 'true')->select('id', 'cours_name')->get(),
             'rooms' => SettingRoom::where('status', 'true')->select('id', 'room_name')->get(),
             'paymarts' => SettingPaymart::where('status', 'true')->select('id', 'amount', 'chegirma', 'admin_chegirma')->get(),
@@ -28,6 +37,7 @@ class GroupService{
             'time' => LessenTime::select('id', 'number', 'time')->get(),
         ];
     }
+    
 
     protected function generateLessonDays($start, $lessen_count, $weekday){
         $daysOfWeek = [
@@ -100,8 +110,8 @@ class GroupService{
             'lessen_times_id' => $data['lessen_times_id'], 
             'user_id' => auth()->user()->id, 
             'next' => 'new', 
-            'techer_paymart' => $data['techer_paymart'], 
-            'techer_bonus' => $data['techer_bonus'], 
+            'techer_paymart' => intval(str_replace(" ","",$data['techer_paymart'])), 
+            'techer_bonus' => intval(str_replace(" ","",$data['techer_bonus'])), 
         ]);
     }
     

@@ -31,6 +31,9 @@ class SettingService{
         return true;
     }
     public function createPaymart(array $data): SettingPaymart{
+        $data['amount'] = intval(str_replace(" ","",$data['amount']));
+        $data['chegirma'] = intval(str_replace(" ","",$data['chegirma']));
+        $data['admin_chegirma'] = intval(str_replace(" ","",$data['admin_chegirma']));
         $data['user_id'] = auth()->id();
         return SettingPaymart::create($data);
     }
@@ -59,7 +62,9 @@ class SettingService{
         return $res;
     }
     public function createChegirma(array $data){
-        $data['user_id'] = auth()->id();
+        $data['amount'] = intval(str_replace(" ","",$data['amount']));
+        $data['chegirma'] = intval(str_replace(" ","",$data['chegirma']));
+        $data['user_id'] = auth()->id(); 
         SettingChegirma::where('status','true')->update(['status' => 'delete']);
         return SettingChegirma::create($data);
     }

@@ -19,8 +19,8 @@ class StoreGroupRequest extends FormRequest{
             'lessen_times_id' => 'required|exists:lessen_times,id',
             'setting_paymarts' => 'required|exists:setting_paymarts,id',
             'techer_id' => 'required|exists:users,id',
-            'techer_bonus' => 'required|numeric|min:0',
-            'techer_paymart' => 'required|numeric|min:0',
+            'techer_bonus' => 'required|string|min:0',
+            'techer_paymart' => 'required|string|min:0',
         ];
     }
     public function messages(): array{

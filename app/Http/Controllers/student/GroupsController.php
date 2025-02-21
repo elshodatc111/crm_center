@@ -22,11 +22,12 @@ class GroupsController extends Controller{
         $this->groupService = $groupService;
     }
 
-    public function index(){
-        $resours = $this->groupService->getGroupResours();
-        
-        return view('groups.index',compact('resours'));
+    public function index(Request $request)
+    {
+        $resours = $this->groupService->getGroupResours($request->search);
+        return view('groups.index', compact('resours'));
     }
+    
 
     public function store(StoreGroupRequest $request){
         $this->groupService->createGroup($request->validated()); 
@@ -35,7 +36,7 @@ class GroupsController extends Controller{
 
     public function show(int $id){
         $response = $this->groupService->groupsShow($id); 
-        //dd($response['activ_user']);
+        //dd($response['groups']);
         return view('groups.show', compact('response'));
     }
 

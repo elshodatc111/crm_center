@@ -34,9 +34,9 @@
                     <form action="{{ route('setting_chegirma_create') }}" method="post">
                         @csrf 
                         <label for="amount" class="mb-1">Chegirmali to'lov summasi</label>
-                        <input type="number" name="amount" required class="form-control">
+                        <input type="text" id="paymentAmount" name="amount" required class="form-control">
                         <label for="chegirma" class="my-1">To'lov uchun chegirma</label>
-                        <input type="number" name="chegirma" required class="form-control">
+                        <input type="text" id="paymentAmount1" name="chegirma" required class="form-control">
                         <label for="comment" class="my-1">To'lov haqida</label>
                         <textarea type="text" name="comment" required class="form-control"></textarea>
                         <button class="btn btn-primary w-100 mt-2">Saqlash</button>
@@ -94,5 +94,16 @@
             </div>
         </div>
     </div>
-
+<script>
+    document.getElementById('paymentAmount').addEventListener('input', function(event) {
+        let input = event.target.value.replace(/\D/g, ''); 
+        let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        event.target.value = formatted;
+    });
+    document.getElementById('paymentAmount1').addEventListener('input', function(event) {
+        let input = event.target.value.replace(/\D/g, ''); 
+        let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        event.target.value = formatted;
+    });
+</script>
 @endsection

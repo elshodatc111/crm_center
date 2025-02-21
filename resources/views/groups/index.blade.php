@@ -33,35 +33,55 @@
                 </div>
             </div>
             <div id="userTable">
-                <table class="table table-bordered text-center" style="font-size:14px;">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Guruh nomi</th>
-                            <th>Boshlanish vaqati</th>
-                            <th>Tugash vaqti</th>
-                            <th>Talabalar soni</th>
-                            <th>Guruh holati</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($resours['groups'] as $item)
-                        <tr>
-                            <td>{{ $loop->index+1 }}</td>
-                            <td><a href="{{ route('create_show',$item['id']) }}">{{ $item['group_name'] }}</a></td>
-                            <td>{{ $item['lessen_start'] }}</td>
-                            <td>{{ $item['lessen_end'] }}</td>
-                            <td>0</td>
-                            <td>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan=6 class="text-center">Guruhlar mavjud emas.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+            <form action="{{ route('all_groups') }}" method="GET" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Guruh nomini kiriting..." value="{{ request('search') }}">
+                </div>
+            </form>
+
+            <!-- Jadval -->
+            <table class="table table-bordered text-center" style="font-size:14px;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Guruh nomi</th>
+                        <th>Boshlanish vaqti</th>
+                        <th>Tugash vaqti</th>
+                        <th>Talabalar soni</th>
+                        <th>Guruh holati</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($resours['groups'] as $item)
+                    <tr>
+                        <td>{{ $loop->iteration + ($resours['groups']->currentPage() - 1) * $resours['groups']->perPage() }}</td>
+                        <td><a href="{{ route('create_show', $item->id) }}">{{ $item->group_name }}</a></td>
+                        <td>{{ \Carbon\Carbon::parse($item->lessen_start)->format('Y-m-d') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->lessen_end)->format('Y-m-d') }}</td>
+                        <td>{{ $item->group_users_count }}</td>
+                        <td>
+                            @if (now()->between(\Carbon\Carbon::parse($item->lessen_start), \Carbon\Carbon::parse($item->lessen_end)))
+                                <span class="badge bg-success">Aktiv</span>
+                            @elseif (now()->gt(\Carbon\Carbon::parse($item->lessen_end)))
+                                <span class="badge bg-danger">Yakunlangan</span>
+                            @else
+                                <span class="badge bg-primary">Yangi</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Guruhlar mavjud emas.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center">
+                {{ $resours['groups']->appends(['search' => request('search')])->links('pagination::bootstrap-4') }}
+            </div>
+
                 
             </div>
         </div>

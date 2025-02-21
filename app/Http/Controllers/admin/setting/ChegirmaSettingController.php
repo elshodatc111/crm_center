@@ -14,7 +14,7 @@ class ChegirmaSettingController extends Controller{
     private SettingService $settingService;
 
     public function __construct(SettingService $settingService){
-        $this->settingService = $settingService;
+        $this->settingService = $settingService; 
         $this->middleware('admin');
     }
 

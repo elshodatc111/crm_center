@@ -4,6 +4,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class Group extends Model{
     use HasFactory;
     protected $fillable = [
@@ -40,5 +42,11 @@ class Group extends Model{
     }
     public function admin(){
         return $this->belongsTo(User::class, 'user_id')->whereIn('type', ['admin', 'sAdmin', 'meneger']);
+    }
+    
+
+    public function groupUsers(): HasMany
+    {
+        return $this->hasMany(GroupUser::class, 'group_id', 'id');
     }
 }

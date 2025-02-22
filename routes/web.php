@@ -80,5 +80,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
     Route::get('social', [sHududSettingController::class, 'index'])->name('all_social');
     Route::post('/social/store', [sHududSettingController::class, 'store'])->name('social_store');
+    Route::post('/social/delete', [sHududSettingController::class, 'store'])->name('social_delete');
 });
 

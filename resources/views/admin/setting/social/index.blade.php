@@ -45,7 +45,8 @@
                                 <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['count'] }}</td>
                                 <td>
-                                    <form action="#" method="post">
+                                    <form action="{{ route('social_delete') }}" method="post">
+                                        @csrf 
                                         <input type="hidden" name="id" value="{{ $item['id'] }}">
                                         <button class="btn btn-danger px-1 py-0" type="submit"><i class="bi bi-trash"></i></button>
                                     </form>

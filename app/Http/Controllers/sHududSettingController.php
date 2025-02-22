@@ -18,5 +18,10 @@ class sHududSettingController extends Controller
         ]);
         return redirect()->back()->with('success', 'Hudud muvaffaqiyatli saqlandi!');
     }
+    public function destroy($request){
+        $hudud = Social::findOrFail($request->id);
+        $hudud->delete();
+        return redirect()->back()->with('success', 'Hudud muvaffaqiyatli o‘chirildi!');
+    }
 
 }

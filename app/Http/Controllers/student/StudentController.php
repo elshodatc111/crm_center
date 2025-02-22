@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Social;
 use App\Http\Requests\StoreVisitRequest;
 use App\Services\StudentService;
+use App\Services\PaymartService;
 use App\Jobs\SendMessageWork;
 use App\Http\Requests\ShowStudentRequest;
 use App\Http\Requests\UserAboutUpdateRequest;
@@ -17,8 +18,10 @@ use App\Http\Requests\AddStudentToGroupRequest;
 class StudentController extends Controller{
 
     private StudentService $studentService;
+    private PaymartService $paymartService;
 
-    public function __construct(StudentService $studentService){
+    public function __construct(StudentService $studentService,PaymartService $paymartService){
+        $this->paymartService = $paymartService;
         $this->studentService = $studentService;
         $this->middleware('meneger');
     }
@@ -48,7 +51,9 @@ class StudentController extends Controller{
         $student = $this->studentService->getShow($id);
         $history = $this->studentService->getShowHistory($id);
         $user_groups = $this->studentService->studentGroups($id);
-        return view('student.show', compact('student','history','addGroups','user_groups'));
+        $chegirma_groups = $this->paymartService->chegirmaGroups($id);
+        //dd($chegirma_groups);
+        return view('student.show', compact('student','history','addGroups','user_groups','chegirma_groups'));
     }
 
     public function update_about(UserAboutUpdateRequest $request){

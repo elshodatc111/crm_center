@@ -255,19 +255,39 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <label for="paymentAmount" class="form-label mt-2">To'lov summa</label>
-                        <input type="text" class="form-control" id="paymentAmount" required>
-
-                        <label for="groupSelect" class="form-label">Guruhni tanlang</label>
-                        <select class="form-select" name="about_me" id="groupSelect" required>
-                            <option value="" disabled selected>Tanlang...</option>
-                            <option value="social_telegram">Guruh nomi</option>
+                    <form action="{{ route('student_add_paymart') }}" method="POST">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <label for="amount_naqt" class="form-label mt-2">Naqt to'lov summasi</label>
+                        <input type="text" name="amount_naqt" value="0" class="form-control" id="paymentAmount4" required>
+                        <script>
+                            document.getElementById('paymentAmount4').addEventListener('input', function(event) {
+                                let input = event.target.value.replace(/\D/g, ''); 
+                                let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                                event.target.value = formatted;
+                            });
+                        </script>
+                        <label for="amount_plastik" class="form-label mt-2">Plastik to'lov summasi</label>
+                        <input type="text" name="amount_plastik" value="0" class="form-control" id="paymentAmount5" required>
+                        <script>
+                            document.getElementById('paymentAmount5').addEventListener('input', function(event) {
+                                let input = event.target.value.replace(/\D/g, ''); 
+                                let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                                event.target.value = formatted;
+                            });
+                        </script>
+                        <label for="group_id" class="form-label mt-2">Chegurma uchun guruh</label>
+                        <select class="form-select" name="group_id" id="groupSelect" required>
+                            <option value="null">Chegirmasiz to'lov</option>
+                            @foreach($chegirma_groups as $item)
+                            <option value="{{ $item['id'] }}">
+                                {{ $item['group_name'] }}
+                                (To'lov: {{ number_format(floatval($item['tulov']), 0, '.', ' ') }} so'm, 
+                                Chegirma: {{ number_format(floatval($item['chegirma']), 0, '.', ' ') }} so'm)</option>
+                            @endforeach
                         </select>
-
-                        <label for="paymentInfo" class="form-label mt-2">To'lov haqida</label>
-                        <textarea type="text" class="form-control" id="paymentInfo" required></textarea>
-
+                        <label for="payment_info" class="form-label mt-2">To'lov haqida</label>
+                        <textarea type="text" class="form-control" id="payment_info" name="payment_info" required></textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -517,5 +537,6 @@
             let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " "); // 3 xonadan bo‘lib chiqarish
             event.target.value = formatted;
         });
+
     </script>
 @endsection

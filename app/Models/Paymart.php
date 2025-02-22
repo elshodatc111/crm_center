@@ -11,7 +11,7 @@ class Paymart extends Model
 {
     use HasFactory;
 
-    protected $table = 'paymart';
+    protected $table = 'paymarts';
 
     protected $fillable = [
         'user_id',
@@ -25,11 +25,6 @@ class Paymart extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function group()
-    {
-        return $this->belongsTo(Group::class, 'group_id');
     }
 
     public function admin()

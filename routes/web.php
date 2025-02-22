@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\cours\TestController;
 use App\Http\Controllers\admin\cours\VideoController;
 use App\Http\Controllers\student\StudentController;
 use App\Http\Controllers\student\GroupsController;
+use App\Http\Controllers\paymarts\AddPaymartController;
 
 Auth::routes();
 
@@ -30,6 +31,8 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/student/update/password', [StudentController::class, 'update_password'])->name('student_update_password');
     Route::post('/student/update/student', [StudentController::class, 'update'])->name('student_update');
     Route::post('/student/add/group', [StudentController::class, 'addGroups'])->name('student_add_group');
+
+    Route::post('/student/add/pay', [AddPaymartController::class, 'store'])->name('student_add_paymart');
 
     
     Route::get('groups', [GroupsController::class, 'index'])->name('all_groups'); 

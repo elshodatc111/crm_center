@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kassa extends Model{
     use HasFactory;
 
-    protected $table = 'kassa';
+    protected $table = 'kassas';
 
     protected $fillable = [
         'naqt',

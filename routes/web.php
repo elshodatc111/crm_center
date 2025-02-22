@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\sadmin\sSettingController;
 use App\Http\Controllers\sadmin\sSmsSettingController;
 use App\Http\Controllers\sadmin\sTimeController;
+use App\Http\Controllers\sHududSettingController;
 use App\Http\Controllers\admin\setting\HolidayController;
 use App\Http\Controllers\admin\setting\SmsSettingController;
 use App\Http\Controllers\admin\setting\PaymartSettingController;
@@ -48,6 +49,8 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
     Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
     Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
+
+    
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
@@ -73,5 +76,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/video/{id}', [VideoController::class, 'index'])->name('setting_cours_video');
     Route::post('setting/video/create', [VideoController::class, 'store'])->name('setting_video_create');
     Route::post('setting/video/delete', [VideoController::class, 'delete'])->name('setting_video_delete');
+
+    
+    Route::get('social', [sHududSettingController::class, 'index'])->name('all_social');
+    Route::post('/social/store', [sHududSettingController::class, 'store'])->name('social_store');
 });
 

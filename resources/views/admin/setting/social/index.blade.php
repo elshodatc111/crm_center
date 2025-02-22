@@ -23,7 +23,7 @@
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
-    @endif
+    @endif 
     <div class="row">
         <div class="col-8">
             <div class="card">
@@ -45,9 +45,9 @@
                                 <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['count'] }}</td>
                                 <td>
-                                    <form action="{{ route('social_delete') }}" method="post">
+                                    <form action="{{ route('social_delete',$item['id']) }}" method="post">
                                         @csrf 
-                                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                        @method('delete')
                                         <button class="btn btn-danger px-1 py-0" type="submit"><i class="bi bi-trash"></i></button>
                                     </form>
                                 </td>

@@ -13,6 +13,7 @@ use App\Models\SettingPaymart;
 use App\Models\Paymart;
 use App\Models\UserHistory;
 use App\Models\MenegerChart;
+use App\Models\SettingChegirma;
 
 class AdminChegirmaService{
 
@@ -33,12 +34,7 @@ class AdminChegirmaService{
         }
         return $Guruh;
     }
-/*
-  "user_id" => "13"
-  "guruh_id" => "1"
-  "chegirma" => "150 000"
-  "description" => "Test Uchun"
-*/
+    
     public function chegirmaAdmin(array $data){
         $Group = Group::find($data['guruh_id']);
         $setting_paymarts_id = $Group->setting_paymarts;
@@ -66,6 +62,92 @@ class AdminChegirmaService{
             'description' => $data['description'],
             'admin_id' => auth()->id(),
         ]);
+        return true;
+    }
+
+    public function holidayDiscount(){
+        $SettingChegirma = SettingChegirma::where('status','true')->first();
+        if ($SettingChegirma) {
+            return [
+                'status' => 'true',
+                'amount' => intval($SettingChegirma->amount),
+                'chegirma' => intval($SettingChegirma->chegirma),
+                'comment' => $SettingChegirma->comment,
+            ];
+        }else{
+            return [
+                'status' => 'false',
+                'amount' => 0,
+                'chegirma' => 0,
+                'comment' => 'false',
+            ];
+        }
+    }
+    /*
+      "user_id" => "12"
+      "amount" => "500000"
+      "chegirma" => "50000"
+      "type" => "naqt"
+      "discription" => "asdasd"
+    */
+    protected function addPay(int $user_id, string $group_id, int $price, string $type, string $description) {
+        return Paymart::create([
+            'user_id' => $user_id,
+            'group_id' => $group_id,
+            'amount' => $price,
+            'paymart_type' => $type,
+            'description' => $description,
+            'admin_id' => auth()->id(),
+        ]);
+    }
+    protected function addHistory(int $user_id, string $type, string $type_commit) {
+        return UserHistory::create([
+            'user_id' => $user_id,
+            'type' => $type,
+            'type_commit' => $type_commit,
+            'admin_id' => auth()->id(),
+        ]);
+    }
+    protected function updateUserBalance(int $user_id, int $price) {
+        $User = User::find($user_id);
+        if ($User) {
+            $User->increment('balans', $price);
+        }
+    }
+    protected function updateMenegerChart(int $price, string $type) {
+        $User = MenegerChart::find(auth()->id());
+        if ($User) {
+            if ($type == 'naqt') {
+                $User->increment('paymart_add_naqt', $price);
+            } elseif ($type == 'plastik') {
+                $User->increment('paymart_add_plastik', $price);
+            } else {
+                $User->increment('chegirma_add', $price);
+            }
+        }
+    }
+    protected function updateKassa(int $price, string $type) {
+        $Kassa = Kassa::firstOrCreate([], ['naqt' => 0, 'plastik' => 0]);
+        if ($type == 'naqt') {
+            $Kassa->increment('naqt', $price);
+        } else {
+            $Kassa->increment('plastik', $price);
+        }
+    }
+    public function storeHolidayDiscount(array $data){
+        if($data['type']=='naqt'){
+            $type = 'naqt';
+        }else{
+            $type = 'plastik';
+        }
+        $this->addPay($data['user_id'], 'null', $data['amount'], $type, $data['discription']);
+        $this->addPay($data['user_id'], 'null', $data['chegirma'], 'chegirma', $data['discription']);
+        $this->addHistory($data['user_id'], 'paymart_add', $data['amount']." so'm to'lov qildi(".$data['discription'].")");
+        $this->addHistory($data['user_id'], 'chegirma_add', $data['amount']." so'm to'lov ucnun ".$data['chegirma']." so\'m chegirma (".$data['discription'].")");
+        $this->updateUserBalance($data['user_id'], $data['amount']);
+        $this->updateUserBalance($data['user_id'], $data['chegirma']);
+        $this->updateMenegerChart($data['amount'], $type);
+        $this->updateKassa($data['amount'], $type);
         return true;
     }
 

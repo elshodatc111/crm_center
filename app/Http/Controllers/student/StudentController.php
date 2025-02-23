@@ -19,6 +19,7 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Requests\AddStudentToGroupRequest;
 use App\Http\Requests\RefundRequest;
 use App\Http\Requests\ChegirmaRequest;
+use App\Http\Requests\DiscountPaymentRequest;
 
 class StudentController extends Controller{
 
@@ -72,8 +73,9 @@ class StudentController extends Controller{
         $kassa = $this->kassaService->getKassa();
         $paymarts = $this->paymartService->getPaymarts($id);
         $adminChegirmaGroup = $this->adminChegirmaService->getGroups($id);
-        //dd($adminChegirmaGroup);
-        return view('student.show', compact('student','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup'));
+        $holidayDiscount = $this->adminChegirmaService->holidayDiscount();
+        //dd($holidayDiscount);
+        return view('student.show', compact('student','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup','holidayDiscount'));
     }
 
     public function update_about(UserAboutUpdateRequest $request){
@@ -114,6 +116,11 @@ class StudentController extends Controller{
         }else{
             return redirect()->back()->with('error', 'Chegirma summasi noto\'g\'ri.');
         }
+    }
+
+    public function discountPayment(DiscountPaymentRequest $request){
+        $type = $this->adminChegirmaService->storeHolidayDiscount($request->validated());
+        return redirect()->back()->with('success', 'Chegirma to\'lov qabul qilindi.');
     }
     
 

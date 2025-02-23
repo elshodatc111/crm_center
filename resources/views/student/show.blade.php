@@ -43,9 +43,11 @@
                         <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#paymentModal">
                             <i class="bi bi-credit-card"></i> TO'LOV QILISH
                         </button>
+                        @if($holidayDiscount['status'] == 'true')
                         <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#discountPaymentModal">
                             <i class="bi bi-percent"></i> CHEGIRMALI TO'LOV
                         </button>
+                        @endif
                         <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#refundModal">
                             <i class="bi bi-arrow-counterclockwise"></i> To'lovni qaytarish
                         </button>
@@ -328,28 +330,32 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="discountPaymentForm">
+                    <form id="discountPaymentForm" action="{{ route('student_bayram_chegirma') }}" method="POST">
+                        @csrf 
                         <div class="row">
                             <div class="col-12 text-center">
-                                <b>Chegirma nomi</b>
+                                <b>{{ $holidayDiscount['comment'] }}</b>
                             </div>
                             <div class="col-6">
                                 <label for="editName" class="form-label">Chegirmali to'lov summasi</label>
-                                <p class="form-control m-0">250 000<p>
+                                <p class="form-control m-0">{{ $holidayDiscount['amount'] }}<p>
                             </div>
                             <div class="col-6">
-                                <label for="editName" class="form-label">To'lov chegirmasi</label>
-                                <p class="form-control m-0">50 000<p>
+                                <label for="editName" class="form-label">Chegirmasi</label>
+                                <p class="form-control m-0">{{ $holidayDiscount['chegirma'] }}<p>
                             </div>
                         </div>
-                        <label for="editName" class="form-label">To'lov turi</label>
-                        <select class="form-select" name="about_me" required>
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <input type="hidden" name="amount" value="{{ $holidayDiscount['amount'] }}">
+                        <input type="hidden" name="chegirma" value="{{ $holidayDiscount['chegirma'] }}">
+                        <label for="type" class="form-label">To'lov turi</label>
+                        <select class="form-select" name="type" required>
                             <option value="" disabled selected>Tanlang...</option>
-                            <option value="social_telegram">Naqt</option>
-                            <option value="social_telegram">Plastik</option>
+                            <option value="naqt">Naqt</option>
+                            <option value="plastik">Plastik</option>
                         </select>
-                        <label for="editName" class="form-label mt-2">To'lov haqida</label>
-                        <textarea type="text" class="form-control" required></textarea>
+                        <label for="discription" class="form-label mt-2">To'lov haqida</label>
+                        <textarea type="text" name="discription" class="form-control" required></textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>

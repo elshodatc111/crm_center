@@ -20,9 +20,16 @@
             </ul>
         </div>
     @endif
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
     @endif
 
@@ -152,7 +159,6 @@
                                 </form>
                             </div>
 
-                            <!-- Talaba guruhlari -->
                             <div class="tab-pane fade" id="profile-groups">
                                 <h5 class="card-title">Talaba guruhlari</h5>
                                 <table class="table table-bordered text-center" style="font-size:12px;">
@@ -201,12 +207,24 @@
                                             <th>To'lov turi</th>
                                             <th>To'lov haqida</th>
                                             <th>To'lov vaqti</th>
+                                            <th>Meneger</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse($paymarts as $item)
+                                            <tr>
+                                                <td>{{ $loop->index+1 }}</td>
+                                                <td>{{ $item['amount'] }}</td>
+                                                <td>{{ $item['paymart_type'] }}</td>
+                                                <td>{{ $item['description'] }}</td>
+                                                <td>{{ $item['created_at'] }}</td>
+                                                <td>{{ $item['user_name'] }}</td>
+                                            </tr>
+                                        @empty  
                                         <tr>
-                                            <td colspan="5">Ma'lumot mavjud emas</td>
+                                            <td colspan="5">To'lovlar mavjud emas</td>
                                         </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -354,11 +372,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="refundForm">
-                        <label for="editName" class="form-label mt-2">Qaytariladigan summa</label>
-                        <input type="text" class="form-control"  id="paymentAmount1" required>
-                        <label for="editName" class="form-label mt-2">Qaytariladigan summa haqida</label>
-                        <textarea type="text" class="form-control" required></textarea>
+                    <form action="{{ route('student_return_paymart') }}" method="POST">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <input type="hidden" name="kassa_amount" value="{{ $kassa['naqt'] }}">
+                        <label for="amount" class="form-label mt-2">Qaytariladigan summa <i class="text-danger">(Kassada mavjud: {{ number_format($kassa['naqt'], 0, '.', ' ') }} so'm)</i></label>
+                        <input type="text" name="amount" class="form-control" id="paymentAmount7" required>
+                        <script>
+                            document.getElementById('paymentAmount7').addEventListener('input', function(event) {
+                                let input = event.target.value.replace(/\D/g, ''); 
+                                let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                                event.target.value = formatted;
+                            });
+                        </script>
+                        <label for="description" class="form-label mt-2">Qaytariladigan to'lov haqida</label>
+                        <textarea type="text" name="description" class="form-control" required></textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -415,16 +443,27 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="adminDiscountForm">
-                        <label for="editName" class="form-label">Guruhni tanlang</label>
-                        <select class="form-select" name="about_me" required>
+                    <form action="{{ route('student_admin_chegirma') }}" method="POST">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <label for="guruh_id" class="form-label">Guruhni tanlang</label>
+                        <select class="form-select" name="guruh_id" required>
                             <option value="" disabled selected>Tanlang...</option>
-                            <option value="social_telegram">Guruh nomi</option>
+                            @foreach($adminChegirmaGroup as $item)
+                            <option value="{{ $item['guruh_id'] }}">{{ $item['guruh_name']." (Maksimal chegirma: ".number_format($item['admin_chegirma'], 0, '.', ' ')." so'm)" }}</option>
+                            @endforeach
                         </select>
-                        <label for="paymentAmount2" class="form-label mt-2">Chegirma summasi</label>
-                        <input type="text" class="form-control"  id="paymentAmount3" required>
-                        <label for="editName" class="form-label mt-2">Chegirma haqida</label>
-                        <textarea type="text" class="form-control" required></textarea>
+                        <label for="chegirma" class="form-label mt-2">Chegirma summasi</label>
+                        <input type="text" class="form-control" name="chegirma" id="paymentAmount17" required>
+                        <script>
+                            document.getElementById('paymentAmount17').addEventListener('input', function(event) {
+                                let input = event.target.value.replace(/\D/g, ''); 
+                                let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                                event.target.value = formatted;
+                            });
+                        </script>
+                        <label for="description" class="form-label mt-2">Chegirma haqida</label>
+                        <textarea type="text" name="description" class="form-control" required></textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>

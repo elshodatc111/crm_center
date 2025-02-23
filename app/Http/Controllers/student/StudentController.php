@@ -9,20 +9,37 @@ use App\Models\Social;
 use App\Http\Requests\StoreVisitRequest;
 use App\Services\StudentService;
 use App\Services\PaymartService;
+use App\Services\PaymartReturnService;
+use App\Services\KassaService;
+use App\Services\AdminChegirmaService;
 use App\Jobs\SendMessageWork;
 use App\Http\Requests\ShowStudentRequest;
 use App\Http\Requests\UserAboutUpdateRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Requests\AddStudentToGroupRequest;
+use App\Http\Requests\RefundRequest;
+use App\Http\Requests\ChegirmaRequest;
 
 class StudentController extends Controller{
 
     private StudentService $studentService;
     private PaymartService $paymartService;
+    private KassaService $kassaService;
+    private PaymartReturnService $paymartReturnService;
+    private AdminChegirmaService $adminChegirmaService;
 
-    public function __construct(StudentService $studentService,PaymartService $paymartService){
+    public function __construct(
+                                StudentService $studentService,
+                                PaymartService $paymartService,
+                                KassaService $kassaService,
+                                PaymartReturnService $paymartReturnService,
+                                AdminChegirmaService $adminChegirmaService
+                            ){
         $this->paymartService = $paymartService;
         $this->studentService = $studentService;
+        $this->kassaService = $kassaService;
+        $this->paymartReturnService = $paymartReturnService;
+        $this->adminChegirmaService = $adminChegirmaService;
         $this->middleware('meneger');
     }
 
@@ -52,8 +69,11 @@ class StudentController extends Controller{
         $history = $this->studentService->getShowHistory($id);
         $user_groups = $this->studentService->studentGroups($id);
         $chegirma_groups = $this->paymartService->chegirmaGroups($id);
-        //dd($chegirma_groups);
-        return view('student.show', compact('student','history','addGroups','user_groups','chegirma_groups'));
+        $kassa = $this->kassaService->getKassa();
+        $paymarts = $this->paymartService->getPaymarts($id);
+        $adminChegirmaGroup = $this->adminChegirmaService->getGroups($id);
+        //dd($adminChegirmaGroup);
+        return view('student.show', compact('student','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup'));
     }
 
     public function update_about(UserAboutUpdateRequest $request){
@@ -76,5 +96,25 @@ class StudentController extends Controller{
         $this->studentService->addGroups($request->validated());
         return redirect()->back()->with('success', 'Yangi guruhga qo\'shildi.');
     }
+    
+    public function returnPaymarts(RefundRequest $request){
+        $Kassa = intval($request->kassa_amount);
+        $Amount = intval(str_replace(" ","",$request->amount));
+        if($Amount>$Kassa){
+            return redirect()->back()->with('success', 'Kassada yetarli mablag\' mavjud emas.');
+        }
+        $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description);
+        return redirect()->back()->with('success', 'To\'lov qaytarish yakunlandi.');
+    }
+
+    public function chegirmaAdmin(ChegirmaRequest $request){
+        $type = $this->adminChegirmaService->chegirmaAdmin($request->validated());
+        if($type){
+            return redirect()->back()->with('success', 'Chegirma qabul qilindi.');
+        }else{
+            return redirect()->back()->with('error', 'Chegirma summasi noto\'g\'ri.');
+        }
+    }
+    
 
 }

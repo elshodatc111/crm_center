@@ -15,7 +15,12 @@ use App\Models\UserHistory;
 use App\Models\MenegerChart;
 
 class PaymartService{
-
+    public function getPaymarts(int $id){
+        return Paymart::where('paymarts.user_id',$id)
+            ->join('users','users.id','paymarts.admin_id')
+            ->select('paymarts.amount','paymarts.paymart_type','paymarts.description','paymarts.created_at','users.user_name')
+            ->get();
+    }
     public function chegirmaGroups(int $user_id){
         $GroupUser = GroupUser::where('user_id', $user_id)
             ->where('status', 1)

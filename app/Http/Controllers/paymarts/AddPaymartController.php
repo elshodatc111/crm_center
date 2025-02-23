@@ -17,7 +17,9 @@ class AddPaymartController extends Controller{
 
     public function store(PaymartRequest $request){
         $this->paymartService->addPayUser($request->validated());
-        //dd($request);
         return redirect()->back()->with('success', 'To\'lov qabul qilindi.');
     }
+
+    
+
 }

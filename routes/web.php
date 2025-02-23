@@ -33,6 +33,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/student/add/group', [StudentController::class, 'addGroups'])->name('student_add_group');
 
     Route::post('/student/add/pay', [AddPaymartController::class, 'store'])->name('student_add_paymart');
+    Route::post('/student/add/return', [StudentController::class, 'returnPaymarts'])->name('student_return_paymart');
 
     
     Route::get('groups', [GroupsController::class, 'index'])->name('all_groups'); 
@@ -84,5 +85,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('social', [sHududSettingController::class, 'index'])->name('all_social');
     Route::post('/social/store', [sHududSettingController::class, 'store'])->name('social_store');
     Route::DELETE('/social/delete/{id}', [sHududSettingController::class, 'destroy'])->name('social_delete'); 
+
+    Route::post('/student/admin/chegirma', [StudentController::class, 'chegirmaAdmin'])->name('student_admin_chegirma');
+    
 });
 

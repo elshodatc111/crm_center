@@ -88,6 +88,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/student/admin/chegirma', [StudentController::class, 'chegirmaAdmin'])->name('student_admin_chegirma');
 
     Route::get('/techers', [TecherController::class, 'index'])->name('all_techer');
+    Route::post('/techers/create', [TecherController::class, 'store'])->name('techer_create');
     Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
 
 });

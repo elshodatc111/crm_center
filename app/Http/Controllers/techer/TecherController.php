@@ -25,7 +25,6 @@ class TecherController extends Controller{
 
     public function store(TeacherRequest $request){
         $this->techerService->create($request->validated());
-        
         return redirect()->back()->with('success', 'O‘qituvchi muvaffaqiyatli qo‘shildi.');
     }
 

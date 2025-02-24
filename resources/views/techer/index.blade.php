@@ -42,7 +42,7 @@
                         <th>Telefon raqam</th>
                         <th>Login</th>
                         <th>Ishga olindi</th>
-                        <th>Status</th>
+                        <th>Ish faoliyati</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -17,6 +17,7 @@ use App\Http\Controllers\admin\cours\VideoController;
 use App\Http\Controllers\student\StudentController;
 use App\Http\Controllers\student\GroupsController;
 use App\Http\Controllers\paymarts\AddPaymartController;
+use App\Http\Controllers\techer\TecherController;
 
 Auth::routes();
 
@@ -81,13 +82,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/video/{id}', [VideoController::class, 'index'])->name('setting_cours_video');
     Route::post('setting/video/create', [VideoController::class, 'store'])->name('setting_video_create');
     Route::post('setting/video/delete', [VideoController::class, 'delete'])->name('setting_video_delete');
-
-    
     Route::get('social', [sHududSettingController::class, 'index'])->name('all_social');
     Route::post('/social/store', [sHududSettingController::class, 'store'])->name('social_store');
     Route::DELETE('/social/delete/{id}', [sHududSettingController::class, 'destroy'])->name('social_delete'); 
-
     Route::post('/student/admin/chegirma', [StudentController::class, 'chegirmaAdmin'])->name('student_admin_chegirma');
+
+    Route::get('/techers', [TecherController::class, 'index'])->name('all_techer');
+    Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
 
 });
 

@@ -132,7 +132,7 @@
         </ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link {{ request()->routeIs(['all_techer','all_techer']) ? '' : 'collapsed' }} " href="{{ route('all_techer') }}">
           <i class="bi bi-briefcase"></i>
           <span>O'qituvchilar</span>
         </a>

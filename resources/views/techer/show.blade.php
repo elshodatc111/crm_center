@@ -18,7 +18,7 @@
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
+    </div> 
 @endif
 @if (session('success'))
     <div class="alert alert-success">
@@ -31,40 +31,51 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title w-100 text-center">O'qituvchi haqida</h3>
-                <form action="#" method="post">
-                    <label for="">O'qituvchi</label>
-                    <input type="text" name="" required class="form-control">
+                <form action="{{ route('techer_update') }}" method="post">
+                    @csrf 
+                    <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
+                    <label for="user_name">O'qituvchi</label>
+                    <input type="text" name="user_name" value="{{ $techer['user_name'] }}" required class="form-control">
                     <div class="row">
                         <div class="col-6">
-                            <label for="" class="mt-1">Telefon raqam 1</label>
-                            <input type="text" name="" required class="form-control">
+                            <label for="phone1" class="mt-1">Telefon raqam 1</label>
+                            <input type="text" name="phone1" value="{{ $techer['phone1'] }}" required class="form-control phone">
                         </div>
                         <div class="col-6">
-                            <label for="" class="mt-1">Telefon raqam 2</label>
-                            <input type="text" name="" required class="form-control">
+                            <label for="phone2" class="mt-1">Telefon raqam 2</label>
+                            <input type="text" name="phone2" value="{{ $techer['phone2'] }}" required class="form-control phone">
                         </div>
                         <div class="col-6">
-                            <label for="" class="mt-1">Tug'ilgan kuni</label>
-                            <input type="text" name="" required class="form-control">
+                            <label for="birthday" class="mt-1">Tug'ilgan kuni</label>
+                            <input type="date" name="birthday" value="{{ $techer['birthday'] }}" required class="form-control">
                         </div>
                         <div class="col-6">
-                            <label for="" class="mt-1">Ish faoliyati</label>
-                            <input type="text" name="" required class="form-control">
+                            <label for="status" class="mt-1">Ish faoliyati</label>
+                            <p class="form-control">
+                                @if($techer['status']=='true')
+                                    Aktive
+                                @elseif($techer['status']=='false')
+                                    Ishdan bo'shatildi
+                                @else
+                                    Vaqtinchalik bloklandi
+                                @endif
+                            </p>
                         </div>
                     </div>
-                    <label for="" class="mt-1">Login</label>
-                    <input type="text" name="" required class="form-control">
-                    <label for="" class="mt-1">Yashash manzili</label>
-                    <input type="text" name="" required class="form-control">
-                    <label for="" class="mt-1">O'qituvchi haqida</label>
-                    <textarea type="text" name="" required class="form-control"></textarea>
+                    <label for="email">Login</label>
+                    <input type="text" name="email" value="{{ $techer['email'] }}" required class="form-control" disabled>
+                    <label for="address" class="mt-1">Yashash manzili</label>
+                    <textarea type="text" name="address" required class="form-control">{{ $techer['address'] }}</textarea>
                     <button class="btn btn-primary w-100 mt-2">O'zgarishlarni saqlash</button>
                 </form>
                 <hr>
                 <div class="row">
                     <div class="col-6">
-                        <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#dismissModal">Ishdan bo'shatish</button>
-                        <button class="btn btn-success w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hireModal">Ishga olish</button>
+                        @if($techer['status']=='true')
+                            <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#dismissModal">Ishdan bo'shatish</button>
+                        @else
+                            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#hireModal">Qaytadan ishga olish</button>
+                        @endif
                     </div>
                     <div class="col-6">
                         <button class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Parolni yangilash</button>
@@ -80,10 +91,22 @@
                     <h5 class="modal-title">Ishdan bo'shatish</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">O'qituvchini ishdan bo'shatishga ishonchingiz komilmi?</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <form action="#" method="post"> @csrf <button type="submit" class="btn btn-danger">Ha, bo'shatish</button> </form>
+                <div class="modal-body">
+                    <p class="w-100 text-center">
+                        O'qituvchini ishdan bo'shatishga ishonchingiz komilmi?
+                    </p>
+                    <div class="row mt-4">
+                        <div class="col-6" >
+                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                        </div>
+                        <div class="col-6">
+                            <form action="{{ route('techer_status') }}" method="post"> 
+                                @csrf 
+                                <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
+                                <button type="submit" class="btn btn-danger w-100">Ha, bo'shatish</button> 
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,13 +117,25 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Ishga olish</h5>
+                    <h5 class="modal-title w-100 text-center">Ishga olish</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">O'qituvchini ishga qabul qilishni tasdiqlaysizmi?</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <form action="#" method="post"> @csrf <button type="submit" class="btn btn-success">Ha, ishga olish</button> </form>
+                <div class="modal-body">
+                    <p class="w-100 text-center">
+                        O'qituvchini qaytadan ishga qabul qilishni tasdiqlaysizmi?
+                    </p>
+                    <div class="row mt-4">
+                        <div class="col-6" >
+                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                        </div>
+                        <div class="col-6">
+                            <form action="{{ route('techer_status') }}" method="post"> 
+                                @csrf 
+                                <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
+                                <button type="submit" class="btn btn-danger w-100">Ha, bo'shatish</button> 
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,13 +146,25 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Parolni yangilash</h5>
+                    <h5 class="modal-title w-100 text-center">Parolni yangilash</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">Ushbu o'qituvchining parolini yangilashni xohlaysizmi?</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                    <form action="#" method="post"> @csrf <button type="submit" class="btn btn-warning">Ha, parolni yangilash</button> </form>
+                <div class="modal-body">
+                    <p class="w-100 text-center">
+                        Ushbu o'qituvchining parolini yangilashni xohlaysizmi?
+                    </p>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                        </div>
+                        <div class="col-6">
+                            <form action="#" method="post"> 
+                                @csrf 
+                                <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
+                                <button type="submit" class="btn btn-warning w-100">Ha, parolni yangilash</button> 
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,9 +199,11 @@
                     </tbody>
                 </table>
                 
-                <button class="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#paySalaryModal">
-                    Ish haqi to'lash
-                </button>
+                <div class="w-100 text-center">
+                    <button class="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#paySalaryModal">
+                        Ish haqi to'lash
+                    </button>
+                </div>
                 
             </div>
         </div>
@@ -163,18 +212,59 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="paySalaryLabel">Ish haqi to'lash</h5>
+                    <h5 class="modal-title w-100 text-center" id="paySalaryLabel">Ish haqi to'lash</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="#" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <label for="amount">To'lov summasi</label>
-                        <input type="number" name="amount" class="form-control" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                        <button type="submit" class="btn btn-primary">To'lash</button>
+                        <table class="table text-center table-bordered" style="font-size:12px;">
+                            <thead>
+                                <tr>
+                                    <th colspan=2>Balansda mavjud</th>
+                                </tr>
+                                <tr>
+                                    <th>Naqt</th>
+                                    <th>Plastik</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>12 000</td>
+                                    <td>25 000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
+                        <label for="amount" class="my-2">Guruhni tanlang</label>
+                        <select name="" class="form-select" required>
+                            <option value="">Tanlang</option>
+                        </select>
+                        <label for="amount" class="my-2">To'lov summasi</label>
+                        <input type="text" name="amount" id="paymentAmount7" class="form-control" required>
+                        <script>
+                            document.getElementById('paymentAmount7').addEventListener('input', function(event) {
+                                let input = event.target.value.replace(/\D/g, ''); 
+                                let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                                event.target.value = formatted;
+                            });
+                        </script>
+                        <label for="amount" class="my-2">To'lov turi</label>
+                        <select name="" class="form-select" required>
+                            <option value="">Tanlang</option>
+                            <option value="naqt">Naqt</option>
+                            <option value="plastik">Plastik</option>
+                        </select>
+                        <label for="amount" class="my-2">To'lov haqida</label>
+                        <textarea name="" required class="form-control"></textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">To'lash</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -214,4 +304,9 @@
 </div>
             
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+    <script>
+        $(".phone").inputmask("+998 99 999 9999");
+    </script>
 @endsection

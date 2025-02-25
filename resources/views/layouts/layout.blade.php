@@ -83,7 +83,19 @@
           <span>Varonka</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs(['compamy_kassa','compamy_kassa'])? '' : 'collapsed' }}" href="{{ route('compamy_kassa') }}">
+          <i class="bi bi-cash-stack"></i>
+          <span>Kassa</span>
+        </a>
+      </li>
       @if(auth()->user()->type === 'sAdmin' || auth()->user()->type === 'admin')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="bi bi-graph-up"></i>
+          <span>Moliya</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Hisobot</span><i class="bi bi-chevron-down ms-auto"></i>

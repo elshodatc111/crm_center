@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('kassa_histories', function (Blueprint $table) {
             $table->id();
-            $table->decimal('naqt', 15, 2)->default(0);
-            $table->decimal('naqt_xar_pedding', 15, 2)->default(0);
-            $table->decimal('naqt_chiq_pedding', 15, 2)->default(0);
-            $table->decimal('naqt_qayt_pedding', 15, 2)->default(0);
-            $table->decimal('plastik', 15, 2)->default(0);
-            $table->decimal('plastik_xar_pedding', 15, 2)->default(0);
-            $table->decimal('plastik_chiq_pedding', 15, 2)->default(0);
-            $table->decimal('plastik_qayt_pedding', 15, 2)->default(0);
+            $table->foreignId('meneger_id')->constrained('users')->onDelete('cascade');
+            $table->timestamp('create_time')->useCurrent();
+            $table->text('description')->nullable();
+            $table->decimal('amount', 15, 2);
+            $table->string('type'); // Naqt yoki plastik
+            $table->enum('status', ['naqt_chiq', 'naqt_xar', 'plastik_chiq', 'plastik_xar']);
+            $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->timestamp('succes_time')->nullable();
             $table->timestamps();
         });
     }

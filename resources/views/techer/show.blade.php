@@ -132,7 +132,7 @@
                             <form action="{{ route('techer_status') }}" method="post"> 
                                 @csrf 
                                 <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
-                                <button type="submit" class="btn btn-danger w-100">Ha, bo'shatish</button> 
+                                <button type="submit" class="btn btn-success w-100">Ha, Ishga qabul qilish</button> 
                             </form>
                         </div>
                     </div>

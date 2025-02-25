@@ -18,6 +18,7 @@ use App\Http\Controllers\student\StudentController;
 use App\Http\Controllers\student\GroupsController;
 use App\Http\Controllers\paymarts\AddPaymartController;
 use App\Http\Controllers\techer\TecherController;
+use App\Http\Controllers\kassa\KassaController;
 
 Auth::routes();
 
@@ -32,17 +33,16 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/student/update/password', [StudentController::class, 'update_password'])->name('student_update_password');
     Route::post('/student/update/student', [StudentController::class, 'update'])->name('student_update');
     Route::post('/student/add/group', [StudentController::class, 'addGroups'])->name('student_add_group');
-
     Route::post('/student/add/pay', [AddPaymartController::class, 'store'])->name('student_add_paymart');
     Route::post('/student/add/return', [StudentController::class, 'returnPaymarts'])->name('student_return_paymart');
-
     Route::post('/student/chegirma', [StudentController::class, 'discountPayment'])->name('student_bayram_chegirma');
-    
     Route::get('groups', [GroupsController::class, 'index'])->name('all_groups'); 
     Route::post('groups/create', [GroupsController::class, 'store'])->name('create_groups'); 
     Route::get('groups/{id}', [GroupsController::class, 'show'])->name('create_show'); 
     Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update'); 
     Route::post('groups/remove/user', [GroupsController::class, 'removeUser'])->name('create_groups_remove_user'); 
+
+    Route::get('/kassa', [KassaController::class, 'index'])->name('compamy_kassa');
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
@@ -92,6 +92,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/techers/update', [TecherController::class, 'techerUpdate'])->name('techer_update');
     Route::post('/techers/status', [TecherController::class, 'techerStatus'])->name('techer_status');
     Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
+
+
 
 });
 

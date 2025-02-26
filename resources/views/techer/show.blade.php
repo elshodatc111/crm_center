@@ -187,15 +187,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="#">Guruh nomi</a></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        @forelse($groups as $item)
+                        <tr> 
+                            <td>{{ $loop->index+1 }}</td>
+                            <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                            <td>
+                                @if($item['status']=='active')
+                                    <i class="text-success">Faol</i>
+                                @elseif($item['status']=='end')
+                                    <i class="text-danger">Yakunlangan</i>
+                                @else
+                                    <i class="text-warning">Kutilmoqda</i>
+                                @endif
+                            </td>
+                            <td>{{ $item['users'] }}</td>
+                            <td>{{ $item['bonus'] }}</td>
+                            <td>{{ number_format($item['xisoblandi'], 0, '.', ' ') }}</td>
+                            <td>{{ number_format($item['tulandi'], 0, '.', ' ') }}</td>
                         </tr>
+                        @empty
+                            <tr>
+                                <td colspan=7 class="text-center">O'qituvchi guruhlari mavjud emas</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 

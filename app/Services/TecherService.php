@@ -4,9 +4,12 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use App\Models\User;
+use App\Models\Group;
+use App\Models\GroupUser;
 use App\Models\Social;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class TecherService{
     public function allTecher(){
@@ -18,7 +21,7 @@ class TecherService{
         $data['email'] = time()."gmail.com";
         $data['password'] = Hash::make('password');
         $data['type'] = 'techer';
-        return User::create($data);
+        return User::create($data); 
     }
      
     public function techerShow(int $id){
@@ -38,18 +41,47 @@ class TecherService{
 
     public function UpdateStaus(int $id){
         $teacher = User::findOrFail($id);
-        //dd($teacher->status);
         if($teacher->status =='true'){
             $teacher->status = 'false';
-            //dd($teacher->status."ss");
             $teacher->save();
             return false;
         }else{
             $teacher->status = 'true';
-            //dd($teacher->status);
             $teacher->save();
             return true;
         }
+    }
+
+    protected function groupBonus(int $id){
+        return 0;
+    }
+    protected function ishHaqiTulandi(int $id){
+        return 0;
+    }
+
+    public function techerGroups(int $id){
+        $date = Carbon::now()->subDays(31)->startOfDay()->format('Y-m-d H:i:s');
+        $group = Group::where('techer_id',$id)->where('lessen_end','>=',$date)->get();
+        $array = [];
+        foreach ($group as $key => $value) {
+            $currentDate = date("Y-m-d H:i:s");
+            if ($value['lessen_start'] <= $currentDate && $value['lessen_end'] >= $currentDate) {
+                $status = 'active';
+            } elseif ($value['lessen_end'] < $currentDate) {
+                $status = 'end';
+            } else {
+                $status = 'new';
+            }
+            $users = count(GroupUser::where('group_id',$value->id)->where('status',1)->get());
+            $array[$key]['group_id'] = $value->id;
+            $array[$key]['group_name'] = $value->group_name;
+            $array[$key]['status'] = $status;
+            $array[$key]['users'] = $users;
+            $array[$key]['bonus'] = $this->groupBonus($value->id);
+            $array[$key]['xisoblandi'] = $users*$value->techer_paymart + $this->groupBonus($value->id) * $value->techer_bonus;
+            $array[$key]['tulandi'] = $this->ishHaqiTulandi($value->id);
+        }
+        return $array;
     }
 
 }

@@ -29,10 +29,10 @@ class TecherController extends Controller{
         return redirect()->back()->with('success', 'O‘qituvchi muvaffaqiyatli qo‘shildi.');
     }
 
-    public function show($id){
+    public function show($id){ 
         $techer = $this->techerService->techerShow($id);
-        //dd($techer);
-        return view('techer.show',compact('techer'));
+        $groups = $this->techerService->techerGroups($id);
+        return view('techer.show',compact('techer','groups'));
     }
 
     public function techerUpdate(UpdateTeacherRequest $request){

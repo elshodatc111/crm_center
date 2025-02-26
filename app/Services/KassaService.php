@@ -126,6 +126,25 @@ class KassaService{
             ->get();
     }
 
+    public function successAllKassa(){
+        $status = Carbon::now()->subDays(90)->startOfDay();
+        return KassaHistory::where('kassa_histories.status', 'success')
+            ->join('users as meneger', 'meneger.id', 'kassa_histories.meneger_id') // 1-join
+            ->join('users as admin', 'admin.id', 'kassa_histories.admin_id') // 2-join
+            ->select(
+                'meneger.user_name as meneger',
+                'kassa_histories.type',
+                'kassa_histories.amount',
+                'kassa_histories.create_time',
+                'kassa_histories.description',
+                'kassa_histories.succes_time',
+                'admin.user_name as admin'
+            )
+            ->where('kassa_histories.succes_time', '>=', $status)
+            ->orderBy('kassa_histories.succes_time', 'desc')
+            ->get();
+    }
+
     public function delete(int $id){
         $KassaHistory = KassaHistory::find($id);
         $Kassa = $this->getKassa();

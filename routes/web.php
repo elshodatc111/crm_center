@@ -99,6 +99,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
 
     Route::get('/moliya', [MoliyaController::class, 'index'])->name('compamy_moliya');
+    Route::post('/moliya/updateExson', [MoliyaController::class, 'updateExson'])->name('compamy_updateExson');
 
 
 

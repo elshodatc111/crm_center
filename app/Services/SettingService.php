@@ -88,4 +88,9 @@ class SettingService{
         $SettingRoom->status = 'delete';
         return $SettingRoom->save();
     }
+    public function exsonUpdate(int $exson_percent){
+        $setting = Setting::first();
+        $setting->exson_foiz = $exson_percent;
+        return $setting->save();
+    }
 }

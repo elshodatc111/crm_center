@@ -41,8 +41,13 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('groups/{id}', [GroupsController::class, 'show'])->name('create_show'); 
     Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update'); 
     Route::post('groups/remove/user', [GroupsController::class, 'removeUser'])->name('create_groups_remove_user'); 
-
+    
     Route::get('/kassa', [KassaController::class, 'index'])->name('compamy_kassa');
+    Route::post('/kassa/chiqim', [KassaController::class, 'chiqim'])->name('compamy_kassa_chiqim');
+    Route::post('/kassa/xarajat', [KassaController::class, 'xarajat'])->name('compamy_kassa_xarajat');
+    Route::post('/kassa/delete', [KassaController::class, 'delete'])->name('compamy_kassa_delete');
+    Route::post('/kassa/success', [KassaController::class, 'success'])->name('compamy_kassa_success');
+
 });
 
 Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {

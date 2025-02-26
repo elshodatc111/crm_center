@@ -83,13 +83,7 @@ class AdminChegirmaService{
             ];
         }
     }
-    /*
-      "user_id" => "12"
-      "amount" => "500000"
-      "chegirma" => "50000"
-      "type" => "naqt"
-      "discription" => "asdasd"
-    */
+    
     protected function addPay(int $user_id, string $group_id, int $price, string $type, string $description) {
         return Paymart::create([
             'user_id' => $user_id,

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->timestamp('create_time')->useCurrent();
             $table->text('description')->nullable();
             $table->decimal('amount', 15, 2);
-            $table->string('type'); // Naqt yoki plastik
-            $table->enum('status', ['naqt_chiq', 'naqt_xar', 'plastik_chiq', 'plastik_xar']);
+            $table->string('status'); 
+            $table->enum('type', ['naqt_chiq', 'naqt_xar', 'plastik_chiq', 'plastik_xar']);
             $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('succes_time')->nullable();
             $table->timestamps();

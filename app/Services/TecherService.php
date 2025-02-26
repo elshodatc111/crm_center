@@ -53,7 +53,23 @@ class TecherService{
     }
 
     protected function groupBonus(int $id){
-        return 0;
+        $GroupUser = GroupUser::where('group_id', $id)->where('status', 1)->get();
+        if ($GroupUser->isEmpty()) {
+            return 0;
+        }
+        $group = Group::find($id);
+        $Groups_id = Group::where('lessen_start', '>=', $group->lessen_end)->pluck('id');
+        $user = [];
+        foreach ($Groups_id as $guruh_id) {
+            foreach ($GroupUser as $value) {
+                $user_id = $value->user_id;
+                $check = GroupUser::where('group_id', $guruh_id)->where('user_id', $user_id)->exists();
+                if ($check) {
+                    $user[$user_id] = true; 
+                }
+            }
+        }
+        return count($user);
     }
     protected function ishHaqiTulandi(int $id){
         return 0;

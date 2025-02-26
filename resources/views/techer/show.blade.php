@@ -139,7 +139,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
     <!-- Parolni yangilash Modal -->
     <div class="modal fade" id="resetPasswordModal" tabindex="-1">

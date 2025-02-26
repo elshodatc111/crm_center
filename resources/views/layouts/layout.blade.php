@@ -91,7 +91,7 @@
       </li>
       @if(auth()->user()->type === 'sAdmin' || auth()->user()->type === 'admin')
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link {{ request()->routeIs(['compamy_moliya'])? '' : 'collapsed' }}" href="{{ route('compamy_moliya') }}">
           <i class="bi bi-graph-up"></i>
           <span>Moliya</span>
         </a>

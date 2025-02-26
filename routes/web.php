@@ -19,6 +19,7 @@ use App\Http\Controllers\student\GroupsController;
 use App\Http\Controllers\paymarts\AddPaymartController;
 use App\Http\Controllers\techer\TecherController;
 use App\Http\Controllers\kassa\KassaController;
+use App\Http\Controllers\moliya\MoliyaController;
 
 Auth::routes();
 
@@ -91,12 +92,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/social/store', [sHududSettingController::class, 'store'])->name('social_store');
     Route::DELETE('/social/delete/{id}', [sHududSettingController::class, 'destroy'])->name('social_delete'); 
     Route::post('/student/admin/chegirma', [StudentController::class, 'chegirmaAdmin'])->name('student_admin_chegirma');
-
     Route::get('/techers', [TecherController::class, 'index'])->name('all_techer');
     Route::post('/techers/create', [TecherController::class, 'store'])->name('techer_create');
     Route::post('/techers/update', [TecherController::class, 'techerUpdate'])->name('techer_update');
     Route::post('/techers/status', [TecherController::class, 'techerStatus'])->name('techer_status');
     Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
+
+    Route::get('/moliya', [MoliyaController::class, 'index'])->name('compamy_moliya');
 
 
 

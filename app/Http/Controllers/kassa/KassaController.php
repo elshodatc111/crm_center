@@ -20,7 +20,6 @@ class KassaController extends Controller{
         $getKassa = $this->kassaService->getKassa();
         $returnPaymart = $this->kassaService->returnPaymart();
         $pedding = $this->kassaService->peddingKassa();
-        //dd($pedding);
         return view('kassa.index',compact('getKassa','returnPaymart','pedding'));
     }
 

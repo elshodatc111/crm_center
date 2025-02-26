@@ -9,7 +9,7 @@ class MoliyaHistory extends Model
 {
     use HasFactory;
 
-    protected $table = 'moliya_history';
+    protected $table = 'moliya_histories';
 
     protected $fillable = [
         'type',

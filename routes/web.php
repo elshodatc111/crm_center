@@ -100,6 +100,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/moliya', [MoliyaController::class, 'index'])->name('compamy_moliya');
     Route::post('/moliya/updateExson', [MoliyaController::class, 'updateExson'])->name('compamy_updateExson');
+    Route::post('/moliya/chiqim', [MoliyaController::class, 'balansChiqim'])->name('compamy_moliya_chiqim');
+    Route::post('/moliya/xarajat', [MoliyaController::class, 'xarajatBalans'])->name('compamy_moliya_xarajat');
 
 
 

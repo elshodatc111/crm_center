@@ -4,6 +4,8 @@ namespace App\Http\Controllers\moliya;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreExpenseRequest;
+use App\Http\Requests\ExpenseRequest;
 use App\Services\MoliyaService;
 use App\Services\KassaService;
 use App\Services\SettingService;
@@ -24,13 +26,34 @@ class MoliyaController extends Controller{
         $service = $this->settingService->getSetting();
         $kassa = $this->kassaService->getKassa();
         $chiqim = $this->kassaService->successAllKassa();
-        //dd($chiqim);
-        return view('moliya.index',compact('service','kassa','chiqim'));
+        $moliya = $this->moliyaService->MoliyaHistory();
+        //dd($moliya);
+        return view('moliya.index',compact('service','kassa','chiqim','moliya'));
     }
 
     public function updateExson(Request $request){
         $this->settingService->exsonUpdate($request->exson_percent);
         return redirect()->back()->with('success', 'Exson foizi taxrirlandi!');
+    }
+
+    public function balansChiqim(StoreExpenseRequest $request){
+        $check = $this->moliyaService->check($request->validated());
+        if($check){
+            $this->moliyaService->chiqimStore($request->validated());
+            return redirect()->back()->with('success', 'Balansdan chiqim qilindi!');
+        }else{
+            return redirect()->back()->with('success', 'Chiqim uchun balansda yetarli mablag\' mavjud emas!');
+        }
+    }
+
+    public function xarajatBalans(ExpenseRequest $request){
+        $check = $this->moliyaService->check($request->validated());
+        if($check){
+            $this->moliyaService->xarajatStore($request->validated());
+            return redirect()->back()->with('success', 'Balansdan xarajat qilindi!');
+        }else{
+            return redirect()->back()->with('success', 'Chiqim uchun balansda yetarli mablag\' mavjud emas!');
+        }
     }
 
 }

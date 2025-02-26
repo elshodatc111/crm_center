@@ -186,14 +186,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
+                                @forelse($moliya as $item)
+                                    <tr>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>
+                                            @if($item['type']=='chiq_plastik')
+                                                <i class="text-primary">Daromad (Plastik)</i>
+                                            @elseif($item['type']=='chiq_naqt')
+                                                <i class="text-primary">Daromad (Naqt)</i>
+                                            @elseif($item['type']=='chiq_exson')
+                                                <i class="text-success">Exson</i>
+                                            @elseif($item['type']=='xar_naqt')
+                                                <i class="text-danger">Xarajat (Naqt)</i>
+                                            @else
+                                                <i class="text-danger">Xarajat (Plastik)</i>
+                                            @endif
+                                        </td>
+                                        <td>{{ number_format($item['amount'], 0, '.', ' ') }}</td>
+                                        <td>{{ $item['comment'] }}</td>
+                                        <td>{{ $item['user_name'] }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan=6 class="text-center"></td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -210,14 +228,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -256,7 +267,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <form action="" method="post">
+                <form action="{{ route('compamy_moliya_chiqim') }}" method="post">
                     @csrf 
                     <input type="hidden" name="naqt" value="{{ $service['balans_naqt'] }}">
                     <input type="hidden" name="plastik" value="{{ $service['balans_plastik'] }}">
@@ -318,11 +329,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <form action="" method="post">
+                <form action="{{ route('compamy_moliya_xarajat') }}" method="post">
                     @csrf 
                     <input type="hidden" name="naqt" value="{{ $service['balans_naqt'] }}">
                     <input type="hidden" name="plastik" value="{{ $service['balans_plastik'] }}">
-                    <input type="hidden" name="exson" value="{{ $service['balans_exson'] }}">
                     <label for="amount" class="mb-1">Xarajat summasi:</label>
                     <input type="text" name="amount" class="form-control" id="amount1" required>
                     <script>

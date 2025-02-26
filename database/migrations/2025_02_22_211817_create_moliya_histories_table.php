@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->enum('type', [
                 'xar_naqt', 'xar_plastik', 
-                'ish_naqt', 'ish_plas', 
                 'chiq_naqt', 'chiq_plastik',
                 'chiq_exson',
             ]);

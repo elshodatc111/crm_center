@@ -176,7 +176,7 @@
                         </div>
                         <hr>
                         <button type="submit" class="btn btn-primary w-100" id="submit-btn">Yangi guruhni saqlash</button>
-                    </form>
+                    </form> 
                 </div>
             </div>
         </div>

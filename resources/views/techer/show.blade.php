@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-6">
                             <label for="status" class="mt-1">Ish faoliyati</label>
-                            <p class="form-control">
+                            <p class="form-control p-0 m-0">
                                 @if($techer['status']=='true')
                                     Aktive
                                 @elseif($techer['status']=='false')
@@ -69,16 +69,21 @@
                     <button class="btn btn-primary w-100 mt-2">O'zgarishlarni saqlash</button>
                 </form>
                 <hr>
-                <div class="row">
-                    <div class="col-6">
+                <div class="row mt-3">
+                    <div class="col-12">
                         @if($techer['status']=='true')
-                            <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#dismissModal">Ishdan bo'shatish</button>
+                            <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#dismissModal">Ishdan bo'shatish</button>
                         @else
-                            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#hireModal">Qaytadan ishga olish</button>
+                            <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#hireModal">Qaytadan ishga olish</button>
                         @endif
                     </div>
-                    <div class="col-6">
-                        <button class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Parolni yangilash</button>
+                    <div class="col-12">
+                        <button class="btn btn-warning w-100 mb-2" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Parolni yangilash</button>
+                    </div>
+                    <div class="col-12">
+                    <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#paySalaryModal">
+                        Ish haqi to'lash
+                    </button>
                     </div>
                 </div>
             </div>
@@ -212,13 +217,42 @@
                         @endforelse
                     </tbody>
                 </table>
-                
-                <div class="w-100 text-center">
-                    <button class="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#paySalaryModal">
-                        Ish haqi to'lash
-                    </button>
-                </div>
-                
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title w-100 text-center">Ish haqi to'lovlari (Oxirgi 3 oylik to'lovlar tarixi)</h3>
+                <table class="table table-bordered text-center" style="font-size:14px">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Guruh</th>
+                            <th>To'langan summa</th>
+                            <th>To'lov turi</th>
+                            <th>To'lov haqida</th>
+                            <th>To'landi</th>
+                            <th>Meneger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @forelse($paymart as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                            <td>{{ $item['amount'] }}</td>
+                            <td>{{ $item['type'] }}</td>
+                            <td>{{ $item['description'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                            <td>{{ $item['admin'] }}</td>
+                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan=7 class="text-center">To'lovlar mavjud emas</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -290,44 +324,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title w-100 text-center">Ish haqi to'lovlari (Oxirgi 3 oylik to'lovlar tarixi)</h3>
-                <table class="table table-bordered text-center" style="font-size:14px">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Guruh</th>
-                            <th>To'langan summa</th>
-                            <th>To'lov turi</th>
-                            <th>To'lov haqida</th>
-                            <th>To'landi</th>
-                            <th>Meneger</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @forelse($paymart as $item)
-                        <tr>
-                            <td>{{ $loop->index+1 }}</td>
-                            <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
-                            <td>{{ $item['amount'] }}</td>
-                            <td>{{ $item['type'] }}</td>
-                            <td>{{ $item['description'] }}</td>
-                            <td>{{ $item['created_at'] }}</td>
-                            <td>{{ $item['admin'] }}</td>
-                        </tr>
-                        @empty
-                            <tr>
-                                <td colspan=7 class="text-center">To'lovlar mavjud emas</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

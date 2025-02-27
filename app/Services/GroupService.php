@@ -147,6 +147,7 @@ class GroupService{
                 'groups.techer_paymart',
                 'groups.techer_bonus',
                 'managers.user_name as meneger',
+                'cours.id as cours_id',
                 'cours.cours_name',
                 'lessen_times.time',
             )
@@ -196,6 +197,9 @@ class GroupService{
             'cours' => $this->getCours(),
             'users' => $this->allGroupUsers($id),
             'activ_user' => $this->activeUsers($id),
+            'rooms' => SettingRoom::where('status', 'true')->select('id', 'room_name')->get(),
+            'paymarts' => SettingPaymart::where('status', 'true')->select('id', 'amount', 'chegirma', 'admin_chegirma')->get(),
+            'time' => LessenTime::select('id', 'number', 'time')->get(),
         ];
     }
 

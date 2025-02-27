@@ -124,11 +124,11 @@
                         @endif
                         @if($response['group']['next']=='new')
                             <div class="col-lg-3 mt-2">
-                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#nextGroup">Guruhni davom ettirish</button>
+                                <button class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#nextGroup">Guruhni davom ettirish</button>
                             </div>
                         @else 
                             <div class="col-lg-3 mt-2">
-                                <a href="#" class="btn btn-primary w-100">Guruhning davomi</button>
+                                <a href="{{ route('create_show',$response['group']['next']) }}" class="btn btn-info w-100">Guruhning davomi</a>
                             </div>
                         @endif
                     </div>
@@ -361,18 +361,101 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="POST" id="visitForm">
+                    <form action="{{ route('create_groups_next_store') }}" method="POST" id="visitForm">
                         @csrf
                         <div id="first">
-                            <label for="">SMS matni</label>
-                            <textarea name="sms1" required class="form-control mb-3 mt-2"></textarea>
-                            <button type="button" class="btn btn-primary w-100" id="next-btn">Kiyingi</button>
+                            <input type="hidden" value="{{ $response['group']['id'] }}" name="group_ids">
+                            <label for="group_name" class="mb-1">Yangi guruh nomi</label>
+                            <input type="text" name="group_name" value="{{ $response['group']['group'] }}" required class="form-control">
+                            <div class="row pt-2">
+                                <div class="col-6">
+                                    <label for="cours_id" class="mb-1">Guruh uchun kurs</label>
+                                    <select name="cours_id" class="form-select">
+                                        <option value="{{ $response['group']['cours_id'] }}">{{ $response['group']['cours_name'] }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="lessen_count" class="mb-1">Darslar soni</label>
+                                    <input type="number" name="lessen_count" value="12" min=9 max=31 required class="form-control">
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-6">
+                                    <label for="setting_rooms_id" class="mb-1">Dars Xonasi</label>
+                                    <select name="setting_rooms_id" class="form-select">
+                                        <option value="" disabled selected>Tanlang...</option>
+                                        @foreach($response['rooms'] as $item)
+                                            <option value="{{ $item['id'] }}">{{ $item['room_name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="lessen_start" class="mb-1">Boshlanish vaqti</label>
+                                    <input type="date" id="dateInput" name="lessen_start" required class="form-control" value="{{ $item['end'] }}">
+                                    <div id="dateError" class="text-danger mt-2" style="display: none;">Boshlanish vaqti noto'g'ri</div>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-6">
+                                    <label for="weekday" class="mb-1">Guruh turi</label>
+                                    <select name="weekday" id="" class="form-select">
+                                        <option value="tok_kun">Haftaning toq kunlari</option>
+                                        <option value="juft_kun">Haftaning juft kunlari</option>
+                                        <option value="har_kun">Har kuni</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="lessen_times_id" class="mb-1">Dars vaqti</label>
+                                    <select name="lessen_times_id" class="form-select">
+                                        <option value="" disabled selected>Tanlang...</option>
+                                        @foreach($response['time'] as $item)
+                                            <option value="{{ $item['id'] }}">{{ $item['time'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <label for="setting_paymarts" class="pt-2 mb-1">To'lov summasi</label>
+                            <select name="setting_paymarts" class="form-select">
+                                <option value="" disabled selected>Tanlang...</option>
+                                @foreach($response['paymarts'] as $item)
+                                    <option value="{{ $item['id'] }}">To'lov: {{ number_format($item['amount'], 0, '.', ' ') }} Chegirma:  {{ number_format($item['chegirma'], 0, '.', ' ') }}</option>
+                                @endforeach
+                            </select>
+                            <label for="techer_id" class="pt-2 mb-1">Guruh o'qituvchisi</label>
+                            <select name="techer_id" class="form-select">
+                                <option value="{{ $response['group']['techer_id'] }}">{{ $response['group']['techer'] }}</option>
+                            </select>
+                            <div class="row pt-2">
+                                <div class="col-6">
+                                    <label for="techer_bonus" class="mb-1">O'qituvchiga bonus</label>
+                                    <input type="text" name="techer_bonus" value="{{ $response['group']['techer_paymart']  }}" id="paymentAmount" required class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <label for="techer_paymart" class="mb-1">O'qituvchiga to'lov</label>
+                                    <input type="text" name="techer_paymart" value="{{ $response['group']['techer_bonus']  }}" id="paymentAmount1" required class="form-control">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary w-100 mt-2" id="next-btn">Kiyingi</button>
                         </div>
                         <div id="seccond" style="display: none;">
-                            <label for="">SMS matni</label>
-                            <textarea name="sms2" required class="form-control mb-3 mt-2"></textarea>
-                            <button type="button" class="btn btn-secondary w-100" id="back-btn">Orqaga</button>
-                            <button type="submit" class="btn btn-primary w-100">Saqlash</button>
+                            <label for="">Yangi guruhga o'tadigan talabalarni tanlang</label>
+                            @foreach($response['users'] as $key => $item)
+                                <div class="form-check py-1">
+                                    <input class="form-check-input" type="checkbox" name="students[]" value="{{ $item['id'] }}" id="gridCheck{{ $key }}">
+                                    <label class="form-check-label" for="gridCheck{{ $key }}">
+                                        {{ $item['user_name'] }} <i>(Balans: {{ number_format($item['balans'], 0, '.', ' ') }})</i>
+                                    </label>
+                                </div>
+                            @endforeach
+
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-secondary w-100" id="back-btn">Orqaga</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary w-100">Saqlash</button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

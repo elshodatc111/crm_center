@@ -74,6 +74,7 @@ class MoliyaService{
         return MoliyaHistory::join('users','users.id','moliya_histories.user_id')
             ->where('moliya_histories.created_at','>=',$status)
             ->select('moliya_histories.type','moliya_histories.amount','moliya_histories.comment','users.user_name','moliya_histories.created_at')
+            ->orderby('moliya_histories.created_at','desc')
             ->get();
     }
 

@@ -6,16 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\HodimCreateRequest;
 use App\Http\Requests\HodimUpdateRequest;
+use App\Http\Requests\PaymentHodimRequest;
 use App\Services\StudentService;
 use App\Services\HodimService;
+use App\Services\SettingService;
 
 class HodimController extends Controller{
     protected $hodimService;
     protected $studentService;
+    protected $settingService;
 
-    public function __construct(HodimService $hodimService, StudentService $studentService){
+    public function __construct(HodimService $hodimService, StudentService $studentService,SettingService $settingService){
         $this->hodimService = $hodimService;
         $this->studentService = $studentService;
+        $this->settingService = $settingService;
     }
 
     public function index(){
@@ -33,8 +37,10 @@ class HodimController extends Controller{
         $this->hodimService->checkUser($id);
         $user = $this->hodimService->userShow($id);
         $user_chart = $this->hodimService->userCart($id);
-        //dd($user_chart);
-        return view('hodim.show',compact('user','user_chart'));
+        $balans = $this->settingService->getSetting();
+        $paymart = $this->hodimService->getPaymart($id);
+        //dd($paymart);
+        return view('hodim.show',compact('user','user_chart','balans','paymart'));
     }
 
     public function chartClear(Request $request){
@@ -50,6 +56,16 @@ class HodimController extends Controller{
     public function updateStatus(Request $request){
         $this->hodimService->updateStatuss($request->user_id, $request->status);
         return redirect()->back()->with('success', 'Hodim statusi yangilandi!');
+    }
+
+    public function paymartStory(PaymentHodimRequest $request){
+        $check = $this->hodimService->hodimPaymartCheck($request->validated());
+        if($check){
+            $this->hodimService->hodimPaymartStore($request->validated());
+            return redirect()->back()->with('success', 'Ish haqi to\'lov amalga oshirildi!');
+        }else{
+            return redirect()->back()->with('success', 'Balansda yetarli mablag\' mavjud emas!');
+        }
     }
 
 }

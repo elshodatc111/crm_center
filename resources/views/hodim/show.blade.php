@@ -194,13 +194,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse($paymart as $item)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>
+                                            {{ number_format($item['amount'], 0, '.', ' ') }} so'm    
+                                        </td>
+                                        <td>
+                                            @if($item['type']=='naqt')
+                                                <b class="text-primary">Naqt</b>
+                                            @else
+                                                <b class="text-info">Plastik</b>
+                                            @endif
+                                        </td>
+                                        <td>{{ $item['created_at'] }}</td>
+                                        <td>{{ $item['user_name'] }}</td>
                                     </tr>
+                                    @empty
+                                    <tr>
+                                        <th class="text-center" colspan=5>To'lovlar mavjud emas.</th>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -255,14 +269,22 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>150000</td>
-                                <td>240000</td>
+                                <td>
+                                    {{ number_format($balans['balans_naqt'], 0, '.', ' ') }} so'm  
+                                </td>
+                                <td>
+                                    {{ number_format($balans['balans_plastik'], 0, '.', ' ') }} so'm  
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                    <form action="#" method="post">
-                        <label for="" class="mb-2">To'lov summasi</label>
-                        <input type="text" class="form-control" id="paymentAmount01" required>
+                    <form action="{{ route('compamy_hodim_paymart_story') }}" method="post">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $user['id'] }}">
+                        <input type="hidden" name="naqt" value="{{ $balans['balans_naqt'] }}">
+                        <input type="hidden" name="plastik" value="{{ $balans['balans_plastik'] }}">
+                        <label for="amount" class="mb-2">To'lov summasi</label>
+                        <input type="text" name="amount" class="form-control" id="paymentAmount01" required>
                         <script>
                             document.getElementById('paymentAmount01').addEventListener('input', function(event) {
                                 let input = event.target.value.replace(/\D/g, ''); 
@@ -270,21 +292,21 @@
                                 event.target.value = formatted;
                             });
                         </script>
-                        <label for="" class="my-2">To'lov turi</label>
-                        <select name="" required class="form-select">
+                        <label for="type" class="my-2">To'lov turi</label>
+                        <select name="type" required class="form-select">
                             <option value="">Tanlang</option>
                             <option value="naqt">Naqt</option>
                             <option value="plastik">Plastik</option>
                         </select>
-                        <label for="" class="my-2">To'lov haqida</label>
-                        <textarea name="" class="form-control" required></textarea>
+                        <label for="discription" class="my-2">To'lov haqida</label>
+                        <textarea name="discription" class="form-control" required></textarea>
                         <br>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">To'lov qilish</button>
+                                <button type="submit" class="btn btn-primary w-100">To'lov qilish</button>
                             </div>
                         </div>
                     </form>

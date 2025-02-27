@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Social;
+use App\Models\HodimPaymart;
 use App\Models\MenegerChart;
+use App\Models\MoliyaHistory;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -84,6 +87,63 @@ class HodimService{
         $User = User::find($user_id);
         $User->status = $status;
         return $User->save();
+    }
+    
+    public function hodimPaymartCheck(array $data){
+        $data['naqt'] = intval($data['naqt']);
+        $data['plastik'] = intval($data['plastik']);
+        $data['amount'] = intval(str_replace(" ","",$data['amount']));
+        if($data['type']=='naqt'){
+            if($data['naqt']>=$data['amount']){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            if($data['plastik']>=$data['amount']){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public function hodimPaymartStore(array $data){
+        $Setting = Setting::first();
+        $data['naqt'] = intval($data['naqt']);
+        $data['plastik'] = intval($data['plastik']);
+        $data['amount'] = intval(str_replace(" ","",$data['amount']));
+        if($data['type']=='naqt'){
+            $Setting->balans_naqt = $Setting->balans_naqt - $data['amount'];
+        }else{
+            $Setting->balans_plastik = $Setting->balans_plastik - $data['amount'];
+        }
+        HodimPaymart::create([
+            'user_id' => $data['user_id'],
+            'amount' => $data['amount'],
+            'type' => $data['type'],
+            'description' => $data['discription'],
+            'admin_id' => auth()->user()->id,
+        ]);
+        if($data['type']=='naqt'){
+            $type = 'ish_naqt';
+        }else{
+            $type = 'ish_plas';
+        }
+        MoliyaHistory::create([
+            'type' => $type,
+            'amount' => $data['amount'],
+            'comment' => $data['discription']." (Hodim)",
+            'user_id' => auth()->user()->id,
+        ]);
+        return $Setting->save();
+    }
+
+    public function getPaymart(int $id){
+        return HodimPaymart::where('hodim_paymarts.user_id',$id)
+            ->join('users','hodim_paymarts.admin_id','users.id')
+            ->select('hodim_paymarts.amount','hodim_paymarts.description','hodim_paymarts.type','hodim_paymarts.created_at','users.user_name')
+            ->get();
     }
 
 

@@ -20,6 +20,7 @@ use App\Http\Controllers\paymarts\AddPaymartController;
 use App\Http\Controllers\techer\TecherController;
 use App\Http\Controllers\kassa\KassaController;
 use App\Http\Controllers\moliya\MoliyaController;
+use App\Http\Controllers\hodim\HodimController;
 
 Auth::routes();
 
@@ -98,11 +99,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/techers/status', [TecherController::class, 'techerStatus'])->name('techer_status');
     Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
     Route::post('/techers/paymart', [TecherController::class, 'PaymartStory'])->name('techer_paymart');
-
     Route::get('/moliya', [MoliyaController::class, 'index'])->name('compamy_moliya');
     Route::post('/moliya/updateExson', [MoliyaController::class, 'updateExson'])->name('compamy_updateExson');
     Route::post('/moliya/chiqim', [MoliyaController::class, 'balansChiqim'])->name('compamy_moliya_chiqim');
     Route::post('/moliya/xarajat', [MoliyaController::class, 'xarajatBalans'])->name('compamy_moliya_xarajat');
+    Route::get('/hodimlar', [HodimController::class, 'index'])->name('compamy_hodim');
+    Route::post('/hodim/create', [HodimController::class, 'createHodim'])->name('compamy_hodim_create');
+    Route::get('/hodim/show/{id}', [HodimController::class, 'show'])->name('compamy_hodim_show');
 
 
 

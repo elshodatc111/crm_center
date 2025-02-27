@@ -150,7 +150,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link {{ request()->routeIs(['compamy_hodim','compamy_hodim']) ? '' : 'collapsed' }}" href="{{ route('compamy_hodim') }}">
           <i class="bi bi-card-list"></i>
           <span>Hodimlar</span>
         </a>

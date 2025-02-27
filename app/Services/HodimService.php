@@ -49,6 +49,42 @@ class HodimService{
         return true;
     }
 
+    public function userShow(int $id){
+        return User::where('id',$id)->select('id','user_name','phone1','phone2','address','birthday','about','email','type','status')->first();
+    }
+
+    public function userCart(int $id){
+        return MenegerChart::where('user_id',$id)->first();
+    }
+
+    public function chartClear(int $id){
+        $MenegerChart = MenegerChart::where('user_id',$id)->first();
+        $MenegerChart->paymart_add_naqt = 0;
+        $MenegerChart->paymart_add_plastik = 0;
+        $MenegerChart->chegirma_add = 0;
+        $MenegerChart->qaytarildi_add = 0;
+        $MenegerChart->create_group = 0;
+        $MenegerChart->create_student = 0;
+        return $MenegerChart->save();
+    }
+
+    public function updateUser(array $data){
+        $User = User::find($data['user_id']);
+        $User->user_name = $data['user_name'];
+        $User->phone1 = $data['phone1'];
+        $User->phone2 = $data['phone2'];
+        $User->birthday = $data['birthday'];
+        $User->address = $data['address'];
+        $User->type = $data['type'];
+        $User->about = $data['about'];
+        return $User->save();
+    }
+
+    public function updateStatuss(int $user_id, string $status){
+        $User = User::find($user_id);
+        $User->status = $status;
+        return $User->save();
+    }
 
 
 }

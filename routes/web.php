@@ -106,6 +106,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/hodimlar', [HodimController::class, 'index'])->name('compamy_hodim');
     Route::post('/hodim/create', [HodimController::class, 'createHodim'])->name('compamy_hodim_create');
     Route::get('/hodim/show/{id}', [HodimController::class, 'show'])->name('compamy_hodim_show');
+    Route::post('/hodim/chart/clear', [HodimController::class, 'chartClear'])->name('compamy_hodim_chart_clear');
+    Route::post('/hodim/techer/update', [HodimController::class, 'updateStore'])->name('compamy_hodim_techer_update');
+    Route::post('/hodim/techer/update/status', [HodimController::class, 'updateStatus'])->name('compamy_hodim_techer_update_status');
 
 
 

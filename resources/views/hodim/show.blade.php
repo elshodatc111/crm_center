@@ -31,31 +31,39 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title w-100 text-center mb-1 pb-0">Elshod Musurmonov</h2>
-                        <p class="m-0 p-0 w-100 text-center">elshodatc1116@gmail.com</p>
+                        <h2 class="card-title w-100 text-center mb-1 pb-0">{{ $user['user_name'] }}</h2>
+                        <p class="m-0 p-0 w-100 text-center">{{ $user['email'] }}</p>
                         <div class="row mt-3">
                             <div class="col-lg-6 col-md-6 label">Naqt to'lovlar:</div>
-                            <div class="col-lg-6 col-md-6" style="text-align:right">45 000 so'm</div>
+                            <div class="col-lg-6 col-md-6" style="text-align:right">
+                                {{ number_format($user_chart['paymart_add_naqt'], 0, '.', ' ') }} so'm
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 label">Plastik to'lovlar:</div>
-                            <div class="col-lg-6 col-md-6" style="text-align:right">45 000 so'm</div>
+                            <div class="col-lg-6 col-md-6" style="text-align:right">
+                                {{ number_format($user_chart['paymart_add_plastik'], 0, '.', ' ') }} so'm
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 label">Chegirmalar:</div>
-                            <div class="col-lg-6 col-md-6" style="text-align:right">45 000 so'm</div>
+                            <div class="col-lg-6 col-md-6" style="text-align:right">
+                                {{ number_format($user_chart['chegirma_add'], 0, '.', ' ') }} so'm
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 label">Qaytarilgan to'lovlar:</div>
-                            <div class="col-lg-6 col-md-6" style="text-align:right">45 000 so'm</div>
+                            <div class="col-lg-6 col-md-6" style="text-align:right">
+                                {{ number_format($user_chart['qaytarildi_add'], 0, '.', ' ') }} so'm
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 label">Yangi guruhlar:</div>
-                            <div class="col-lg-6 col-md-6" style="text-align:right">5</div>
+                            <div class="col-lg-6 col-md-6" style="text-align:right">{{ $user_chart['create_group'] }}</div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 label">Yangi talabalar:</div>
-                            <div class="col-lg-6 col-md-6" style="text-align:right">4</div>
+                            <div class="col-lg-6 col-md-6" style="text-align:right">{{ $user_chart['create_student'] }}</div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-lg-6 col-md-6">
@@ -86,61 +94,75 @@
                             </li>
                         </ul>
                         <div class="tab-content pt-2">
-                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                            <h5 class="card-title">Profil</h5>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 label">Telefon raqam: </div>
-                                <div class="col-lg-3 col-md-3"> +998 90 888 7788</div>
-                                <div class="col-lg-3 col-md-3 label">Telefon raqam: </div>
-                                <div class="col-lg-3 col-md-3"> +998 90 888 7788</div>
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <h5 class="card-title">Profil</h5>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 label">Telefon raqam: </div>
+                                    <div class="col-lg-3 col-md-3"> {{ $user['phone1'] }}</div>
+                                    <div class="col-lg-3 col-md-3 label">Telefon raqam: </div>
+                                    <div class="col-lg-3 col-md-3"> {{ $user['phone2'] }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 label">Yashash manzili: </div>
+                                    <div class="col-lg-3 col-md-3"> {{ $user['address'] }}</div>
+                                    <div class="col-lg-3 col-md-3 label">Tug'ilgan kuni: </div>
+                                    <div class="col-lg-3 col-md-3"> {{ $user['birthday'] }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 label">Lavozimi: </div>
+                                    <div class="col-lg-3 col-md-3"> 
+                                        @if($user['type']=='admin')
+                                            Admin
+                                        @else
+                                            Meneger
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 label">Ish faoliyati: </div>
+                                    <div class="col-lg-3 col-md-3"> 
+                                        @if($user['status']=='true')
+                                            Aktive
+                                        @else
+                                            Yakunlangan
+                                        @endif
+                                    </div>
+                                </div>
+                                <p class="small fst-italic">{{ $user['about'] }}</p>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 label">Yashash manzili: </div>
-                                <div class="col-lg-3 col-md-3"> Qarshi shaxar</div>
-                                <div class="col-lg-3 col-md-3 label">Tug'ilgan kuni: </div>
-                                <div class="col-lg-3 col-md-3"> 2025-01-03</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 label">Lavozimi: </div>
-                                <div class="col-lg-3 col-md-3"> Meneger</div>
-                                <div class="col-lg-3 col-md-3 label">Ish faoliyati: </div>
-                                <div class="col-lg-3 col-md-3"> Aktive</div>
-                            </div>
-                            <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
-                        </div>
                         <div class="tab-pane fade profile-edit" id="profile-edit">
                             <h5 class="card-title">Profil taxrirlash</h5>
-                            <form action="#" method="post">
-                                <label for="">FIO</label>
-                                <input type="text" name="" required class="form-control">
+                            <form action="{{ route('compamy_hodim_techer_update') }}" method="post">
+                                @csrf 
+                                <input type="hidden" name="user_id" value="{{ $user['id'] }}">
+                                <label for="user_name">FIO</label>
+                                <input type="text" name="user_name" value="{{ $user['user_name'] }}" required class="form-control">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label for="" class="my-2">Telefon raqam</label>
-                                        <input type="text" name="" required class="form-control phone">
+                                        <label for="phone1" class="my-2">Telefon raqam</label>
+                                        <input type="text" name="phone1" value="{{ $user['phone1'] }}" required class="form-control phone">
                                     </div>
                                     <div class="col-6">
-                                        <label for="" class="my-2">Telefon raqam</label>
-                                        <input type="text" name="" required class="form-control phone">
+                                        <label for="phone2" class="my-2">Telefon raqam</label>
+                                        <input type="text" name="phone2" value="{{ $user['phone2'] }}" required class="form-control phone">
                                     </div>
                                     <div class="col-6">
-                                        <label for="" class="my-2">Tug'ilgan kuni</label>
-                                        <input type="date" name="" required class="form-control">
+                                        <label for="birthday" class="my-2">Tug'ilgan kuni</label>
+                                        <input type="date" name="birthday" value="{{ $user['birthday'] }}" required class="form-control">
                                     </div>
                                     <div class="col-6">
-                                        <label for="" class="my-2">Yashash manzili</label>
-                                        <input type="text" name="" required class="form-control">
+                                        <label for="address" class="my-2">Yashash manzili</label>
+                                        <input type="text" name="address" value="{{ $user['address'] }}" required class="form-control">
                                     </div>
                                     <div class="col-6">
-                                        <label for="" class="my-2">Lavozimi</label>
-                                        <select name="" required class="form-select">
+                                        <label for="type" class="my-2">Lavozimi</label>
+                                        <select name="type" required class="form-select">
                                             <option value="">Tanlang</option>
-                                            <option value="">Meneger</option>
-                                            <option value="">Admin</option>
+                                            <option value="meneger">Meneger</option>
+                                            <option value="admin">Admin</option>
                                         </select>
                                     </div>
                                     <div class="col-6">
-                                        <label for="" class="my-2">Hodim haqida</label>
-                                        <input type="text" name="" required class="form-control">
+                                        <label for="about" class="my-2">Hodim haqida</label>
+                                        <input type="text" name="about" value="{{ $user['about'] }}" required class="form-control">
                                     </div>
                                     <div class="col-12 text-center pt-3">
                                         <button type="submit" class="btn btn-primary w-50">Saqlash</button>
@@ -196,13 +218,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post">
+                    <form action="{{ route('compamy_hodim_chart_clear') }}" method="post">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $user['id'] }}">
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Tozalash</button>
+                                <button type="submit" class="btn btn-primary w-100">Tozalash</button>
                             </div>
                         </div>
                     </form>
@@ -301,10 +325,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post">
-                        <p>Joriy holatda: <b>Aktiv/Yakunlangan</b></p>
-                        <label for="" class="my-2">Hodim ish faoliyati</label>
-                        <select name="" required class="form-select">
+                    <form action="{{ route('compamy_hodim_techer_update_status') }}" method="post">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $user['id'] }}">
+                        <p>Joriy holatda: <b>@if($user['status']=='true')
+                                            Aktive
+                                        @else
+                                            Yakunlangan
+                                        @endif</b></p>
+                        <label for="status" class="my-2">Hodim ish faoliyati</label>
+                        <select name="status" required class="form-select">
                             <option value="">Tanlang</option>
                             <option value="true">Aktiv</option>
                             <option value="false">Yakunlash</option>
@@ -315,7 +345,7 @@
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Faoliyatini o'zgartirish</button>
+                                <button type="submit" class="btn btn-primary w-100">Faoliyatini o'zgartirish</button>
                             </div>
                         </div>
                     </form>

@@ -43,7 +43,6 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('groups/{id}', [GroupsController::class, 'show'])->name('create_show'); 
     Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update'); 
     Route::post('groups/remove/user', [GroupsController::class, 'removeUser'])->name('create_groups_remove_user'); 
-    
     Route::get('/kassa', [KassaController::class, 'index'])->name('compamy_kassa');
     Route::post('/kassa/chiqim', [KassaController::class, 'chiqim'])->name('compamy_kassa_chiqim');
     Route::post('/kassa/xarajat', [KassaController::class, 'xarajat'])->name('compamy_kassa_xarajat');
@@ -62,7 +61,6 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
     Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
     Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
-
     
 });
 

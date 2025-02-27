@@ -29,6 +29,8 @@ class HodimController extends Controller{
     }
 
     public function show($id){
-        dd("Hodim haqida");
+        $this->hodimService->checkUser($id);
+
+        return view('hodim.show');
     }
 }

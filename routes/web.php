@@ -97,6 +97,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/techers/update', [TecherController::class, 'techerUpdate'])->name('techer_update');
     Route::post('/techers/status', [TecherController::class, 'techerStatus'])->name('techer_status');
     Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
+    Route::post('/techers/paymart', [TecherController::class, 'PaymartStory'])->name('techer_paymart');
 
     Route::get('/moliya', [MoliyaController::class, 'index'])->name('compamy_moliya');
     Route::post('/moliya/updateExson', [MoliyaController::class, 'updateExson'])->name('compamy_updateExson');

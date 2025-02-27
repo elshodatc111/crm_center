@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('moliya_histories', function (Blueprint $table) {
             $table->id();
             $table->enum('type', [
+                'ish_naqt', 'ish_plas', 
                 'xar_naqt', 'xar_plastik', 
                 'chiq_naqt', 'chiq_plastik',
                 'chiq_exson',

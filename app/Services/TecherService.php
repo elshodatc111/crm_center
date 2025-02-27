@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\Social;
+use App\Models\Setting;
+use App\Models\TecherPaymart;
+use App\Models\MoliyaHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -72,7 +75,12 @@ class TecherService{
         return count($user);
     }
     protected function ishHaqiTulandi(int $id){
-        return 0;
+        $summa = 0;
+        $TecherPaymart = TecherPaymart::where('group_id',$id)->get();
+        foreach ($TecherPaymart as $key => $value) {
+            $summa = $summa + $value['amount'];
+        }
+        return intval($summa);
     }
 
     public function techerGroups(int $id){
@@ -99,5 +107,62 @@ class TecherService{
         }
         return $array;
     }
+
+    public function check(array $data): bool{
+        $data['naqt'] = (int) $data['naqt'];
+        $data['plastik'] = (int) $data['plastik'];
+        $data['amount'] = (int) str_replace(" ", "", $data['amount']);
+    
+        return ($data['type'] === 'naqt' ? $data['naqt'] : $data['plastik']) >= $data['amount'];
+    }
+    
+    public function PaymartStore(array $data){
+        $Setting = Setting::first();
+        $data['naqt'] = intval($data['naqt']);
+        $data['plastik'] = intval($data['plastik']);
+        $data['amount'] = str_replace(" ","",$data['amount']);
+        if($data['type']=='plastik'){
+            $type = 'ish_plas';
+            $Setting->decrement('balans_plastik', $data['amount']);
+        }else{
+            $type = 'ish_naqt';
+            $Setting->decrement('balans_naqt', $data['amount']);
+        }
+        MoliyaHistory::create([
+            'type' => $type,
+            'amount' => $data['amount'],
+            'comment' => $data['description'].'(O\'qituvchi)',
+            'user_id' => auth()->user()->id,
+        ]);
+        TecherPaymart::create([
+            'user_id'=> $data['techer_id'],
+            'group_id'=> $data['group_id'],
+            'amount'=> $data['amount'],
+            'type'=> $data['type'],
+            'description'=> $data['description'],
+            'admin_id'=> auth()->user()->id,
+        ]);
+        return $Setting->save();
+    }
+
+    public function techerPaymart(int $id){
+        return TecherPaymart::where('techer_paymarts.user_id', $id)
+            ->join('users as techer', 'techer_paymarts.user_id', '=', 'techer.id')
+            ->join('groups as group', 'techer_paymarts.group_id', '=', 'group.id')
+            ->join('users as admin', 'techer_paymarts.admin_id', '=', 'admin.id')
+            ->select(
+                'techer_paymarts.user_id as techer_id', // Ushbu qatorni o'zgartirish
+                'techer.user_name as techer',
+                'techer_paymarts.group_id',
+                'group.group_name',
+                'techer_paymarts.amount',
+                'techer_paymarts.type',
+                'techer_paymarts.description',
+                'techer_paymarts.admin_id',
+                'admin.user_name as admin',
+                'techer_paymarts.created_at',
+            )->get();
+    }
+
 
 }

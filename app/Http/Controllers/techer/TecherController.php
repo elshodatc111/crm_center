@@ -6,16 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\TecherService;
 use App\Services\StudentService;
+use App\Services\SettingService;
 use App\Http\Requests\TeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
+use App\Http\Requests\TecherPaymartRequest;
 
 class TecherController extends Controller{
     private StudentService $studentService;
     private TecherService $techerService;
+    private SettingService $settingService;
 
-    public function __construct(StudentService $studentService, TecherService $techerService ){
+    public function __construct(StudentService $studentService, TecherService $techerService, SettingService $settingService){
         $this->studentService = $studentService;
         $this->techerService = $techerService;
+        $this->settingService = $settingService;
     }
 
     public function index(){
@@ -32,7 +36,10 @@ class TecherController extends Controller{
     public function show($id){ 
         $techer = $this->techerService->techerShow($id);
         $groups = $this->techerService->techerGroups($id);
-        return view('techer.show',compact('techer','groups'));
+        $balans = $this->settingService->getSetting();
+        $paymart = $this->techerService->techerPaymart($id);
+        //dd($paymart);
+        return view('techer.show',compact('techer','groups','balans','paymart'));
     }
 
     public function techerUpdate(UpdateTeacherRequest $request){
@@ -47,6 +54,15 @@ class TecherController extends Controller{
         }else{
             return redirect()->back()->with('success', 'O‘qituvchi ishdan bo\'shatildi.');
         }
+    }
+
+    public function PaymartStory(TecherPaymartRequest $request){
+        $validatedData = $request->validated();
+        if ($this->techerService->check($validatedData)) {
+            $this->techerService->PaymartStore($validatedData);
+            return redirect()->back()->with('success', "Ish haqi to'lovi amalga oshirildi.");
+        }
+        return redirect()->back()->with('error', "Balansda yetarli mablag' mavjud emas.");
     }
 
 }

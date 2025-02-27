@@ -229,30 +229,39 @@
                     <h5 class="modal-title w-100 text-center" id="paySalaryLabel">Ish haqi to'lash</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="#" method="POST">
+                <table class="table text-center table-bordered" style="font-size:12px;">
+                    <thead>
+                        <tr>
+                            <th colspan=2>Balansda mavjud</th>
+                        </tr>
+                        <tr>
+                            <th>Naqt</th>
+                            <th>Plastik</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ number_format($balans['balans_naqt'], 0, '.', ' ') }} so'm</td>
+                            <td>{{ number_format($balans['balans_plastik'], 0, '.', ' ') }} so'm</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form action="{{ route('techer_paymart') }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <table class="table text-center table-bordered" style="font-size:12px;">
-                            <thead>
-                                <tr>
-                                    <th colspan=2>Balansda mavjud</th>
-                                </tr>
-                                <tr>
-                                    <th>Naqt</th>
-                                    <th>Plastik</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>12 000</td>
-                                    <td>25 000</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <input type="hidden" value="{{ $balans['balans_naqt'] }}" name="naqt">
+                        <input type="hidden" value="{{ $balans['balans_plastik'] }}" name="plastik">
                         <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
-                        <label for="amount" class="my-2">Guruhni tanlang</label>
-                        <select name="" class="form-select" required>
+                        <label for="amount">Guruhni tanlang</label>
+                        <select name="group_id" class="form-select" required>
                             <option value="">Tanlang</option>
+                            @foreach($groups as $item)
+                                <option value="{{ $item['group_id'] }}">
+                                    {{ $item['group_name'] }}
+                                    ( Hisoblandi: {{ number_format($item['xisoblandi'], 0, '.', ' ') }} 
+                                    To'landi: {{ number_format($item['tulandi'], 0, '.', ' ' ) }}) 
+                                </option>
+                            @endforeach
                         </select>
                         <label for="amount" class="my-2">To'lov summasi</label>
                         <input type="text" name="amount" id="paymentAmount7" class="form-control" required>
@@ -263,14 +272,14 @@
                                 event.target.value = formatted;
                             });
                         </script>
-                        <label for="amount" class="my-2">To'lov turi</label>
-                        <select name="" class="form-select" required>
+                        <label for="type" class="my-2">To'lov turi</label>
+                        <select name="type" class="form-select" required>
                             <option value="">Tanlang</option>
                             <option value="naqt">Naqt</option>
                             <option value="plastik">Plastik</option>
                         </select>
-                        <label for="amount" class="my-2">To'lov haqida</label>
-                        <textarea name="" required class="form-control"></textarea>
+                        <label for="description" class="my-2">To'lov haqida</label>
+                        <textarea name="description" required class="form-control"></textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -301,15 +310,22 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @forelse($paymart as $item)
                         <tr>
-                            <td>1</td>
-                            <td>Guruh nomi</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                            <td>{{ $item['amount'] }}</td>
+                            <td>{{ $item['type'] }}</td>
+                            <td>{{ $item['description'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                            <td>{{ $item['admin'] }}</td>
                         </tr>
+                        @empty
+                            <tr>
+                                <td colspan=7 class="text-center">To'lovlar mavjud emas</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

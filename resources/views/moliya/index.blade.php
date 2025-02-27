@@ -123,9 +123,6 @@
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#balans-justified" type="button" role="tab" aria-controls="profile" aria-selected="false">Balansdan chiqim tarixi (oxirgi 3 oy)</button>
                     </li>
-                    <li class="nav-item flex-fill" role="presentation">
-                        <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#ishhaqi-justified" type="button" role="tab" aria-controls="profile" aria-selected="false">To'langan ish haqi (oxirgi 3 oy)</button>
-                    </li>
                 </ul>
                 
                 <div class="tab-content pt-2" id="myTabjustifiedContent">
@@ -198,8 +195,12 @@
                                                 <i class="text-success">Exson</i>
                                             @elseif($item['type']=='xar_naqt')
                                                 <i class="text-danger">Xarajat (Naqt)</i>
-                                            @else
+                                            @elseif($item['type']=='xar_plastik')
                                                 <i class="text-danger">Xarajat (Plastik)</i>
+                                            @elseif($item['type']=='ish_naqt')
+                                                <i class="text-info">Ish haqi (Naqt)</i>
+                                            @elseif($item['type']=='ish_plas')
+                                                <i class="text-info">Ish haqi (Plastik)</i>
                                             @endif
                                         </td>
                                         <td>{{ number_format($item['amount'], 0, '.', ' ') }}</td>
@@ -212,23 +213,6 @@
                                         <td colspan=6 class="text-center"></td>
                                     </tr>
                                 @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="ishhaqi-justified" role="tabpanel" aria-labelledby="profile-tab">
-                        <table class="table text-center table-bordered" style="font-size:14px;">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Ish haqi</th>
-                                    <th>Chiqim summasi</th>
-                                    <th>Chiqim haqida</th>
-                                    <th>Admin</th>
-                                    <th>Chiqim vaqti</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
                             </tbody>
                         </table>
                     </div>

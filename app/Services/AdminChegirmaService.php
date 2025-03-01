@@ -14,6 +14,7 @@ use App\Models\Paymart;
 use App\Models\UserHistory;
 use App\Models\MenegerChart;
 use App\Models\SettingChegirma;
+use App\Jobs\PaymartMessageWork;
 
 class AdminChegirmaService{
 
@@ -85,7 +86,7 @@ class AdminChegirmaService{
     }
     
     protected function addPay(int $user_id, string $group_id, int $price, string $type, string $description) {
-        return Paymart::create([
+        $paymart = Paymart::create([
             'user_id' => $user_id,
             'group_id' => $group_id,
             'amount' => $price,
@@ -93,6 +94,8 @@ class AdminChegirmaService{
             'description' => $description,
             'admin_id' => auth()->id(),
         ]);
+        dispatch(new PaymartMessageWork($paymart->id, $type , $user_id, auth()->user()->id, 'pay_student_sms'));
+        return true;
     }
     protected function addHistory(int $user_id, string $type, string $type_commit) {
         return UserHistory::create([

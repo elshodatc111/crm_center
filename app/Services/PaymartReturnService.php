@@ -17,7 +17,7 @@ use App\Models\MenegerChart;
 class PaymartReturnService{
 
     protected function addPay(int $user_id, string $group_id, int $price, string $type, string $description) {
-        return Paymart::create([
+        $id = Paymart::create([
             'user_id' => $user_id,
             'group_id' => $group_id,
             'amount' => $price,
@@ -25,6 +25,7 @@ class PaymartReturnService{
             'description' => $description,
             'admin_id' => auth()->id(),
         ]);
+        return $id->id;
     }
     
     protected function addHistory(int $user_id, string $type, string $type_commit) {
@@ -56,11 +57,12 @@ class PaymartReturnService{
     }
     
     public function returnPaymart(int $user_id, int $return, string $description) {
-        $this->addPay($user_id, 'null', $return, 'qaytarildi', $description);
+        $id = $this->addPay($user_id, 'null', $return, 'qaytarildi', $description);
         $this->addHistory($user_id, 'paymart_return', $return." so'm to'lov qaytarildi(".$description.")");
         $this->updateUserBalance($user_id,$return);
         $this->updateMenegerChart($return);
         $this->updateKassa($return);
+        return $id;
     }
 
 

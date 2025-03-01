@@ -47,10 +47,12 @@ class PaymartMessageWork implements ShouldQueue
             $Paymart = Paymart::find($this->paymart_id);
             $type = $Paymart->paymart_type;
             $amount = $Paymart->amount;
-            if($type=='naqt' OR $type=='plastik'){
+            if($type == 'chegirma'){
+                $text = "Hurmatli {$User->user_name}, Sizga {$amount} so'm chegirma qabul qilindi. Websayt: ".config('app.url');
+            }elseif($type == 'qaytarildi'){
+                $text = "Hurmatli {$User->user_name}, Sizning {$amount} so'm to'lovingiz qaytarildi. Websayt: ".config('app.url');
+            }else{
                 $text = "Hurmatli {$User->user_name}, Sizning {$amount} so'm to'lovingiz qabul qilindi. Websayt: ".config('app.url');
-            }elseif($type == 'chegirma'){
-                $text = "Hurmatli {$User->user_name}, Siz {$amount} so'm chegirma qabul qilindi. Websayt: ".config('app.url');
             }
         } elseif ($this->message_type == 'pay_hodim_sms' && $Setting->pay_hodim_sms == 1) {
             if($this->paymart_type=='techer'){
@@ -60,7 +62,6 @@ class PaymartMessageWork implements ShouldQueue
             if($this->paymart_type=='hodim'){
                 $TecherPaymart = HodimPaymart::find($this->paymart_id)->amount;
                 $text = "Hurmatli {$User->user_name}, Sizga {$TecherPaymart} so'm ish haqi to'landi. Websayt: ".config('app.url');
-                //$text = "Sizning yangi parolingiz Parol: 96987423 websayt: https://crm-atko.uz";
             }
         }
 

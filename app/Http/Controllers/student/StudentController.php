@@ -13,6 +13,7 @@ use App\Services\PaymartReturnService;
 use App\Services\KassaService;
 use App\Services\AdminChegirmaService;
 use App\Jobs\SendMessageWork;
+use App\Jobs\PaymartMessageWork;
 use App\Http\Requests\ShowStudentRequest;
 use App\Http\Requests\UserAboutUpdateRequest;
 use App\Http\Requests\UpdateStudentRequest;
@@ -105,7 +106,8 @@ class StudentController extends Controller{
         if($Amount>$Kassa){
             return redirect()->back()->with('success', 'Kassada yetarli mablag\' mavjud emas.');
         }
-        $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description);
+        $patmart_id = $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description);
+        dispatch(new PaymartMessageWork($patmart_id,'qaytarildi', $request->user_id, auth()->user()->id, 'pay_student_sms'));
         return redirect()->back()->with('success', 'To\'lov qaytarish yakunlandi.');
     }
 

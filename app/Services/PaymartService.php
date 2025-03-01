@@ -14,6 +14,8 @@ use App\Models\Paymart;
 use App\Models\UserHistory;
 use App\Models\MenegerChart;
 
+use App\Jobs\PaymartMessageWork;
+
 class PaymartService{
     public function getPaymarts(int $id){
         return Paymart::where('paymarts.user_id',$id)
@@ -53,7 +55,8 @@ class PaymartService{
     }
     
     protected function addPay(int $user_id, string $group_id, int $price, string $type, string $description) {
-        return Paymart::create([
+        //dd($type);
+        $paymart = Paymart::create([
             'user_id' => $user_id,
             'group_id' => $group_id,
             'amount' => $price,
@@ -61,6 +64,8 @@ class PaymartService{
             'description' => $description,
             'admin_id' => auth()->id(),
         ]);
+        dispatch(new PaymartMessageWork($paymart->id, $type , $user_id, auth()->user()->id, 'pay_student_sms'));
+        return true;
     }
     
     protected function addHistory(int $user_id, string $type, string $type_commit) {
@@ -132,7 +137,6 @@ class PaymartService{
                 if ($SettingPaymart) {
                     $PayChek = $SettingPaymart->amount - $SettingPaymart->chegirma;
                     $Chegirma = $SettingPaymart->chegirma;
-    
                     if ($PayChek == $totalPayment) {
                         $this->addHistory($user_id, 'chegirma_add', "$Chegirma so'm to'lov uchun chegirma");
                         $this->updateUserBalance($user_id, $Chegirma);

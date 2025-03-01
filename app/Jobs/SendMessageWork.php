@@ -33,7 +33,7 @@ class SendMessageWork implements ShouldQueue {
         }
         $User = User::find($this->user_id);
         if (!$User) {
-            return;
+            return; 
         }
         $phone = str_replace('+','',str_replace(' ', '', $User->phone1));
         if ($Setting->message_status == 1) {
@@ -49,6 +49,7 @@ class SendMessageWork implements ShouldQueue {
                 return;
             }
         }
+        Log::info($User);
         Log::info($text);
         $smsService = new SmsService();
         $response = $smsService->sendSms($phone, $text);

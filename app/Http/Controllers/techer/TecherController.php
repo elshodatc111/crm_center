@@ -10,6 +10,7 @@ use App\Services\SettingService;
 use App\Http\Requests\TeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Http\Requests\TecherPaymartRequest;
+use App\Jobs\SendMessageWork;
 
 class TecherController extends Controller{
     private StudentService $studentService;
@@ -29,7 +30,9 @@ class TecherController extends Controller{
     }
 
     public function store(TeacherRequest $request){
-        $this->techerService->create($request->validated());
+        $users = $this->techerService->create($request->validated());
+        $user_id = $this->techerService->userID($request->validated());
+        dispatch(new SendMessageWork($user_id, 'new_hodim_sms',auth()->user()->id));
         return redirect()->back()->with('success', 'O‘qituvchi muvaffaqiyatli qo‘shildi.');
     }
 

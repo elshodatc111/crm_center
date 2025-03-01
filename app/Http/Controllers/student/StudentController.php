@@ -60,7 +60,7 @@ class StudentController extends Controller{
         $users = $this->studentService->createStudent($request->validated());
         $this->studentService->sotsials($request->about_me);
         $this->studentService->countAddres($users->address);
-        dispatch(new SendMessageWork($users->id, 'new_student_sms',auth()->user()->id)); // SendMessageWork(user_id, message_type, admin_id)
+        dispatch(new SendMessageWork($users->id, 'new_student_sms',auth()->user()->id)); // SendMessageWork(user_id, message_type, admin_id) 
         return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
     }
 

@@ -10,6 +10,7 @@ use App\Http\Requests\PaymentHodimRequest;
 use App\Services\StudentService;
 use App\Services\HodimService;
 use App\Services\SettingService;
+use App\Jobs\SendMessageWork;
 
 class HodimController extends Controller{
     protected $hodimService;
@@ -29,7 +30,10 @@ class HodimController extends Controller{
     }
 
     public function createHodim(HodimCreateRequest $request){
-        $this->hodimService->create($request->validated());
+        $validate = $request->validated();
+        $users = $this->hodimService->create($validate);
+        $user_id = $this->hodimService->userID($validate);
+        dispatch(new SendMessageWork($user_id, 'new_hodim_sms',auth()->user()->id));
         return redirect()->back()->with('success', 'Yangi hodim ishga olindi!');
     }
 

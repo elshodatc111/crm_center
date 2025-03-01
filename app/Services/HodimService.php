@@ -20,6 +20,11 @@ class HodimService{
         return User::whereIn('type', ['admin', 'meneger'])->get();
     }
 
+    public function userID(array $data){
+        $user = User::where('user_name',$data['user_name'])->where('phone1',$data['phone1'])->first();
+        return $user->id;
+    }
+
     public function create(array $data){
         $data['address'] = Social::find($data['address_id'])->name;
         $data['email'] =time()."@mail";

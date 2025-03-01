@@ -72,18 +72,24 @@
                 <div class="row mt-3">
                     <div class="col-12">
                         @if($techer['status']=='true')
-                            <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#dismissModal">Ishdan bo'shatish</button>
+                            <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#dismissModal">
+                                <i class="bi bi-person-x"></i> Ishdan bo'shatish
+                            </button>
                         @else
-                            <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#hireModal">Qaytadan ishga olish</button>
+                            <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#hireModal">
+                                <i class="bi bi-person-check"></i> Qaytadan ishga olish
+                            </button>
                         @endif
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-warning w-100 mb-2" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Parolni yangilash</button>
+                        <button class="btn btn-warning w-100 mb-2" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">
+                            <i class="bi bi-key"></i> Parolni yangilash
+                        </button>
                     </div>
                     <div class="col-12">
-                    <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#paySalaryModal">
-                        Ish haqi to'lash
-                    </button>
+                        <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#paySalaryModal">
+                            <i class="bi bi-cash-stack"></i> Ish haqi to'lash
+                        </button>
                     </div>
                 </div>
             </div>
@@ -117,7 +123,6 @@
         </div>
     </div>
 
-    <!-- Ishga olish Modal -->
     <div class="modal fade" id="hireModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -146,7 +151,6 @@
         </div>
     </div> 
 
-    <!-- Parolni yangilash Modal -->
     <div class="modal fade" id="resetPasswordModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -163,7 +167,7 @@
                             <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                         </div>
                         <div class="col-6">
-                            <form action="#" method="post"> 
+                            <form action="{{ route('techer_update_password') }}" method="post"> 
                                 @csrf 
                                 <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
                                 <button type="submit" class="btn btn-warning w-100">Ha, parolni yangilash</button> 

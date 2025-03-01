@@ -96,6 +96,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/techers', [TecherController::class, 'index'])->name('all_techer');
     Route::post('/techers/create', [TecherController::class, 'store'])->name('techer_create');
     Route::post('/techers/update', [TecherController::class, 'techerUpdate'])->name('techer_update');
+    Route::post('/techers/update/password', [TecherController::class, 'techerUpdatePassword'])->name('techer_update_password');
     Route::post('/techers/status', [TecherController::class, 'techerStatus'])->name('techer_status');
     Route::get('/techer/{id}', [TecherController::class, 'show'])->name('techer_show');
     Route::post('/techers/paymart', [TecherController::class, 'PaymartStory'])->name('techer_paymart');

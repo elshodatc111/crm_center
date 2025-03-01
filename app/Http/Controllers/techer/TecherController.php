@@ -68,4 +68,9 @@ class TecherController extends Controller{
         return redirect()->back()->with('error', "Balansda yetarli mablag' mavjud emas.");
     }
 
+    public function techerUpdatePassword(Request $request){
+        $this->techerService->updatePassword($request->techer_id);
+        dispatch(new SendMessageWork($request->techer_id, 'update_pass_sms',auth()->user()->id));
+        return redirect()->back()->with('success', "Hodim paroli yangilandi.");
+    }
 }

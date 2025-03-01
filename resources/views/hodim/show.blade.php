@@ -323,14 +323,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post">
+                    <form action="{{ route('techer_update_password') }}" method="post">
+                        @csrf 
+                        <input type="hidden" name="techer_id" value="{{ $user['id'] }}">
                         <label for="" class="mb-2">Yangi parol: <b>password</b></label>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Parolni yangilash</button>
+                                <button type="submit" class="btn btn-primary w-100">Parolni yangilash</button>
                             </div>
                         </div>
                     </form>

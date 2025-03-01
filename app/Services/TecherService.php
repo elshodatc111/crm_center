@@ -31,6 +31,12 @@ class TecherService{
         $data['type'] = 'techer';
         return User::create($data); 
     }
+
+    public function updatePassword(int $id){
+        $user = User::find($id);
+        $user->password = Hash::make('password');
+        return $user->save();
+    }
      
     public function techerShow(int $id){
         return User::find($id);

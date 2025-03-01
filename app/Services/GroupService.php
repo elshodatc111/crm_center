@@ -190,8 +190,14 @@ class GroupService{
             ->get();
     }
     public function groupsShow(int $id){
+        $davomi = $this->groupAbout($id);
+        $next='new';
+        if($davomi->next!='new'){
+            $next = Group::where('groups.id', $davomi->next)->first()->group_name;
+        }
         return [
             'group' => $this->groupAbout($id),
+            'next' =>$next,
             'group_day' => $this->groupDays($id),
             'message_status' => Setting::first()->message_status,
             'cours' => $this->getCours(),

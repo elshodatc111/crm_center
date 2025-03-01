@@ -30,24 +30,38 @@
             <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
                     <button class="nav-link w-100 active" id="home-tab" 
-                    data-bs-toggle="tab" data-bs-target="#guruh-haqida" 
-                    type="button" role="tab" aria-controls="home" aria-selected="true">Guruh haqida</button>
+                        data-bs-toggle="tab" data-bs-target="#guruh-haqida" 
+                        type="button" role="tab" aria-controls="home" aria-selected="true">
+                        <i class="bi bi-info-circle"></i> Guruh haqida
+                    </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
                     <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" 
-                    data-bs-target="#dars-kunlari" type="button" role="tab" aria-controls="profile" aria-selected="false">Dars kunlari</button>
+                        data-bs-target="#dars-kunlari" type="button" role="tab" 
+                        aria-controls="profile" aria-selected="false">
+                        <i class="bi bi-calendar-check"></i> Dars kunlari
+                    </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#guruh_talabalari" 
-                    type="button" role="tab" aria-controls="contact" aria-selected="false">Guruh talabalari</button>
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
+                        data-bs-target="#guruh_talabalari" type="button" role="tab" 
+                        aria-controls="contact" aria-selected="false">
+                        <i class="bi bi-people"></i> Guruh talabalari
+                    </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#test-natija" 
-                    type="button" role="tab" aria-controls="contact" aria-selected="false">Test natijalari</button>
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
+                        data-bs-target="#test-natija" type="button" role="tab" 
+                        aria-controls="contact" aria-selected="false">
+                        <i class="bi bi-clipboard-check"></i> Test natijalari
+                    </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#davomat" 
-                    type="button" role="tab" aria-controls="contact" aria-selected="false">Davomad</button>
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
+                        data-bs-target="#davomat" type="button" role="tab" 
+                        aria-controls="contact" aria-selected="false">
+                        <i class="bi bi-check2-circle"></i> Davomad
+                    </button>
                 </li>
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
@@ -103,32 +117,36 @@
                                         <th>Darslar tugash vaqti:</th>
                                         <td style="text-align:right">{{ \Carbon\Carbon::parse($response['group']['end'])->format('Y-m-d') }}</td>
                                     </tr>
+                                    @if($response['group']['next']!='new')
+                                    <tr>
+                                        <th>Guruh davom ettirilgan:</th>
+                                        <td style="text-align:right">
+                                            <a href="{{ route('create_show',$response['group']['next']) }}">Guruhning davomi ({{ $response['next'] }})</a>
+                                        </td>
+                                    </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
                         @if(auth()->user()->type=='admin' OR auth()->user()->type=='sAdmin')
                             @if($response['message_status']==1)
-                                <div class="col-lg-3 mt-2">
-                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#sendmessage">Talabalarga SMS</button>
+                                <div class="col-lg-3 mt-2" style="display:none;">
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#sendmessage"><i class="bi bi-envelope"></i> Talabalarga SMS</button>
                                 </div>
                                 <div class="col-lg-3 mt-2">
-                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage">Qarzdorlarga SMS</button>
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage"> <i class="bi bi-exclamation-circle"></i> Qarzdorlarga SMS</button>
                                 </div>
                             @endif
                             <div class="col-lg-3 mt-2">
-                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#updateGroups">Guruhni taxrirlash</button>
+                                <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#updateGroups"><i class="bi bi-pencil-square"></i> Guruhni taxrirlash</button>
                             </div>
                             <div class="col-lg-3 mt-2">
-                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#deleteGroups">Guruhdan o'chirish</button>
+                                <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteGroups"><i class="bi bi-trash"></i> Guruhdan o'chirish</button>
                             </div>
                         @endif
                         @if($response['group']['next']=='new')
                             <div class="col-lg-3 mt-2">
-                                <button class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#nextGroup">Guruhni davom ettirish</button>
-                            </div>
-                        @else 
-                            <div class="col-lg-3 mt-2">
-                                <a href="{{ route('create_show',$response['group']['next']) }}" class="btn btn-info w-100">Guruhning davomi</a>
+                                <button class="btn btn-warning w-100 text-white" data-bs-toggle="modal" data-bs-target="#nextGroup"><i class="bi bi-arrow-repeat"></i> Guruhni davom ettirish</button>
                             </div>
                         @endif
                     </div>

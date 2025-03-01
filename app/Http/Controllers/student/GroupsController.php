@@ -55,10 +55,9 @@ class GroupsController extends Controller{
     }
 
     public function newStore(GroupNextStoreRequest $request){
-        //dd($request);
-        $new_groups = $this->groupService->createGroup($request->validated()); // Yangi guruh
-        $student = $request['students']; // Talabalar
-        $group_ids = $request['group_ids']; // Eski guruh id
+        $new_groups = $this->groupService->createGroup($request->validated()); 
+        $student = $request['students'];
+        $group_ids = $request['group_ids'];
         $groups_id_new = $new_groups->id;
         $Group = Group::find($group_ids);
         $Group->next = $groups_id_new;

@@ -21,10 +21,14 @@ use App\Http\Controllers\techer\TecherController;
 use App\Http\Controllers\kassa\KassaController;
 use App\Http\Controllers\moliya\MoliyaController;
 use App\Http\Controllers\hodim\HodimController;
+use App\Http\Controllers\varonka\VaronkaController;
 
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/varonka/user/{visited}', [VaronkaController::class, 'user'])->name('user_varonka');
+Route::post('/varonka/register', [VaronkaController::class, 'register'])->name('user_varonka_varonka');
 
 Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('student', [StudentController::class, 'index'])->name('all_student'); 

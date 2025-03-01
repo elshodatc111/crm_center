@@ -11,6 +11,7 @@ use App\Services\StudentService;
 use App\Services\HodimService;
 use App\Services\SettingService;
 use App\Jobs\SendMessageWork;
+use App\Jobs\PaymartMessageWork;
 
 class HodimController extends Controller{
     protected $hodimService;
@@ -63,9 +64,11 @@ class HodimController extends Controller{
     }
 
     public function paymartStory(PaymentHodimRequest $request){
+        $user_id = intval($request->user_id);
         $check = $this->hodimService->hodimPaymartCheck($request->validated());
         if($check){
-            $this->hodimService->hodimPaymartStore($request->validated());
+            $patmart_id = $this->hodimService->hodimPaymartStore($request->validated());
+            dispatch(new PaymartMessageWork($patmart_id,'hodim', $user_id, auth()->user()->id, 'pay_hodim_sms'));
             return redirect()->back()->with('success', 'Ish haqi to\'lov amalga oshirildi!');
         }else{
             return redirect()->back()->with('success', 'Balansda yetarli mablag\' mavjud emas!');

@@ -11,6 +11,7 @@ use App\Http\Requests\TeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Http\Requests\TecherPaymartRequest;
 use App\Jobs\SendMessageWork;
+use App\Jobs\PaymartMessageWork;
 
 class TecherController extends Controller{
     private StudentService $studentService;
@@ -62,7 +63,8 @@ class TecherController extends Controller{
     public function PaymartStory(TecherPaymartRequest $request){
         $validatedData = $request->validated();
         if ($this->techerService->check($validatedData)) {
-            $this->techerService->PaymartStore($validatedData);
+            $patmart_id = $this->techerService->PaymartStore($validatedData);
+            dispatch(new PaymartMessageWork($patmart_id, 'techer', $validatedData['techer_id'], auth()->user()->id, 'pay_hodim_sms'));
             return redirect()->back()->with('success', "Ish haqi to'lovi amalga oshirildi.");
         }
         return redirect()->back()->with('error', "Balansda yetarli mablag' mavjud emas.");

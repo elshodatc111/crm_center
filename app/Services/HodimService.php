@@ -123,7 +123,7 @@ class HodimService{
         }else{
             $Setting->balans_plastik = $Setting->balans_plastik - $data['amount'];
         }
-        HodimPaymart::create([
+        $id = HodimPaymart::create([
             'user_id' => $data['user_id'],
             'amount' => $data['amount'],
             'type' => $data['type'],
@@ -141,7 +141,8 @@ class HodimService{
             'comment' => $data['discription']." (Hodim)",
             'user_id' => auth()->user()->id,
         ]);
-        return $Setting->save();
+        $Setting->save();
+        return $id->id;
     }
 
     public function getPaymart(int $id){

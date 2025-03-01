@@ -145,7 +145,7 @@ class TecherService{
             'comment' => $data['description'].'(O\'qituvchi)',
             'user_id' => auth()->user()->id,
         ]);
-        TecherPaymart::create([
+        $paymart = TecherPaymart::create([
             'user_id'=> $data['techer_id'],
             'group_id'=> $data['group_id'],
             'amount'=> $data['amount'],
@@ -153,7 +153,8 @@ class TecherService{
             'description'=> $data['description'],
             'admin_id'=> auth()->user()->id,
         ]);
-        return $Setting->save();
+        $Setting->save();
+        return $paymart->id;
     }
 
     public function techerPaymart(int $id){

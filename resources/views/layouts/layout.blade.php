@@ -11,13 +11,13 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#">
             <i class="bi bi-cake2"></i>
-            <span class="badge bg-success badge-number">3</span>
+            <span class="badge bg-success badge-number">@include('layouts.tkun')</span>
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#">
+          <a class="nav-link nav-icon" href="{{ route('meneger_varonka_new') }}">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-success badge-number">3</span>
+            <span class="badge bg-info badge-number">@include('layouts.murojat')</span>
           </a>
         </li>
         <li class="nav-item dropdown pe-3">

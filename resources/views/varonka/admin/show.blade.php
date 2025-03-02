@@ -46,10 +46,8 @@
 
     <div class="col-lg-8">
         <div class="card">
-            <div class="card-header bg-primary text-white text-center">
-                <h5><i class="bi bi-chat-dots"></i> Murojat haqida</h5>
-            </div>
             <div class="card-body chat-box p-3" id="chatBox" style="height: 400px; overflow-y: auto; background: #f8f9fa;">
+                <h5 class="card-title w-100 text-center bg-white"><i class="bi bi-chat-dots"></i> Murojat haqida</h5>
                 <div class="d-flex flex-column">
                     <div class="d-flex justify-content-start mb-2">
                         <div class="p-3 bg-light border rounded shadow">

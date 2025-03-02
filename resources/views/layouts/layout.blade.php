@@ -78,9 +78,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['meneger_varonka','meneger_varonka_show','meneger_varonka_cancel','meneger_varonka_new','meneger_varonka_repeat','meneger_varonka_pedding','meneger_varonka_success'])? '' : 'collapsed' }}" href="{{ route('meneger_varonka') }}">
+        <a class="nav-link {{ request()->routeIs(['meneger_varonka','meneger_varonka_show','meneger_varonka_cancel','meneger_varonka_new','meneger_varonka_pedding','meneger_varonka_success'])? '' : 'collapsed' }}" href="{{ route('meneger_varonka') }}">
           <i class="bi bi-inboxes"></i>
-          <span>Varonka</span>
+          <span>Murojatlar</span>
         </a>
       </li>
       <li class="nav-item">

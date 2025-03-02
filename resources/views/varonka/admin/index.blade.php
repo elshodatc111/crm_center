@@ -11,17 +11,13 @@
         </nav>
     </div>
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="card">
             <div class="card-body pt-3">
                 <div class="d-grid gap-2">
                     <a href="{{ route('meneger_varonka_new') }}" class="btn btn-outline-primary d-flex justify-content-between align-items-center">
                         <span><i class="bi bi-envelope"></i> Yangi murojatlar</span>
                         <span class="badge bg-white text-primary">{{ $charts['new'] }}</span>
-                    </a>
-                    <a href="{{ route('meneger_varonka_repeat') }}" class="btn btn-outline-success d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-people"></i> Talabalarinizdan murojatlar</span>
-                        <span class="badge bg-white text-success">{{ $charts['repeat'] }}</span>
                     </a>
                     <a href="{{ route('meneger_varonka_pedding') }}" class="btn btn-outline-warning d-flex justify-content-between align-items-center text-dark">
                         <span><i class="bi bi-eye"></i> Ko‘rib chiqilmoqda</span>
@@ -39,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="card">
             <div class="card-body pt-3">
                 <div class="table-responsive">

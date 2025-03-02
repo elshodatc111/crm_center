@@ -57,7 +57,6 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
 
     Route::get('/varonka/meneger', [VaronkaMenegerController::class, 'index'])->name('meneger_varonka');
     Route::get('/varonka/new', [VaronkaMenegerController::class, 'newAll'])->name('meneger_varonka_new');
-    Route::get('/varonka/repeat', [VaronkaMenegerController::class, 'newRepeat'])->name('meneger_varonka_repeat');
     Route::get('/varonka/pedding', [VaronkaMenegerController::class, 'newPedding'])->name('meneger_varonka_pedding');
     Route::get('/varonka/success', [VaronkaMenegerController::class, 'newSuccess'])->name('meneger_varonka_success');
     Route::get('/varonka/cancel', [VaronkaMenegerController::class, 'newCancel'])->name('meneger_varonka_cancel');

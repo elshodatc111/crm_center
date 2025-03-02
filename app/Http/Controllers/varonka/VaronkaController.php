@@ -27,7 +27,6 @@ class VaronkaController extends Controller{
         'social_boshqa',
     ];
 
-    // URL: env('APP_URL')."/".$visited
     public function user($visited){
         $adders = $this->studentService->getAddres();
         return view('varonka.user.index',compact('visited','adders'));
@@ -42,4 +41,5 @@ class VaronkaController extends Controller{
     public function success(){
         return view('varonka.user.success');
     }
+    
 }

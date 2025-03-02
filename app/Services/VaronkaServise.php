@@ -17,18 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
-
-/*
-  "" => "social_telegram"
-  "" => "Elshod"
-  "" => "Musurmonov"
-  "phone1" => "+998 94 520 4004"
-  "phone2" => "+998 90 558 4516"
-  "address" => "Shahrisabz_sh"
-  "birth_date" => "1997-02-01"
-*/
-
 class VaronkaServise{
+
     public function createRegister(array $data){
         $type = User::where('phone1', $data['phone1'])
             ->where('type', 'student')
@@ -43,4 +33,7 @@ class VaronkaServise{
             'type_social' => $data['visited'] ?? null,
         ]));
     }
+
+
+
 }

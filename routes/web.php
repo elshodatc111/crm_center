@@ -22,11 +22,11 @@ use App\Http\Controllers\kassa\KassaController;
 use App\Http\Controllers\moliya\MoliyaController;
 use App\Http\Controllers\hodim\HodimController;
 use App\Http\Controllers\varonka\VaronkaController;
+use App\Http\Controllers\varonka\VaronkaMenegerController;
 
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
 Route::get('/varonka/user/{visited}', [VaronkaController::class, 'user'])->name('user_varonka');
 Route::post('/varonka/register', [VaronkaController::class, 'register'])->name('user_varonka_varonka');
 Route::get('/varonka/success', [VaronkaController::class, 'success'])->name('user_varonka_success');
@@ -49,12 +49,19 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update'); 
     Route::post('groups/remove/user', [GroupsController::class, 'removeUser'])->name('create_groups_remove_user'); 
     Route::post('groups/next/store', [GroupsController::class, 'newStore'])->name('create_groups_next_store'); 
-
     Route::get('/kassa', [KassaController::class, 'index'])->name('compamy_kassa');
     Route::post('/kassa/chiqim', [KassaController::class, 'chiqim'])->name('compamy_kassa_chiqim');
     Route::post('/kassa/xarajat', [KassaController::class, 'xarajat'])->name('compamy_kassa_xarajat');
     Route::post('/kassa/delete', [KassaController::class, 'delete'])->name('compamy_kassa_delete');
     Route::post('/kassa/success', [KassaController::class, 'success'])->name('compamy_kassa_success');
+
+    Route::get('/varonka/meneger', [VaronkaMenegerController::class, 'index'])->name('meneger_varonka');
+    Route::get('/varonka/new', [VaronkaMenegerController::class, 'newAll'])->name('meneger_varonka_new');
+    Route::get('/varonka/repeat', [VaronkaMenegerController::class, 'newRepeat'])->name('meneger_varonka_repeat');
+    Route::get('/varonka/pedding', [VaronkaMenegerController::class, 'newPedding'])->name('meneger_varonka_pedding');
+    Route::get('/varonka/success', [VaronkaMenegerController::class, 'newSuccess'])->name('meneger_varonka_success');
+    Route::get('/varonka/cancel', [VaronkaMenegerController::class, 'newCancel'])->name('meneger_varonka_cancel');
+    Route::get('/varonka/show/{id}', [VaronkaMenegerController::class, 'show'])->name('meneger_varonka_show');
 
 });
 

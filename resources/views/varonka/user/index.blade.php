@@ -51,7 +51,6 @@
     <div class="col-md-6">
         <div class="card text-center">
             <div class="card-header"><h1>{{ env('APP_NAME') }} o'quv markazi</h1></div>
-
             <div class="card-body">
                 <h2 class="card-title">Ro'yhatdan o'tish</h2>
                 <form action="{{ route('user_varonka_varonka') }}" method="post">
@@ -76,8 +75,11 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="address" class="mt-2">Yashash manzilingiz</label>
-                            <select name="address" class="form-control my-1">
-                                <option value="Tanlang">Tanlang</option>
+                            <select name="address" required class="form-control my-1">
+                                <option value="">Tanlang</option>
+                                @foreach($adders as $item)
+                                    <option value="{{ $item['name'] }}">{{ $item['name'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-lg-6">

@@ -134,7 +134,7 @@ class StudentService{
 
     public function getAddres(){
         return Social::get();
-    }
+    } 
 
     public function countAddres(string $addres){
         $Social = Social::where('name',$addres)->first();

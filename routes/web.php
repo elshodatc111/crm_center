@@ -29,6 +29,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/varonka/user/{visited}', [VaronkaController::class, 'user'])->name('user_varonka');
 Route::post('/varonka/register', [VaronkaController::class, 'register'])->name('user_varonka_varonka');
+Route::get('/varonka/success', [VaronkaController::class, 'success'])->name('user_varonka_success');
 
 Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('student', [StudentController::class, 'index'])->name('all_student'); 

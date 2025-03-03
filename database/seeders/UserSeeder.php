@@ -10,7 +10,7 @@ use App\Models\UserHistory;
 class UserSeeder extends Seeder
 {
     public function run(): void
-    {/*
+    {
         $users = [
             [
                 'user_name' => 'Super Admin',
@@ -88,7 +88,6 @@ class UserSeeder extends Seeder
                 User::create($user);
             }
         }
-        */
         User::factory()->count(50)->create([
             'type' => 'student',
         ]);

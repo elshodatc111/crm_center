@@ -15,8 +15,10 @@ use App\Models\TecherPaymart;
 use App\Models\MoliyaHistory;
 use App\Models\Varonka;
 use App\Models\VaronkaHistory;
+use App\Jobs\SendMessageWork;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterVaronkaRequest;
 
 class VaronkaMenegerController extends Controller{
     private StudentService $studentService;
@@ -33,15 +35,9 @@ class VaronkaMenegerController extends Controller{
     }
 
     public function newAll(){
-        $Varonka = Varonka::where('status', 'new')->paginate(10); 
-        $count = count( Varonka::where('status', 'new')->get());
+        $Varonka = Varonka::whereIn('status', ['new','repeat'])->paginate(100);
+        $count =count($Varonka);
         return view('varonka.admin.new',compact('Varonka','count'));
-    }
-    
-    public function newRepeat(){
-        $Varonka = Varonka::where('status', 'repeat')->paginate(10); 
-        $count = count( Varonka::where('status', 'repeat')->get());
-        return view('varonka.admin.repeat',compact('Varonka','count'));
     }
 
     public function newPedding(){
@@ -65,9 +61,14 @@ class VaronkaMenegerController extends Controller{
     public function show($id){
         $user = $this->varonkaServise->users($id);
         $check = $this->varonkaServise->check($id);
-        //dd($user);
-
-        return view('varonka.admin.show',compact('user','check'));
+        $comment = $this->varonkaServise->comment($id);
+        $checkPhone = User::where('phone1',$user['phone1'])->first();
+        if($checkPhone){
+            $status = true;
+        }else{
+            $status = false;
+        }
+        return view('varonka.admin.show',compact('user','check','comment','status'));
     }
 
     public function cancelVaronka(Request $request){
@@ -75,6 +76,36 @@ class VaronkaMenegerController extends Controller{
         return redirect()->back()->with('success', 'Murojat bekor qilindi.');
     }
 
+    public function commentsVaronka(Request $request){
+        $user = $this->varonkaServise->createComment($request->id,$request->comment);
+        return redirect()->back();
+    }
+
+    public function register(RegisterVaronkaRequest $request){
+        $varonka_id = $request->id;
+        $about = $request->about;
+        $varomka = Varonka::find($varonka_id);
+        $users = $this->studentService->createStudent([
+            'user_name' => $varomka['user_name'],
+            'phone1' => $varomka['phone1'],
+            'phone2' => $varomka['phone2'],
+            'address' => $varomka['address'],
+            'birthday' => $varomka['birthday'],
+            'about' => $about,
+        ]);
+        $this->studentService->sotsials($varomka->type_social);
+        $this->studentService->countAddres($varomka['address']);
+        VaronkaHistory::create([
+            'varonka_id'=>$varonka_id,
+            'comment'=>"Murojat ro'yhatga olindi.",
+            'admin_id'=>auth()->user()->id,
+        ]);
+        $varomka->status = 'success';
+        $varomka->register_id = $users->id;
+        $varomka->save();
+        dispatch(new SendMessageWork($users->id, 'new_student_sms',auth()->user()->id));
+        return redirect()->back()->with('success', 'Murojat ro\'yhatga olindi.');
+    }
 
 
 }

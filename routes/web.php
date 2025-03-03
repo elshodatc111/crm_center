@@ -54,15 +54,15 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/kassa/xarajat', [KassaController::class, 'xarajat'])->name('compamy_kassa_xarajat');
     Route::post('/kassa/delete', [KassaController::class, 'delete'])->name('compamy_kassa_delete');
     Route::post('/kassa/success', [KassaController::class, 'success'])->name('compamy_kassa_success');
-
     Route::get('/varonka/meneger', [VaronkaMenegerController::class, 'index'])->name('meneger_varonka');
     Route::get('/varonka/new', [VaronkaMenegerController::class, 'newAll'])->name('meneger_varonka_new');
     Route::get('/varonka/pedding', [VaronkaMenegerController::class, 'newPedding'])->name('meneger_varonka_pedding');
     Route::get('/varonka/success', [VaronkaMenegerController::class, 'newSuccess'])->name('meneger_varonka_success');
     Route::get('/varonka/cancel', [VaronkaMenegerController::class, 'newCancel'])->name('meneger_varonka_cancel');
     Route::get('/varonka/show/{id}', [VaronkaMenegerController::class, 'show'])->name('meneger_varonka_show');
-    
     Route::post('/varonka/user/cancel', [VaronkaMenegerController::class, 'cancelVaronka'])->name('meneger_varonka_cancel_post');
+    Route::post('/varonka/user/comments', [VaronkaMenegerController::class, 'commentsVaronka'])->name('meneger_varonka_comments_post');
+    Route::post('/varonka/user/register', [VaronkaMenegerController::class, 'register'])->name('meneger_varonka_register_post');
 
 });
 

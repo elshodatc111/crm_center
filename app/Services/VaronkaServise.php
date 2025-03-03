@@ -42,10 +42,8 @@ class VaronkaServise{
         $success = 0;
         $cancel = 0;
         foreach (Varonka::get() as $key => $value) {
-            if($value->status=='new'){
+            if($value->status=='new' or $value->status=='repeat'){
                 $new = $new+1;
-            }elseif($value->status=='repeat'){
-                $repeat = $repeat+1;
             }elseif($value->status=='pedding'){
                 $pedding = $pedding+1;
             }elseif($value->status=='success'){
@@ -65,15 +63,15 @@ class VaronkaServise{
     public function users(int $id){
         $Varonka = Varonka::where('id',$id)->first();
         $type = $Varonka['type_social'];
-        if($Varonka['status']='new'){
+        if($Varonka['status']=='new'){
             $status = "Yangi murojat";
-        }elseif($Varonka['status']='repeat'){
+        }elseif($Varonka['status']=='repeat'){
             $status = "Telefon raqam ro'yhatdan o'tgan";
-        }elseif($Varonka['status']='pedding'){
+        }elseif($Varonka['status']=='pedding'){
             $status = "Ko'rib chiqilmoqda";
-        }elseif($Varonka['status']='success'){
+        }elseif($Varonka['status']=='success'){
             $status = "Qabul qilindi";
-        }elseif($Varonka['status']='cancel'){
+        }elseif($Varonka['status']=='cancel'){
             $status = "Bekor qilindi";
         }
         if($type=='social_telegram'){$typs = "Telegram";
@@ -107,6 +105,7 @@ class VaronkaServise{
                 $history['id'] = $User['id'];
                 $history['user_name'] = $User['user_name'];
                 $history['created_at'] = $User['created_at'];
+                $history['phone1'] = $Varonka['phone1'];
             }
         }
         return $history;
@@ -120,6 +119,26 @@ class VaronkaServise{
             'comment'=>"Murojat bekor qilindi",
             'admin_id'=>auth()->user()->id,
         ]);
+        return $Varonka->save();
+    }
+
+    public function comment(int $id){
+        return VaronkaHistory::where('varonka_histories.varonka_id',$id)
+        ->join('users','varonka_histories.admin_id','users.id')
+        ->select('varonka_histories.comment','varonka_histories.created_at','users.user_name')
+        ->get();
+    }
+
+    public function createComment(int $id, string $comment){
+        VaronkaHistory::create([
+            'varonka_id'=>$id,
+            'comment'=>$comment,
+            'admin_id'=>auth()->user()->id,
+        ]);
+        $Varonka = Varonka::where('id', $id)->first();
+        if($Varonka->status != 'success'){
+            $Varonka->status='pedding';
+        }
         return $Varonka->save();
     }
 

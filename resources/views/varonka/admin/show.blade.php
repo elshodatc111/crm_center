@@ -44,20 +44,32 @@
                     </ul>
                 </div> 
             </div>
+            @if($user['status']!='cancel')
             <div class="row mb-2 px-2">
-                <div class="col-6">
+                <div class="col-12">
+                    @if($user['register_id'] == 0)
                     <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#cancelModal">
                         <i class="bi bi-x-circle"></i> Bekor qilish
                     </button>
+                    @endif
                 </div>
-                <div class="col-6">
+                <div class="col-12">
                     @if(!$check)
-                        <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#registerModal">
-                            <i class="bi bi-check-circle"></i> Ro'yxatga olish
-                        </button>
+                        @if($user['register_id'] == 0)
+                            @if(!$status)
+                            <button class="btn btn-success mt-2 w-100" data-bs-toggle="modal" data-bs-target="#registerModal">
+                                <i class="bi bi-check-circle"></i> Ro'yxatga olish
+                            </button>
+                            @endif
+                        @else
+                        <a class="btn btn-info text-white w-100 mt-2" href="{{ route('student_show', $user['register_id']) }}">
+                            <i class="bi bi-person"></i> Ro'yxatga olingan
+                        </a>
+                        @endif
                     @endif
                 </div>
             </div>
+            @endif
         </div>
     </div>
 
@@ -74,25 +86,36 @@
                             </div>
                         </div>
                     @endif
-
+                    @forelse($comment as $item)
                     <div class="d-flex justify-content-start mb-2">
                         <div class="p-3 bg-light border rounded shadow">
-                            <strong>Meneger (meneger123):</strong> <i class="text-muted">2025-01-01 15:22</i>
-                            <div class="small">Assalomu alaykum! Bu boshqa xabar.</div>
+                            <strong>{{ $item['user_name'] }}</strong> <i class="text-muted">{{ $item['created_at'] }}</i>
+                            <div class="small">{{ $item['comment'] }}</div>
                         </div>
                     </div>
+                    @empty
+                        <div class="d-flex justify-content-start mb-2">
+                            <div class="p-3 bg-light border rounded shadow">
+                                <strong>Admin</strong></i>
+                                <div class="small">Murojatchi haqida malumotlarni saqlab qo'yish uchun joy.</div>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
             </div>
 
             <div class="card-footer">
                 @if(!$check)
-                    <form action="#" method="POST">
-                        @csrf
-                        <div class="input-group">
-                            <input type="text" name="message" class="form-control" placeholder="Xabar yozing..." required>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button>
-                        </div>
-                    </form>
+                    @if($user['status']!='cancel')
+                        <form action="{{ route('meneger_varonka_comments_post') }}" method="POST">
+                            @csrf
+                            <div class="input-group">
+                                <input type="hidden" name="id" value="{{ $user['id'] }}">
+                                <input type="text" name="comment" class="form-control" placeholder="Eslatma qoldiring..." required>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button>
+                            </div>
+                        </form>
+                    @endif
                 @endif
             </div>
         </div>
@@ -123,7 +146,6 @@
     </div>
 </div>
 
-<!-- Ro‘yxatga olish modali -->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -132,11 +154,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Ushbu murojaatni ro‘yxatga olishga ishonchingiz komilmi?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                <button type="button" class="btn btn-success">Ha, ro‘yxatga olish</button>
+                <form action="{{ route('meneger_varonka_register_post') }}" method="post">
+                    @csrf 
+                    <input type="hidden" name="id" value="{{ $user['id'] }}">
+                    <label for="about">Ro'yhatga olish haqida</label>
+                    <textarea name="about" required class="form-control mb-3"></textarea>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-success w-100">Ro‘yxatga olish</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

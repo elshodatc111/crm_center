@@ -1,13 +1,13 @@
 @extends('layouts.app02')
-@section('title','Yangi Murojatlar')
+@section('title','Murojatlar bajarilmoqdda')
 @section('content')
     <div class="pagetitle">
-        <h1>Yangi murojatlar</h1>
+        <h1>Murojatlar bajarilmoqdda</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('meneger_varonka') }}">Murojatlar</a></li>
-                <li class="breadcrumb-item">Yangi murojatlar</li>
+                <li class="breadcrumb-item">Murojatlar bajarilmoqdda</li>
             </ol>
         </nav>
     </div>

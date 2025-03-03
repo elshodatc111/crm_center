@@ -37,16 +37,9 @@
     </div>
     <div class="col-md-7">
         <div class="card">
-            <div class="card-body pt-3">
+            <div class="card-body pt-4">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover justify-content-center" style="font-size:12px;">
-                        <thead class="table-dark">
-                            <tr>
-                                <th class="text-center">Tarmoq</th>
-                                <th class="text-center">Havola</th>
-                                <th class="text-center">Nusxalash</th>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr>
                                 <td class="text-center"><i class="bi bi-telegram text-primary"></i> Telegram</td>

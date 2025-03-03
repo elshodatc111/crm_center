@@ -28,30 +28,7 @@ class VaronkaMenegerController extends Controller{
     }
 
     public function index(){
-        $charts = array();
-        $new = 0;
-        $repeat = 0;
-        $pedding = 0;
-        $success = 0;
-        $cancel = 0;
-        foreach (Varonka::get() as $key => $value) {
-            if($value->status=='new'){
-                $new = $new+1;
-            }elseif($value->status=='repeat'){
-                $repeat = $repeat+1;
-            }elseif($value->status=='pedding'){
-                $pedding = $pedding+1;
-            }elseif($value->status=='success'){
-                $success = $success+1;
-            }elseif($value->status=='cancel'){
-                $cancel = $cancel+1;
-            }
-        }
-        $charts['new'] = $new;
-        $charts['repeat'] = $repeat;
-        $charts['pedding'] = $pedding;
-        $charts['success'] = $success;
-        $charts['cancel'] = $cancel;
+        $charts = $this->varonkaServise->chats();
         return view('varonka.admin.index',compact('charts'));
     }
 
@@ -86,6 +63,18 @@ class VaronkaMenegerController extends Controller{
     }
 
     public function show($id){
-        return view('varonka.admin.show');
+        $user = $this->varonkaServise->users($id);
+        $check = $this->varonkaServise->check($id);
+        //dd($user);
+
+        return view('varonka.admin.show',compact('user','check'));
     }
+
+    public function cancelVaronka(Request $request){
+        $user = $this->varonkaServise->requestCancel($request->id);
+        return redirect()->back()->with('success', 'Murojat bekor qilindi.');
+    }
+
+
+
 }

@@ -61,6 +61,8 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('/varonka/success', [VaronkaMenegerController::class, 'newSuccess'])->name('meneger_varonka_success');
     Route::get('/varonka/cancel', [VaronkaMenegerController::class, 'newCancel'])->name('meneger_varonka_cancel');
     Route::get('/varonka/show/{id}', [VaronkaMenegerController::class, 'show'])->name('meneger_varonka_show');
+    
+    Route::post('/varonka/user/cancel', [VaronkaMenegerController::class, 'cancelVaronka'])->name('meneger_varonka_cancel_post');
 
 });
 

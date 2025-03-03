@@ -34,6 +34,95 @@ class VaronkaServise{
         ]));
     }
 
+    public function chats(){
+        $charts = array();
+        $new = 0;
+        $repeat = 0;
+        $pedding = 0;
+        $success = 0;
+        $cancel = 0;
+        foreach (Varonka::get() as $key => $value) {
+            if($value->status=='new'){
+                $new = $new+1;
+            }elseif($value->status=='repeat'){
+                $repeat = $repeat+1;
+            }elseif($value->status=='pedding'){
+                $pedding = $pedding+1;
+            }elseif($value->status=='success'){
+                $success = $success+1;
+            }elseif($value->status=='cancel'){
+                $cancel = $cancel+1;
+            }
+        }
+        $charts['new'] = $new;
+        $charts['repeat'] = $repeat;
+        $charts['pedding'] = $pedding;
+        $charts['success'] = $success;
+        $charts['cancel'] = $cancel;
+        return $charts;
+    }
+
+    public function users(int $id){
+        $Varonka = Varonka::where('id',$id)->first();
+        $type = $Varonka['type_social'];
+        if($Varonka['status']='new'){
+            $status = "Yangi murojat";
+        }elseif($Varonka['status']='repeat'){
+            $status = "Telefon raqam ro'yhatdan o'tgan";
+        }elseif($Varonka['status']='pedding'){
+            $status = "Ko'rib chiqilmoqda";
+        }elseif($Varonka['status']='success'){
+            $status = "Qabul qilindi";
+        }elseif($Varonka['status']='cancel'){
+            $status = "Bekor qilindi";
+        }
+        if($type=='social_telegram'){$typs = "Telegram";
+        }elseif($type=='social_instagram'){$typs = "Instagram";
+        }elseif($type=='social_facebook'){$typs = "Facebook";
+        }elseif($type=='social_youtube'){$typs = "Youtube";
+        }elseif($type=='social_banner'){$typs = "Banner";
+        }elseif($type=='social_tanish'){$typs = "Tanishlar";
+        }elseif($type=='social_boshqa'){$typs = "Boshqa";}
+        return [
+            "id" => $Varonka['id'],
+            "user_name" => $Varonka['user_name'],
+            "phone1" => $Varonka['phone1'],
+            "phone2" => $Varonka['phone2'],
+            "address" => $Varonka['address'],
+            "birthday" => $Varonka['birthday'],
+            "status" => $Varonka['status'],
+            "status2" => $status,
+            "register_id" => $Varonka['register_id'],
+            "type_social" => $typs,
+            "created_at" => $Varonka['created_at'],
+        ];
+    }
+
+    public function check($id){
+        $Varonka = Varonka::where('id', $id)->first();
+        $history = array();
+        if ($Varonka && ($Varonka['status'] == 'new' || $Varonka['status'] == 'repeat')) {
+            $User = User::where('phone1', $Varonka['phone1'])->where('type', 'student')->first();
+            if ($User) { 
+                $history['id'] = $User['id'];
+                $history['user_name'] = $User['user_name'];
+                $history['created_at'] = $User['created_at'];
+            }
+        }
+        return $history;
+    }
+
+    public function requestCancel(int $id){
+        $Varonka = Varonka::where('id', $id)->first();
+        $Varonka->status = 'cancel';
+        VaronkaHistory::create([
+            'varonka_id'=>$id,
+            'comment'=>"Murojat bekor qilindi",
+            'admin_id'=>auth()->user()->id,
+        ]);
+        return $Varonka->save();
+    }
+
 
 
 }

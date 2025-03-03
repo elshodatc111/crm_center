@@ -50,63 +50,63 @@
                         <tbody>
                             <tr>
                                 <td class="text-center"><i class="bi bi-telegram text-primary"></i> Telegram</td>
-                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/social_telegram' }}" readonly></td>
+                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/varonka/user/social_telegram' }}" readonly></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('{{ env('APP_URL').'/social_telegram' }}')">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('{{ env('APP_URL').'/varonka/user/social_telegram' }}')">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center"><i class="bi bi-instagram text-danger"></i> Instagram</td>
-                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/social_instagram' }}" readonly></td>
+                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/varonka/user/social_instagram' }}" readonly></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-danger" onclick="copyToClipboard('{{ env('APP_URL').'/social_instagram' }}')">
+                                    <button class="btn btn-sm btn-outline-danger" onclick="copyToClipboard('{{ env('APP_URL').'/varonka/user/social_instagram' }}')">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center"><i class="bi bi-facebook text-primary"></i> Facebook</td>
-                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/social_facebook' }}" readonly></td>
+                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/varonka/user/social_facebook' }}" readonly></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('{{ env('APP_URL').'/social_facebook' }}')">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('{{ env('APP_URL').'/varonka/user/social_facebook' }}')">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center"><i class="bi bi-youtube text-danger"></i> YouTube</td>
-                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/social_youtube' }}" readonly></td>
+                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/varonka/user/social_youtube' }}" readonly></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-danger" onclick="copyToClipboard('{{ env('APP_URL').'/social_youtube' }}')">
+                                    <button class="btn btn-sm btn-outline-danger" onclick="copyToClipboard('{{ env('APP_URL').'/varonka/user/social_youtube' }}')">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center"><i class="bi bi-image text-warning"></i> Bannerlar</td>
-                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/social_banner' }}" readonly></td>
+                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/varonka/user/social_banner' }}" readonly></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-warning" onclick="copyToClipboard('{{ env('APP_URL').'/social_banner' }}')">
+                                    <button class="btn btn-sm btn-outline-warning" onclick="copyToClipboard('{{ env('APP_URL').'/varonka/user/social_banner' }}')">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center"><i class="bi bi-people text-success"></i> Tanishlar</td>
-                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/social_tanish' }}" readonly></td>
+                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/varonka/user/social_tanish' }}" readonly></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-success" onclick="copyToClipboard('{{ env('APP_URL').'/social_tanish' }}')">
+                                    <button class="btn btn-sm btn-outline-success" onclick="copyToClipboard('{{ env('APP_URL').'/varonka/user/social_tanish' }}')">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center"><i class="bi bi-link-45deg text-secondary"></i> Boshqalar</td>
-                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/social_boshqa' }}" readonly></td>
+                                <td><input type="text" class="form-control" value="{{ env('APP_URL').'/varonka/user/social_boshqa' }}" readonly></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('{{ env('APP_URL').'/social_boshqa' }}')">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('{{ env('APP_URL').'/varonka/user/social_boshqa' }}')">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </td>

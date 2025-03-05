@@ -53,6 +53,7 @@ class TecherAppService{
         }
         return $day;
     }
+
     protected function user($id){
         $users = [];
         $GroupUser = GroupUser::where('group_users.group_id',$id)
@@ -62,6 +63,7 @@ class TecherAppService{
             ->get();
         return $GroupUser;
     }
+
     protected function groupAbout($id){
         $group = Group::find($id);
         $today = date('Y-m-d');
@@ -87,6 +89,7 @@ class TecherAppService{
             'status' => $stat,
         ];
     }
+
     protected function davomad($id){
         $days = $this->day($id);
         $response = [];
@@ -118,12 +121,14 @@ class TecherAppService{
         }
         return $response;
     }
+
     protected function TestHistory($id){
         return TestCheck::where('test_checks.group_id',$id)
             ->join('users','users.id','test_checks.user_id')
             ->select('users.user_name','test_checks.count','test_checks.count_true','test_checks.ball')
             ->get();
     }
+    
     public function group(int $id){
         return [
             'group' => $this->groupAbout($id),
@@ -132,6 +137,28 @@ class TecherAppService{
             'davomad_history' => $this->davomad($id),
             'test_history' => $this->TestHistory($id),
         ];
+    }
+
+    public function checkDavomadDay(array $data){
+        $GroupDays = GroupDays::where('group_id',$data['group_id'])->where('date',date("Y-m-d"))->get();
+        if(count($GroupDays)>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function CreateDavomad(array $data){
+        $days = date("y-m-d");
+        $Davomad = Davomad::where('user_id',$data['user_id'])->where('group_id',$data['group_id'])->where('data',$days)->get();
+        if(!$Davomad){
+            if($Davomad->status != $data['status']){
+                $Davomad->status = $data['status'];
+                return $Davomad->save();
+            }
+        }else{
+            $data['data'] = $days;
+            return Davomad::create($data);
+        }
     }
 
 }

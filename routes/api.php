@@ -8,6 +8,8 @@ use App\Http\Controllers\api\techer\GroupsTecherController;
 use App\Http\Controllers\api\user\AuthUserController;
 use App\Http\Controllers\api\user\GroupUserController;
 use App\Http\Controllers\api\user\PaymartUserController;
+use App\Http\Controllers\api\user\VideoUserController;
+use App\Http\Controllers\api\user\TestUserController;
 
 
 Route::post('/techer/login', [AuthController::class, 'login']);
@@ -29,5 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/groups', [GroupUserController::class, 'index']);
     Route::get('/user/group/{id}', [GroupUserController::class, 'show']);
     Route::get('/user/paymart', [PaymartUserController::class, 'index']);
-    // Route::post('/techer/davomad', [GroupUserController::class, 'davomadPost']);
+    Route::get('/user/video', [VideoUserController::class, 'index']);
+    Route::get('/user/video/show/{id}', [VideoUserController::class, 'shows']);
+    Route::get('/user/tests', [TestUserController::class, 'index']);
+    Route::get('/user/tests/show/{id}', [TestUserController::class, 'shows']);
+    Route::post('/user/tests/check', [TestUserController::class, 'store']);
 }); 

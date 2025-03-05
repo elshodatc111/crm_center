@@ -17,6 +17,7 @@ use App\Models\TestCheck;
 use App\Models\UserHistory;
 use App\Models\SettingRoom;
 use App\Models\MenegerChart;
+use App\Models\TecherPaymart;
 use App\Models\SettingChegirma;
 use App\Jobs\PaymartMessageWork;
 use Illuminate\Support\Facades\Log;
@@ -159,6 +160,12 @@ class TecherAppService{
             $data['data'] = $days;
             return Davomad::create($data);
         }
+    }
+
+    public function paymarts(){
+        return TecherPaymart::where('techer_paymarts.user_id',auth()->user()->id)
+            ->join('groups','groups.id','techer_paymarts.group_id')
+            ->select('groups.group_name','techer_paymarts.type','techer_paymarts.amount','techer_paymarts.created_at')->get();
     }
 
 }

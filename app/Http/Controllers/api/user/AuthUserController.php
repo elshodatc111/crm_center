@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\api\techer;
+namespace App\Http\Controllers\api\user;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
-class AuthController extends Controller{
-    
+class AuthUserController extends Controller{
+
     public function login(Request $request){
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        $user = User::where('email', $request->email)->where('type','techer')->first();
+        $user = User::where('email', $request->email)->where('type','student')->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
@@ -49,8 +50,4 @@ class AuthController extends Controller{
         $user->save();
         return response()->json(['message' => 'Parol muvaffaqiyatli yangilandi!'], 200);
     }
-
-
-
-
 }

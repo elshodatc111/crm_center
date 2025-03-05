@@ -17,7 +17,6 @@ class TestUserController extends Controller
     }
 
     public function store(Request $request){
-        Log::info($request);
         $array['group_id'] = $request->group_id;
         $array['count_true'] = $request->count_true;
         $array['ball'] = $request->count_true*2;

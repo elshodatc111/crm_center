@@ -264,13 +264,13 @@
                                     @foreach($item['davomad'] as $item2)
                                     <td>
                                         @if($item2=='true')
-                                        <b class="text-success" style="font-size:20px"><i class="bi bi-check-all"></i></b>
+                                        <b class="text-success p-0 m-0" style="font-size:14px"><i class="bi bi-check-all"></i></b>
                                         @elseif($item2=='false')
-                                        <b class="text-danger" style="font-size:20px"><i class="bi bi-exclamation"></i></b>
+                                        <b class="text-danger p-0 m-0" style="font-size:14px"><i class="bi bi-exclamation"></i></b>
                                         @elseif($item2=='close')
-                                        <b class="text-warning" style="font-size:20px"><i class="bi bi-exclamation-diamond"></i></b>
+                                        <b class="text-warning p-0 m-0" style="font-size:14px"><i class="bi bi-exclamation-diamond"></i></b>
                                         @else
-                                        <b class="text-info" style="font-size:20px"><i class="bi bi-eye-slash"></i></b>
+                                        <b class="text-info p-0 m-0" style="font-size:14px"><i class="bi bi-eye-slash"></i></b>
                                         @endif
                                     </td>
                                     @endforeach

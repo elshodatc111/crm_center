@@ -8,19 +8,27 @@
                 <h5 class="card-title w-100 text-center">Hududlardan tashriflar</h5>
                 <div id="HududCharts"></div>
                 <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#HududCharts"), {
-                    series: [44, 55, 13, 43, 22],
-                    chart: {
-                        height: 320,
-                        type: 'pie',
-                        toolbar: {
-                            show: true
-                        }
-                    },
-                    labels: ['Qarshi shaxar', 'Yakkabog tuman', 'Dexqonobod tuman', 'Chiroqchi tuman', 'Muborak tuman']
-                    }).render();
-                });
+                    document.addEventListener("DOMContentLoaded", () => {
+                        new ApexCharts(document.querySelector("#HududCharts"), {
+                            series: [
+                                @foreach($Hudud as $item)
+                                    {{ $item['count'] }},
+                                @endforeach
+                            ],
+                            chart: {
+                                height: 320,
+                                type: 'pie',
+                                toolbar: {
+                                    show: true
+                                }
+                            },
+                            labels: [
+                                @foreach($Hudud as $item)
+                                    "{{ $item['name'] }}",
+                                @endforeach
+                            ]
+                        }).render();
+                    });
                 </script>
             </div>
         </div>
@@ -33,7 +41,15 @@
                 <script>
                 document.addEventListener("DOMContentLoaded", () => {
                     new ApexCharts(document.querySelector("#pieChart"), {
-                    series: [44, 55, 13, 43, 22],
+                    series: [
+                        {{ $Social['telegram'] }},
+                        {{ $Social['instagram'] }},
+                        {{ $Social['facebook'] }},
+                        {{ $Social['youtube'] }},
+                        {{ $Social['bannner'] }},
+                        {{ $Social['tanish'] }},
+                        {{ $Social['boshqa'] }},
+                    ],
                     chart: {
                         height: 320,
                         type: 'pie',
@@ -41,7 +57,7 @@
                             show: true
                         }
                     },
-                    labels: ['Telegram', 'Instagram', 'Facebook', 'Youtube', 'Banner']
+                    labels: ['Telegram', 'Instagram', 'Facebook', 'Youtube', 'Banner','Tanishlar','Boshqa']
                     }).render();
                 });
                 </script>
@@ -58,16 +74,32 @@
                         new ApexCharts(document.querySelector("#columnChart"), {
                         series: [{
                             name: 'Tashriflar',
-                            data: [44, 55, 57, 56, 61, 58]
+                            data: [
+                                @foreach($tashrif['tashrif'] as $item)
+                                    {{$item}},
+                                @endforeach
+                            ]
                         },{
                             name: 'Guruhga biriktirildi',
-                            data: [44, 25, 75, 65, 16, 85]
+                            data: [
+                                @foreach($tashrif['group'] as $item)
+                                    {{$item}},
+                                @endforeach
+                            ]
                         }, {
                             name: 'To\'lov qilid',
-                            data: [76, 85, 101, 98, 87, 15]
+                            data: [
+                                @foreach($tashrif['paymart'] as $item)
+                                    {{$item}},
+                                @endforeach
+                            ]
                         }, {
                             name: 'Aktiv talabalar',
-                            data: [36, 45, 11, 78, 81, 65]
+                            data: [
+                                @foreach($activeUser as $item)
+                                    {{$item}},
+                                @endforeach
+                            ]
                         }],
                         chart: {
                             type: 'bar',
@@ -89,7 +121,11 @@
                             colors: ['transparent']
                         },
                         xaxis: {
-                            categories: ['2025-Yanvar', '2025-Fevral', '2025-Mart', '2025-Aprel', '2025-May', '2025-Iyun'],
+                            categories: [
+                                @foreach($tashrif['data'] as $item)
+                                    '{{$item}}',
+                                @endforeach
+                            ],
                         },
                         yaxis: {
                             title: {
@@ -109,57 +145,44 @@
                         }).render();
                     });
                 </script>
-                <table class="table table-bordered text-center" style="font-size:12px;">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><b>2025-Yanvar</b></th>
-                            <th><b>2025-Fevral</b></th>
-                            <th><b>2025-Mart</b></th>
-                            <th><b>2025-Aprel</b></th>
-                            <th><b>2025-May</b></th>
-                            <th><b>2025-Iyun</b></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th style="text-align:left;">Tashriflar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Guruhga biriktirildi</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">To'lov qildi</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Aktiv talabalar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                @foreach($tashrif['data'] as $item)
+                                    <th><b>{{$item}}</b></th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th style="text-align:left;">Tashriflar</th>
+                                @foreach($tashrif['tashrif'] as $item)
+                                    <td>{{$item}}</td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Guruhga biriktirildi</th>
+                                @foreach($tashrif['group'] as $item)
+                                    <td>{{$item}}</td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">To'lov qildi</th>
+                                @foreach($tashrif['paymart'] as $item)
+                                    <td>{{$item}}</td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Aktiv talabalar</th>
+                                @foreach($activeUser as $item)
+                                    <td>{{$item}}</td>
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

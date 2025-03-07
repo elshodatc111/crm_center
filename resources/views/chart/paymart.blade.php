@@ -110,72 +110,74 @@
                         }).render();
                     });
                 </script>
-                <table class="table table-bordered text-center" style="font-size:12px;">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><a href="#">1-mart</a></th>
-                            <th><a href="#">2-mart</a></th>
-                            <th><a href="#">3-mart</a></th>
-                            <th><a href="#">4-mart</a></th>
-                            <th><a href="#">5-mart</a></th>
-                            <th><a href="#">6-mart</a></th>
-                            <th><a href="#">7-mart</a></th>
-                            <th><a href="#">8-mart</a></th>
-                            <th><a href="#">9-mart</a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th style="text-align:left;">Naqt to'lovlar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Plastik to'lovlar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Qaytarilgan to'lovlar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Chegirmalar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><a href="#">1-mart</a></th>
+                                <th><a href="#">2-mart</a></th>
+                                <th><a href="#">3-mart</a></th>
+                                <th><a href="#">4-mart</a></th>
+                                <th><a href="#">5-mart</a></th>
+                                <th><a href="#">6-mart</a></th>
+                                <th><a href="#">7-mart</a></th>
+                                <th><a href="#">8-mart</a></th>
+                                <th><a href="#">9-mart</a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th style="text-align:left;">Naqt to'lovlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Plastik to'lovlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Qaytarilgan to'lovlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Chegirmalar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -249,84 +251,86 @@
                         }).render();
                     });
                 </script>
-                <table class="table table-bordered text-center" style="font-size:12px;">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><b>2025-yanvar</b></th>
-                            <th><b>2025-fevral</b></th>
-                            <th><b>2025-mart</b></th>
-                            <th><b>2025-aprel</b></th>
-                            <th><b>2025-may</b></th>
-                            <th><b>2025-iyun</b></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th style="text-align:left;">Naqt to'lovlar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Plastik to'lovlar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Qaytarilgan to'lovlar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Chegirmalar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Exson</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Xarajatlar</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left;">Daromad</th>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                            <td>125 000</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><b>2025-yanvar</b></th>
+                                <th><b>2025-fevral</b></th>
+                                <th><b>2025-mart</b></th>
+                                <th><b>2025-aprel</b></th>
+                                <th><b>2025-may</b></th>
+                                <th><b>2025-iyun</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th style="text-align:left;">Naqt to'lovlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Plastik to'lovlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Qaytarilgan to'lovlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Chegirmalar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Exson</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Xarajatlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Daromad</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

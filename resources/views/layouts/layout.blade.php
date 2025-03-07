@@ -156,18 +156,23 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link  {{ request()->routeIs(['chart_vised','chart_paymart']) ? '' : 'collapsed' }}" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link  {{ request()->routeIs(['chart_vised','chart_paymart','chart_techer']) ? '' : 'collapsed' }}" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Statistika</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="charts-nav" class="nav-content collapse {{ request()->routeIs(['chart_vised','chart_paymart']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="charts-nav" class="nav-content collapse {{ request()->routeIs(['chart_vised','chart_paymart','chart_techer']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('chart_vised') }}" class="{{ request()->routeIs(['chart_vised']) ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Tashrif Statistika</span>
+              <i class="bi bi-circle"></i><span>Tashrif Statistikasi</span>
             </a>
           </li>
           <li>
             <a href="{{ route('chart_paymart') }}" class="{{ request()->routeIs(['chart_paymart']) ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>To'lovlar Statistika</span>
+              <i class="bi bi-circle"></i><span>To'lovlar Statistikasi</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('chart_techer') }}" class="{{ request()->routeIs(['chart_techer']) ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Guruhlar Statistikasi</span>
             </a>
           </li>
         </ul>

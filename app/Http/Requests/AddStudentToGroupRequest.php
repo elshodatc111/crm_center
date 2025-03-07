@@ -13,7 +13,7 @@ class AddStudentToGroupRequest extends FormRequest{
         return [
             'user_id' => ['required', 'exists:users,id'], 
             'group_id' => ['required', 'exists:groups,id'], 
-            'start_discription' => ['required', 'string', 'min:5', 'max:500'],
+            'start_discription' => ['required', 'string', 'min:2', 'max:500'],
         ];
     }
 

@@ -224,7 +224,7 @@
                                             </tr>
                                         @empty  
                                         <tr>
-                                            <td colspan="5">To'lovlar mavjud emas</td>
+                                            <td colspan="6">To'lovlar mavjud emas</td>
                                         </tr>
                                         @endforelse
                                     </tbody>
@@ -254,7 +254,7 @@
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="4">Ma'lumot mavjud emas.</td>
+                                            <td colspan="5">Ma'lumot mavjud emas.</td>
                                         </tr>
                                         @endforelse
                                     </tbody>

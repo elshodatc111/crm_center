@@ -10,7 +10,9 @@ use App\Models\Setting;
 use App\Models\LessenTime;
 use App\Models\GroupDays;
 use App\Models\Group;
+use App\Models\TestCheck;
 use App\Models\GroupUser;
+use App\Models\Davomad;
 use App\Models\Holiday;
 use App\Models\MenegerChart;
 use App\Models\UserHistory;
@@ -189,10 +191,60 @@ class GroupService{
             )
             ->get();
     }
+    public function TestCheck(int $id){
+        return TestCheck::where('test_checks.group_id', $id)
+        ->join('users', 'test_checks.user_id', '=', 'users.id')
+        ->select(
+            'users.id as user_id',
+            'users.user_name', // To‘g‘ri ustun nomi
+            'test_checks.count as urinishlar',
+            'test_checks.count_true',
+            'test_checks.ball'
+        )->get();
+    }
+    public function davomad(int $id){
+        $days = $this->groupDays($id);
+        $users = $this->allGroupUsers($id);
+        $davomad = [];
+        $kunlar = [];
+        foreach ($days as $key => $value) {
+            $kunlar[$key] = $value;
+        }
+        $davomad['kunlar'] = $kunlar;
+        $User = [];
+        $now = date("Y-m-d");
+        if(count($users)>0){
+            foreach ($users as $key => $user) {
+                $User[$key]['user_id'] = $user->id;
+                $User[$key]['name'] = $user->user_name;
+                foreach ($days as $key1 => $day) {
+                    if($now>$day){
+                        $Davomad = Davomad::where('group_id',$id)->where('data',$day)->get();
+                        if(count($Davomad)==0){
+                            $User[$key]['davomad'][$key1] = 'close';
+                        }else{
+                            $davomad2 = Davomad::where('group_id',$id)->where('data',$day)->where('user_id',$user->id)->first();
+                            if($davomad2 && $davomad2->status == true){
+                                $User[$key]['davomad'][$key1] = 'true';
+                            }else{
+                                $User[$key]['davomad'][$key1] = 'false';
+                            }
+                        }
+                    }else{
+                        $User[$key]['davomad'][$key1] = 'pedding';
+                    }
+                }
+            }
+            $davomad['users'] = $User;
+            return [
+                $davomad
+            ];
+        }else{return [];}
+    }
     public function groupsShow(int $id){
         $davomi = $this->groupAbout($id);
         $next='new';
-        if($davomi->next!='new'){
+        if($davomi->next!='new'){ 
             $next = Group::where('groups.id', $davomi->next)->first()->group_name;
         }
         return [
@@ -206,6 +258,8 @@ class GroupService{
             'rooms' => SettingRoom::where('status', 'true')->select('id', 'room_name')->get(),
             'paymarts' => SettingPaymart::where('status', 'true')->select('id', 'amount', 'chegirma', 'admin_chegirma')->get(),
             'time' => LessenTime::select('id', 'number', 'time')->get(),
+            'testlar' => $this->TestCheck($id),
+            'davomad' => $this->davomad($id),
         ];
     }
 

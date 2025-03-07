@@ -62,7 +62,7 @@
                         aria-controls="contact" aria-selected="false">
                         <i class="bi bi-check2-circle"></i> Davomad
                     </button>
-                </li>
+                </li> 
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
                 <div class="tab-pane fade show active pt-2" id="guruh-haqida" role="tabpanel" aria-labelledby="home-tab">
@@ -219,6 +219,7 @@
                         <table class="table table-bordered text-center" style="font-size:12px;">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Talaba</th>
                                     <th>Urinishlar soni</th>
                                     <th>Testlar soni</th>
@@ -227,13 +228,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @forelse($response['testlar'] as $item)
                                 <tr>
-                                    <th>FIO</th>
-                                    <th>2</th>
-                                    <th>15</th>
-                                    <th>10</th>
-                                    <th>20</th>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['user_name'] }}</a></td>
+                                    <td>{{ $item['urinishlar'] }}</td>
+                                    <td>15</td>
+                                    <td>{{ $item['count_true'] }}</td>
+                                    <td>{{ $item['ball'] }}</td>
                                 </tr>
+                            @empty
+                                <tr>
+                                    <th colspan=6 class="text-center">Urinishlar mavjud emas</th>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -244,20 +252,30 @@
                             <thead>
                                 <tr>
                                     <th>Talaba / Dars kunlari</th>
-                                    <th>20.02.2025</th>
-                                    <th>21.02.2025</th>
-                                    <th>22.02.2025</th>
-                                    <th>23.02.2025</th>
+                                    @foreach($response['davomad'][0]['kunlar'] as $item)
+                                    <th>{{$item}}</th>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($response['davomad'][0]['users'] as $item)
                                 <tr>
-                                    <th>Davomad</th>
-                                    <td><b class="text-success" style="font-size:20px"><i class="bi bi-check-all"></i></b></td>
-                                    <td><b class="text-danger" style="font-size:20px"><i class="bi bi-exclamation"></i></b></td>
-                                    <td><b class="text-warning" style="font-size:20px"><i class="bi bi-exclamation-diamond"></i></b></td>
-                                    <td><b class="text-info" style="font-size:20px"><i class="bi bi-eye-slash"></i></b></td>
+                                    <th style="text-align:left"><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['name'] }}</a></th>
+                                    @foreach($item['davomad'] as $item2)
+                                    <td>
+                                        @if($item2=='true')
+                                        <b class="text-success" style="font-size:20px"><i class="bi bi-check-all"></i></b>
+                                        @elseif($item2=='false')
+                                        <b class="text-danger" style="font-size:20px"><i class="bi bi-exclamation"></i></b>
+                                        @elseif($item2=='close')
+                                        <b class="text-warning" style="font-size:20px"><i class="bi bi-exclamation-diamond"></i></b>
+                                        @else
+                                        <b class="text-info" style="font-size:20px"><i class="bi bi-eye-slash"></i></b>
+                                        @endif
+                                    </td>
+                                    @endforeach
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

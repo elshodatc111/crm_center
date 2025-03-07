@@ -65,7 +65,7 @@ class VisedService{
                 ->count();
             $paymartCount = Paymart::whereIn('user_id', $users)
                 ->whereIn('paymart_type', ['plastik', 'naqt'])
-                ->distinct('user_id') // Faqat noyob user_id larni sanaydi
+                ->distinct('user_id') 
                 ->count();
             $count['data'][] = $date['yM'];
             $count['tashrif'][] = count($users);

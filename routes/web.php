@@ -26,6 +26,17 @@ use App\Http\Controllers\varonka\VaronkaMenegerController;
 
 Auth::routes();
 
+Route::get('/chart0', function () {
+    return view('chart.chart01');
+});
+Route::get('/chart1', function () {
+    return view('chart.chart02');
+});
+Route::get('/chart2', function () {
+    return view('chart.chart03');
+});
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/varonka/user/{visited}', [VaronkaController::class, 'user'])->name('user_varonka');
 Route::post('/varonka/register', [VaronkaController::class, 'register'])->name('user_varonka_varonka');

@@ -23,18 +23,10 @@ use App\Http\Controllers\moliya\MoliyaController;
 use App\Http\Controllers\hodim\HodimController;
 use App\Http\Controllers\varonka\VaronkaController;
 use App\Http\Controllers\varonka\VaronkaMenegerController;
+use App\Http\Controllers\chart\ChartController;
 
 Auth::routes();
 
-Route::get('/chart0', function () {
-    return view('chart.chart01');
-});
-Route::get('/chart1', function () {
-    return view('chart.chart02');
-});
-Route::get('/chart2', function () {
-    return view('chart.chart03');
-});
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -136,7 +128,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/hodim/update/status', [HodimController::class, 'updateStatus'])->name('compamy_hodim_techer_update_status');
     Route::post('/hodim/paymart/status', [HodimController::class, 'paymartStory'])->name('compamy_hodim_paymart_story');
 
-
-
+    
+    Route::get('chart/vised', [ChartController::class, 'vised'])->name('chart_vised');
+    Route::get('chart/paymart', [ChartController::class, 'paymart'])->name('chart_paymart');
+    
 });
 

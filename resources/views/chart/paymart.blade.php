@@ -1,53 +1,7 @@
-@extends('layouts.app')
-@section('title','Dashboard')
+@extends('layouts.app02')
+@section('title','To\'lovlar Statistika')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title w-100 text-center">Hududlardan tashriflar</h5>
-                <div id="HududCharts"></div>
-                <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#HududCharts"), {
-                    series: [44, 55, 13, 43, 22],
-                    chart: {
-                        height: 350,
-                        type: 'pie',
-                        toolbar: {
-                            show: true
-                        }
-                    },
-                    labels: ['Qarshi shaxar', 'Yakkabog tuman', 'Dexqonobod tuman', 'Chiroqchi tuman', 'Muborak tuman']
-                    }).render();
-                });
-                </script>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title w-100 text-center">Sotsial tashriflar</h5>
-                <div id="pieChart"></div>
-                <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#pieChart"), {
-                    series: [44, 55, 13, 43, 22],
-                    chart: {
-                        height: 350,
-                        type: 'pie',
-                        toolbar: {
-                            show: true
-                        }
-                    },
-                    labels: ['Telegram', 'Instagram', 'Facebook', 'Youtube', 'Banner']
-                    }).render();
-                });
-                </script>
-            </div>
-        </div>
-    </div>
     <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
@@ -58,7 +12,7 @@
                         new ApexCharts(document.querySelector("#umumiyMurojat"), {
                         series: [44, 55, 13, 43, 22],
                         chart: {
-                            height: 350,
+                            height: 320,
                             type: 'pie',
                             toolbar: {
                             show: true
@@ -81,7 +35,7 @@
                         new ApexCharts(document.querySelector("#oylikMurojat"), {
                         series: [44, 55, 13, 43, 22],
                         chart: {
-                            height: 350,
+                            height: 320,
                             type: 'pie',
                             toolbar: {
                             show: true

@@ -34,6 +34,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/video', [VideoUserController::class, 'index']);
     Route::get('/user/video/show/{id}', [VideoUserController::class, 'shows']);
     Route::get('/user/tests', [TestUserController::class, 'index']);
-    Route::get('/user/tests/show/{id}', [TestUserController::class, 'shows']);
     Route::post('/user/tests/check', [TestUserController::class, 'store']);
 }); 

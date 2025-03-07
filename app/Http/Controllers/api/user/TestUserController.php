@@ -56,16 +56,24 @@ class TestUserController extends Controller{
         return response()->json(['testlar' => $Testlar], 200);
     }
 
-    public function shows($id){
-        return response()->json(['test' => $id], 200);
-    }
-
     public function store(Request $request){
-        $array['group_id'] = $request->group_id;
-        $array['count_true'] = $request->count_true;
-        $array['ball'] = $request->count_true*2;
-        $array['count'] = $request->count;
-        return response()->json(['test post' => $array], 200);
+        $TestCheck = TestCheck::where('user_id',auth()->user()->id)->where('group_id',$request->group_id)->first();
+        if($TestCheck){
+            $TestCheck->count = $TestCheck->count + 1;
+            $TestCheck->count_true = $request->count_true;
+            $TestCheck->ball = ($request->count_true)*2;
+            $TestCheck->save();
+            return response()->json(['status' => 'success'], 200);
+        }else{
+            TestCheck::create([
+                'user_id' => auth()->user()->id,
+                'group_id' => $request->group_id,
+                'count' => 1,
+                'count_true' => $request->count_true,
+                'ball' => ($request->count_true)*2,
+            ]);
+            return response()->json(['status' => 'success'], 200);
+        }
     }
 
 

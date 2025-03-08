@@ -10,7 +10,13 @@
                 <script>
                     document.addEventListener("DOMContentLoaded", () => {
                         new ApexCharts(document.querySelector("#umumiyMurojat"), {
-                        series: [44, 55, 13, 43, 22],
+                        series: [
+                            {{ $allMurojat['new'] }},
+                            {{ $allMurojat['pedding'] }},
+                            {{ $allMurojat['cancel'] }},
+                            {{ $allMurojat['success'] }},
+                            {{ $allMurojat['paymart'] }},
+                        ],
                         chart: {
                             height: 320,
                             type: 'pie',
@@ -33,7 +39,13 @@
                 <script>
                     document.addEventListener("DOMContentLoaded", () => {
                         new ApexCharts(document.querySelector("#oylikMurojat"), {
-                        series: [44, 55, 13, 43, 22],
+                        series: [
+                            {{ $monchMurojat['new'] }},
+                            {{ $monchMurojat['pedding'] }},
+                            {{ $monchMurojat['cancel'] }},
+                            {{ $monchMurojat['success'] }},
+                            {{ $monchMurojat['paymart'] }},
+                        ],
                         chart: {
                             height: 320,
                             type: 'pie',
@@ -208,6 +220,9 @@
                             name: 'Xarajatlar',
                             data: [44, 55, 57, 56, 61, 58]
                         },{
+                            name: 'Ish haqi',
+                            data: [44, 55, 57, 56, 61, 58]
+                        },{
                             name: 'Daromad',
                             data: [44, 55, 57, 56, 61, 58]
                         }],
@@ -312,6 +327,15 @@
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Xarajatlar</th>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                                <td>125 000</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">To'langan ish haqi</th>
                                 <td>125 000</td>
                                 <td>125 000</td>
                                 <td>125 000</td>

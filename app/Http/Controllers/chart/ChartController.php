@@ -8,16 +8,23 @@ use Illuminate\Http\Request;
 use App\Services\chart\VisedService;
 use App\Services\chart\PaymartService;
 use App\Services\chart\TecherService;
+use App\Services\chart\TecherReytingService;
 
 class ChartController extends Controller{
     protected $visedService;
     protected $paymartService;
     protected $techerService;
+    protected $techerReytingService;
 
-    public function __construct(VisedService $visedService,PaymartService $paymartService,TecherService $techerService){
+    public function __construct(
+            VisedService $visedService,
+            PaymartService $paymartService,
+            TecherService $techerService,
+            TecherReytingService $techerReytingService){
         $this->visedService = $visedService;
         $this->paymartService = $paymartService;
         $this->techerService = $techerService;
+        $this->techerReytingService = $techerReytingService;
     }
 
     public function vised(){
@@ -45,8 +52,13 @@ class ChartController extends Controller{
 
     public function techer(){
         $item = $this->techerService->getAll();
-        //dd($item);
         return view('chart.techer',compact('item'));
+    }
+
+    public function techerReyting(){
+        $techer = $this->techerReytingService->reyting();
+        //dd($techer);
+        return view('chart.reyting',compact('techer'));
     }
     
 }

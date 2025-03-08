@@ -18,7 +18,7 @@ class TecherService{
         return count(GroupUser::where('group_id',$group_id)->where('status',true)->get());
     }
 
-    protected function countNextUser(int $group_id, string $end_data, string $type){
+    public function countNextUser(int $group_id, string $end_data, string $type){
         $user_ids = GroupUser::where('group_id', $group_id)
             ->where('status', true)
             ->pluck('user_id')

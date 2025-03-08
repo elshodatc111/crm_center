@@ -7,7 +7,7 @@
             <div class="card-body">
                 <h4 class="card-title">Guruhlar Statistikasi</h4>
                 <div class="table-responsive">
-                    <table class="table table-bordered text-center justify-content-center" style="font-size:14px;">
+                    <table class="table table-bordered text-center table-striped justify-content-center" style="font-size:14px;">
                         <thead style="font-size:14px;">
                             <tr>
                                 <th rowspan=2>Guruhlar (Oxirgi 30 kunda yakunlangan guruhlar)</th>

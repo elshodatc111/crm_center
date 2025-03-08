@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 
 use App\Services\chart\VisedService;
 use App\Services\chart\PaymartService;
+use App\Services\chart\TecherService;
 
 class ChartController extends Controller{
     protected $visedService;
     protected $paymartService;
+    protected $techerService;
 
-    public function __construct(VisedService $visedService,PaymartService $paymartService){
+    public function __construct(VisedService $visedService,PaymartService $paymartService,TecherService $techerService){
         $this->visedService = $visedService;
         $this->paymartService = $paymartService;
+        $this->techerService = $techerService;
     }
 
     public function vised(){
@@ -32,10 +35,8 @@ class ChartController extends Controller{
         $monch = $this->visedService->getLastSixMonths();
         $DaysChart = $this->paymartService->DaysChart();
         $MonchChart = $this->paymartService->MonchChart();
-        //dd($MonchChart); 
         return view('chart.paymart',compact('allMurojat','monchMurojat','days','monch','DaysChart','MonchChart'));
     }
-
 
     public function paymart_show($data){
         $paymart = $this->paymartService->paymartDay($data);
@@ -43,7 +44,9 @@ class ChartController extends Controller{
     }
 
     public function techer(){
-        return view('chart.techer');
+        $item = $this->techerService->getAll();
+        //dd($item);
+        return view('chart.techer',compact('item'));
     }
     
 }

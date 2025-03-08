@@ -7,36 +7,38 @@
             <div class="card-body">
                 <h4 class="card-title">Guruhlar Statistikasi</h4>
                 <div class="table-responsive">
-                    <table class="table table-bordered text-center justify-content-center" style="font-size:12px;">
+                    <table class="table table-bordered text-center justify-content-center" style="font-size:14px;">
                         <thead style="font-size:14px;">
                             <tr>
-                                <th rowspan=2  class="bg-primary text-white">Guruhlar (Oxirgi 30 kunda yakunlangan guruhlar)</th>
-                                <th rowspan=2  class="bg-primary text-white">Guruh talabalari</th>
-                                <th colspan=2  class="bg-primary text-white">Dars vaqtlari</th>
-                                <th colspan=4  class="bg-primary text-white">Darslarni davom etgan talabalar</th>
-                                <th rowspan=2  class="bg-warning text-white">O'qituvchi</th>
+                                <th rowspan=2>Guruhlar (Oxirgi 30 kunda yakunlangan guruhlar)</th>
+                                <th colspan=2>Dars vaqtlari</th>
+                                <th rowspan=2>Guruh talabalari</th>
+                                <th colspan=2>Darslarni davom etgan talabalar</th>
+                                <th rowspan=2>O'qituvchi</th>
                             </tr>
                             <tr>
-                                <th class="bg-info text-white">Boshlangan vaqt</th>
-                                <th class="bg-info text-white">Yakunlangan vaqti</th>
-                                <th class="bg-success text-white">Umumiy soni</th>
-                                <th class="bg-success text-white">Umumiy soni (%)</th>
-                                <th class="bg-success text-white">To'lov qilganlar</th>
-                                <th class="bg-success text-white">To'lov qilganlar(%)</th>
+                                <th>Boshlangan vaqt</th>
+                                <th>Yakunlangan vaqti</th>
+                                <th>Umumiy soni</th>
+                                <th>To'lov qilganlar</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($item as $items)
                             <tr>
-                                <th style="text-align:left;"><a href="">Guruh nomi</a></th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td><a href="">O'qituvchi</a></td>
+                                <th><a href="{{ route('create_show',$items['group_id']) }}">{{ $items['group_name'] }}</a></th>
+                                <td>{{ $items['lessen_start'] }}</td>
+                                <td>{{ $items['lessen_end'] }}</td>
+                                <td>{{ $items['user_count'] }}</td>
+                                <td>{{ $items['next_count'] }}</td>
+                                <td>{{ $items['paymart_count'] }}</td>
+                                <td><a href="{{ route('techer_show',$items['techer_id']) }}">{{ $items['techer'] }}</a></td>
                             </tr>
+                            @empty
+                            <tr>
+                                <td colspan=7 class="text-center">30 kun davomida yakunlangan guruhlar mavjud emas.</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

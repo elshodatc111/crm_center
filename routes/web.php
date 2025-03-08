@@ -131,6 +131,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
     Route::get('chart/vised', [ChartController::class, 'vised'])->name('chart_vised');
     Route::get('chart/paymart', [ChartController::class, 'paymart'])->name('chart_paymart');
+    Route::get('chart/paymarts/{data}', [ChartController::class, 'paymart_show'])->name('chart_paymart_show');
     Route::get('chart/techer', [ChartController::class, 'techer'])->name('chart_techer');
     
 });

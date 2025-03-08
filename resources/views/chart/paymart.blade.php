@@ -71,16 +71,32 @@
                         new ApexCharts(document.querySelector("#columnChart"), {
                         series: [{
                             name: 'Naqt to\'lovlar',
-                            data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                            data: [
+                                @foreach($DaysChart['naqt'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         },{
                             name: 'Plastik to\'lovlar',
-                            data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                            data: [
+                                @foreach($DaysChart['plastik'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         }, {
                             name: 'Chegirmalar',
-                            data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+                            data: [
+                                @foreach($DaysChart['chegirma'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         }, {
                             name: 'Qaytarilgan to\'lovlar',
-                            data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                            data: [
+                                @foreach($DaysChart['qaytarildi'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         }],
                         chart: {
                             type: 'bar',
@@ -102,7 +118,11 @@
                             colors: ['transparent']
                         },
                         xaxis: {
-                            categories: ['01-mart', '02-mart', '03-mart', '04-mart', '05-mart', '06-mart', '07-mart', '08-mart', '09-mart'],
+                            categories: [
+                                @foreach($days as $item)
+                                    "{{$item['ymd']}}",
+                                @endforeach
+                            ],
                         },
                         yaxis: {
                             title: {
@@ -127,65 +147,35 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th><a href="#">1-mart</a></th>
-                                <th><a href="#">2-mart</a></th>
-                                <th><a href="#">3-mart</a></th>
-                                <th><a href="#">4-mart</a></th>
-                                <th><a href="#">5-mart</a></th>
-                                <th><a href="#">6-mart</a></th>
-                                <th><a href="#">7-mart</a></th>
-                                <th><a href="#">8-mart</a></th>
-                                <th><a href="#">9-mart</a></th>
+                                @foreach($days as $item)
+                                    <th><a href="{{ route('chart_paymart_show',$item['ymd']) }}">{{$item['ymd']}}</a></th>
+                                @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th style="text-align:left;">Naqt to'lovlar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($DaysChart['naqt'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Plastik to'lovlar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left;">Qaytarilgan to'lovlar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($DaysChart['plastik'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Chegirmalar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($DaysChart['chegirma'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                <th style="text-align:left;">Qaytarilgan to'lovlar</th>
+                                @foreach($DaysChart['qaytarildi'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                         </tbody>
                     </table>
@@ -202,29 +192,61 @@
                     document.addEventListener("DOMContentLoaded", () => {
                         new ApexCharts(document.querySelector("#oylikTolovlar"), {
                         series: [{
-                            name: 'Oylik to\'lovlar',
-                            data: [44, 55, 57, 56, 61, 58]
+                            name: 'Naqt to\'lovlar',
+                            data: [
+                                @foreach($MonchChart['naqt'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         },{
                             name: 'Plastik to\'lovlar',
-                            data: [44, 55, 57, 56, 61, 58]
+                            data: [
+                                @foreach($MonchChart['plastik'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         }, {
                             name: 'Chegirmalar',
-                            data: [76, 85, 101, 98, 87, 105]
+                            data: [
+                                @foreach($MonchChart['chegirma'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         }, {
                             name: 'Qaytarilgan to\'lovlar',
-                            data: [35, 41, 36, 26, 45, 48]
+                            data: [
+                                @foreach($MonchChart['qaytarildi'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         }, {
                             name: 'Exson',
-                            data: [35, 41, 36, 26, 45, 48]
+                            data: [
+                                @foreach($MonchChart['exson'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         },{
                             name: 'Xarajatlar',
-                            data: [44, 55, 57, 56, 61, 58]
+                            data: [
+                                @foreach($MonchChart['xarajat'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         },{
                             name: 'Ish haqi',
-                            data: [44, 55, 57, 56, 61, 58]
+                            data: [
+                                @foreach($MonchChart['ishhaqi'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         },{
                             name: 'Daromad',
-                            data: [44, 55, 57, 56, 61, 58]
+                            data: [
+                                @foreach($MonchChart['daromad'] as $item)
+                                    {{ $item['int'] }},
+                                @endforeach
+                            ]
                         }],
                         chart: {
                             type: 'bar',
@@ -246,7 +268,11 @@
                             colors: ['transparent']
                         },
                         xaxis: {
-                            categories: ['2025-yanvar', '2025-fevral', '2025-mart', '2025-aprel', '2025-may', '2025-iyun'],
+                            categories: [
+                                @foreach($monch as $item)
+                                    "{{$item['yM']}}",
+                                @endforeach
+                            ],
                         },
                         yaxis: {
                             title: {
@@ -271,86 +297,59 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th><b>2025-yanvar</b></th>
-                                <th><b>2025-fevral</b></th>
-                                <th><b>2025-mart</b></th>
-                                <th><b>2025-aprel</b></th>
-                                <th><b>2025-may</b></th>
-                                <th><b>2025-iyun</b></th>
+                                @foreach($monch as $item)
+                                    <th><b>{{$item['yM']}}</b></th>
+                                @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th style="text-align:left;">Naqt to'lovlar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['naqt'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Plastik to'lovlar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['plastik'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Qaytarilgan to'lovlar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['qaytarildi'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Chegirmalar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['chegirma'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Exson</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['exson'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Xarajatlar</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['xarajat'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">To'langan ish haqi</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['ishhaqi'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                             <tr>
                                 <th style="text-align:left;">Daromad</th>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
-                                <td>125 000</td>
+                                @foreach($MonchChart['daromad'] as $item)
+                                    <td>{{ $item['string'] }}</td>
+                                @endforeach
                             </tr>
                         </tbody>
                     </table>

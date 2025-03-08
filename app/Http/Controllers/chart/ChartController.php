@@ -28,8 +28,18 @@ class ChartController extends Controller{
     public function paymart(){
         $allMurojat = $this->paymartService->allMurojat();
         $monchMurojat = $this->paymartService->monchMurojat();
-        //dd($monchMurojat);
-        return view('chart.paymart',compact('allMurojat','monchMurojat'));
+        $days = $this->paymartService->getLastNineDays();
+        $monch = $this->visedService->getLastSixMonths();
+        $DaysChart = $this->paymartService->DaysChart();
+        $MonchChart = $this->paymartService->MonchChart();
+        //dd($MonchChart); 
+        return view('chart.paymart',compact('allMurojat','monchMurojat','days','monch','DaysChart','MonchChart'));
+    }
+
+
+    public function paymart_show($data){
+        $paymart = $this->paymartService->paymartDay($data);
+        return view('chart.show',compact('data','paymart'));
     }
 
     public function techer(){

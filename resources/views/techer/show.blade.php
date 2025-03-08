@@ -27,7 +27,7 @@
 @endif
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-lg-4">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title w-100 text-center">O'qituvchi haqida</h3>
@@ -179,84 +179,88 @@
         </div>
     </div>
 
-    <div class="col-8">
+    <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title w-100 text-center">Guruhlar (Guruh yakunlanganiga 30 kundan kiyin o'chiriladi)</h3>
-                <table class="table table-bordered text-center" style="font-size:14px">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Guruh</th>
-                            <th>Guruh holati</th>
-                            <th>Talabalar</th>
-                            <th>Bonus talaba</th>
-                            <th>Ish haqi</th>
-                            <th>To'langan ish haqi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($groups as $item)
-                        <tr> 
-                            <td>{{ $loop->index+1 }}</td>
-                            <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
-                            <td>
-                                @if($item['status']=='active')
-                                    <i class="text-success">Faol</i>
-                                @elseif($item['status']=='end')
-                                    <i class="text-danger">Yakunlangan</i>
-                                @else
-                                    <i class="text-warning">Kutilmoqda</i>
-                                @endif
-                            </td>
-                            <td>{{ $item['users'] }}</td>
-                            <td>{{ $item['bonus'] }}</td>
-                            <td>{{ number_format($item['xisoblandi'], 0, '.', ' ') }}</td>
-                            <td>{{ number_format($item['tulandi'], 0, '.', ' ') }}</td>
-                        </tr>
-                        @empty
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:14px">
+                        <thead>
                             <tr>
-                                <td colspan=7 class="text-center">O'qituvchi guruhlari mavjud emas</td>
+                                <th>#</th>
+                                <th>Guruh</th>
+                                <th>Guruh holati</th>
+                                <th>Talabalar</th>
+                                <th>Bonus talaba</th>
+                                <th>Ish haqi</th>
+                                <th>To'langan ish haqi</th>
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse($groups as $item)
+                            <tr> 
+                                <td>{{ $loop->index+1 }}</td>
+                                <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                                <td>
+                                    @if($item['status']=='active')
+                                        <i class="text-success">Faol</i>
+                                    @elseif($item['status']=='end')
+                                        <i class="text-danger">Yakunlangan</i>
+                                    @else
+                                        <i class="text-warning">Kutilmoqda</i>
+                                    @endif
+                                </td>
+                                <td>{{ $item['users'] }}</td>
+                                <td>{{ $item['bonus'] }}</td>
+                                <td>{{ number_format($item['xisoblandi'], 0, '.', ' ') }}</td>
+                                <td>{{ number_format($item['tulandi'], 0, '.', ' ') }}</td>
+                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=7 class="text-center">O'qituvchi guruhlari mavjud emas</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title w-100 text-center">Ish haqi to'lovlari (Oxirgi 3 oylik to'lovlar tarixi)</h3>
-                <table class="table table-bordered text-center" style="font-size:14px">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Guruh</th>
-                            <th>To'langan summa</th>
-                            <th>To'lov turi</th>
-                            <th>To'lov haqida</th>
-                            <th>To'landi</th>
-                            <th>Meneger</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @forelse($paymart as $item)
-                        <tr>
-                            <td>{{ $loop->index+1 }}</td>
-                            <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
-                            <td>{{ $item['amount'] }}</td>
-                            <td>{{ $item['type'] }}</td>
-                            <td>{{ $item['description'] }}</td>
-                            <td>{{ $item['created_at'] }}</td>
-                            <td>{{ $item['admin'] }}</td>
-                        </tr>
-                        @empty
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:14px">
+                        <thead>
                             <tr>
-                                <td colspan=7 class="text-center">To'lovlar mavjud emas</td>
+                                <th>#</th>
+                                <th>Guruh</th>
+                                <th>To'langan summa</th>
+                                <th>To'lov turi</th>
+                                <th>To'lov haqida</th>
+                                <th>To'landi</th>
+                                <th>Meneger</th>
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+                            @forelse($paymart as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                                <td>{{ $item['amount'] }}</td>
+                                <td>{{ $item['type'] }}</td>
+                                <td>{{ $item['description'] }}</td>
+                                <td>{{ $item['created_at'] }}</td>
+                                <td>{{ $item['admin'] }}</td>
+                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=7 class="text-center">To'lovlar mavjud emas</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -25,7 +25,7 @@
     </div>
 @endif
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title text-center w-100">
@@ -46,7 +46,7 @@
         </div>
     </div> 
 
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title text-center w-100">
@@ -67,88 +67,70 @@
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title text-center w-100">
-                    <i class="bi bi-cart-check me-1 text-warning"></i> Xarajat kutilmoqda
-                </h3>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <i class="bi bi-cart me-1 text-danger"></i> Naqt: <b>{{ number_format($getKassa['naqt_xar_pedding'], 0, '.', ' ') }}</b> so'm
-                    </li>
-                    <li class="list-group-item">
-                        <i class="bi bi-wallet2 me-1 text-warning"></i> Plastik: <b>{{ number_format($getKassa['plastik_xar_pedding'], 0, '.', ' ') }}</b> so'm
-                    </li>
-                </ul>
-                <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#spendingModal">
-                    <i class="bi bi-receipt me-1"></i> Xarajatlar uchun chiqim
-                </button>
-            </div>
-        </div>
-    </div>
 
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title text-center w-100">
-                    <i class="bi bi-cart-check me-1 text-warning"></i> Tasdiqlanmagan xarajatlar va chiqimlar
+                    <i class="bi bi-cart-check me-1 text-warning"></i> Tasdiqlanmagan chiqimlar
                 </h3>
-                <table class="table table-bordered text-center" style="font-size:14px">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Meneger</th>
-                            <th>Chiqim turi</th>
-                            <th>Chimim summasi</th>
-                            <th>Chiqim vaqti</th>
-                            <th>Chiqim haqida</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($pedding as $item)
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:14px">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->index+1 }}</td>
-                                <td>{{ $item['user_name'] }}</td>
-                                <td>
-                                    @if($item['type']=='naqt_chiq')
-                                        <i class="text-primary">Kassadan chiqim (Naqt)</i>
-                                    @elseif($item['type']=='plastik_chiq')
-                                        <i class="text-primary">Kassadan chiqim (Plastik)</i>
-                                    @elseif($item['type']=='naqt_xar')
-                                        <i class="text-danger">Kassadan xarajat (Naqt)</i>
-                                    @elseif($item['type']=='plastik_xar')
-                                        <i class="text-danger">Kassadan xarajat (Plastik)</i>
-                                    @endif
-                                </td>
-                                <td>{{ $item['amount'] }}</td>
-                                <td>{{ $item['create_time'] }}</td>
-                                <td>{{ $item['description'] }}</td>
-                                <td>
-                                    <div class="d-flex gap-2 text-center">
-                                        @if(auth()->user()->type != 'meneger')
-                                            <form action="{{ route('compamy_kassa_success') }}" method="post" class="d-inline-block">
+                                <th>#</th>
+                                <th>Meneger</th>
+                                <th>Chiqim turi</th>
+                                <th>Chimim summasi</th>
+                                <th>Chiqim vaqti</th>
+                                <th>Chiqim haqida</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($pedding as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td>{{ $item['user_name'] }}</td>
+                                    <td>
+                                        @if($item['type']=='naqt_chiq')
+                                            <i class="text-primary">Kassadan chiqim (Naqt)</i>
+                                        @elseif($item['type']=='plastik_chiq')
+                                            <i class="text-primary">Kassadan chiqim (Plastik)</i>
+                                        @elseif($item['type']=='naqt_xar')
+                                            <i class="text-danger">Kassadan xarajat (Naqt)</i>
+                                        @elseif($item['type']=='plastik_xar')
+                                            <i class="text-danger">Kassadan xarajat (Plastik)</i>
+                                        @endif
+                                    </td>
+                                    <td>{{ $item['amount'] }}</td>
+                                    <td>{{ $item['create_time'] }}</td>
+                                    <td>{{ $item['description'] }}</td>
+                                    <td>
+                                        <div class="d-flex gap-2 text-center">
+                                            @if(auth()->user()->type != 'meneger')
+                                                <form action="{{ route('compamy_kassa_success') }}" method="post" class="d-inline-block">
+                                                    @csrf 
+                                                    <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                                    <button type="submit" class="btn btn-success px-1 py-0"><i class="bi bi-check"></i></button>
+                                                </form>
+                                            @endif
+                                            <form action="{{ route('compamy_kassa_delete') }}" method="post" class="d-inline-block">
                                                 @csrf 
                                                 <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                                <button type="submit" class="btn btn-success px-1 py-0"><i class="bi bi-check"></i></button>
+                                                <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
                                             </form>
-                                        @endif
-                                        <form action="{{ route('compamy_kassa_delete') }}" method="post" class="d-inline-block">
-                                            @csrf 
-                                            <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                            <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan=7 class="text-center">Tasdiqlanmagan chiqim va xarajatlar mavjud emas.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=7 class="text-center">Tasdiqlanmagan chiqim va xarajatlar mavjud emas.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -164,34 +146,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered text-center" style="font-size:14px">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Talaba</th>
-                            <th>Qaytarilgan</th>
-                            <th>Qaytarish sababi</th>
-                            <th>Qaytarilgan vaqt</th>
-                            <th>Meneger</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($returnPaymart as $item)
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:14px">
+                        <thead>
                             <tr>
-                                <td class="td">{{ $loop->index+1 }}</td>
-                                <td><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['user_name'] }}</a></td>
-                                <td class="td">{{ $item['amount'] }}</td>
-                                <td class="td">{{ $item['description'] }}</td>
-                                <td class="td">{{ $item['created_at'] }}</td>
-                                <td class="td">{{ $item['admin'] }}</td>
+                                <th>#</th>
+                                <th>Talaba</th>
+                                <th>Qaytarilgan</th>
+                                <th>Qaytarish sababi</th>
+                                <th>Qaytarilgan vaqt</th>
+                                <th>Meneger</th>
                             </tr>
-                            @empty
-                            <tr>
-                                <td colspan=5 class="text-center">Oxirgi 7 kunda qaytarilgan to'lovlar mavjud emas.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse($returnPaymart as $item)
+                                <tr>
+                                    <td class="td">{{ $loop->index+1 }}</td>
+                                    <td><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['user_name'] }}</a></td>
+                                    <td class="td">{{ $item['amount'] }}</td>
+                                    <td class="td">{{ $item['description'] }}</td>
+                                    <td class="td">{{ $item['created_at'] }}</td>
+                                    <td class="td">{{ $item['admin'] }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=5 class="text-center">Oxirgi 7 kunda qaytarilgan to'lovlar mavjud emas.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
@@ -260,68 +244,5 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="spendingModal" tabindex="-1" aria-labelledby="spendingModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="spendingModalLabel">
-                    <i class="bi bi-receipt me-1"></i> Xarajatlar uchun chiqim
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered text-center" style="font-size:14px;">
-                    <thead>
-                        <tr>
-                            <th colspan=2>Kassada mavjud</th>
-                        </tr>
-                        <tr>
-                            <th>Naqt</th>
-                            <th>Plastik</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ number_format($getKassa['naqt'], 0, '.', ' ') }} so'm</td>
-                            <td>{{ number_format($getKassa['plastik'], 0, '.', ' ') }} so'm</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <form action="{{ route('compamy_kassa_xarajat') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="naqt" value="{{ $getKassa['naqt'] }}">
-                    <input type="hidden" name="plastik" value="{{ $getKassa['plastik'] }}">
-                    <label for="amount" class="my-2">Xarajat summasi</label>
-                    <input type="text" name="amount" id="paymentAmount02" required class="form-control">
-                    <script>
-                        document.getElementById('paymentAmount02').addEventListener('input', function(event) {
-                            let input = event.target.value.replace(/\D/g, ''); 
-                            let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " "); 
-                            event.target.value = formatted;
-                        });
-                    </script>
-                    <label for="type" class="my-2">Xarajat turi</label>
-                    <select name="type" required class="form-select">
-                        <option value="naqt">Naqt</option>
-                        <option value="plastik">Plastik</option>
-                    </select>
-                    <label for="description" class="my-2">Xarajat haqida</label>
-                    <textarea name="description" class="form-control mb-2" required></textarea>
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
-                        </div>
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-primary w-100" data-bs-dismiss="modal">Saqlash</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 @endsection

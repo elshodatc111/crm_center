@@ -32,42 +32,44 @@
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVisitModal"><i class="bi bi-plus"></i> Yangi hodim</button>
                     </div>
                 </div>
-                <table class="table table-bordered text-center" style="font-size:14px;">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Hodim</th>
-                            <th>Telefon raqam</th>
-                            <th>Yashash manzil</th>
-                            <th>Lavozim</th>
-                            <th>Login</th>
-                            <th>Ish faoliyati</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($user as $item)
-                        <tr>
-                            <td>{{ $loop->index+1 }}</td>
-                            <td><a href="{{ route('compamy_hodim_show',$item['id']) }}">{{ $item['user_name'] }}</a></td>
-                            <td>{{ $item['phone1'] }}</td>
-                            <td>{{ $item['address'] }}</td>
-                            <td>{{ $item['type'] }}</td>
-                            <td>{{ $item['email'] }}</td>
-                            <td>
-                                @if($item['status']=='true')
-                                    <i class="text-success">Aktive</i>
-                                @else
-                                    <i class="text-danger">Block</i>
-                                @endif
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan=6 class="text-center">Hodimlar mavjud emas.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:14px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Hodim</th>
+                                <th>Telefon raqam</th>
+                                <th>Yashash manzil</th>
+                                <th>Lavozim</th>
+                                <th>Login</th>
+                                <th>Ish faoliyati</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($user as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td><a href="{{ route('compamy_hodim_show',$item['id']) }}">{{ $item['user_name'] }}</a></td>
+                                <td>{{ $item['phone1'] }}</td>
+                                <td>{{ $item['address'] }}</td>
+                                <td>{{ $item['type'] }}</td>
+                                <td>{{ $item['email'] }}</td>
+                                <td>
+                                    @if($item['status']=='true')
+                                        <i class="text-success">Aktive</i>
+                                    @else
+                                        <i class="text-danger">Block</i>
+                                    @endif
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=6 class="text-center">Hodimlar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

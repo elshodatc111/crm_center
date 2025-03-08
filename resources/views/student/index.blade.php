@@ -36,36 +36,38 @@
                 <input type="text" name="search" class="form-control mb-3" placeholder="Ism yoki telefon raqamini kiriting...">
             </form>
             <div id="userTable">
-                <table class="table table-bordered" style="font-size:14px;">
-                    <thead>
-                        <tr class="text-center">
-                            <th>#</th>
-                            <th>Ism</th>
-                            <th>Telefon</th>
-                            <th>Manzil</th>
-                            <th>Balans</th>
-                            <th>Guruhlar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $index => $user)
-                            <tr>
-                                <td class="text-center">{{ $users->firstItem() + $index }}</td>
-                                <td><a href="{{ route('student_show', $user->id ) }}">{{ $user->user_name }}</a></td>
-                                <td>{{ $user->phone1 }}</td>
-                                <td>{{ $user->address }}</td>
-                                <td class="text-center">
-                                    @if($user['balans']>=0)
-                                        <b class="text-success">{{ number_format($user['balans'], 0, '.', ' ') }} so'm</b>
-                                    @else
-                                        <b class="text-danger">{{ number_format($user['balans'], 0, '.', ' ') }} so'm</b>
-                                    @endif
-                                </td>
-                                <td class="text-center">{{ $user->group_count }}</td>
+                <div class="table-responsive">
+                    <table class="table table-bordered" style="font-size:14px;">
+                        <thead>
+                            <tr class="text-center">
+                                <th>#</th>
+                                <th>Ism</th>
+                                <th>Telefon</th>
+                                <th>Manzil</th>
+                                <th>Balans</th>
+                                <th>Guruhlar</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $index => $user)
+                                <tr>
+                                    <td class="text-center">{{ $users->firstItem() + $index }}</td>
+                                    <td><a href="{{ route('student_show', $user->id ) }}">{{ $user->user_name }}</a></td>
+                                    <td>{{ $user->phone1 }}</td>
+                                    <td>{{ $user->address }}</td>
+                                    <td class="text-center">
+                                        @if($user['balans']>=0)
+                                            <b class="text-success">{{ number_format($user['balans'], 0, '.', ' ') }} so'm</b>
+                                        @else
+                                            <b class="text-danger">{{ number_format($user['balans'], 0, '.', ' ') }} so'm</b>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">{{ $user->group_count }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <div class="d-flex justify-content-center">
                     {{ $users->links('pagination::bootstrap-4') }}
                 </div>

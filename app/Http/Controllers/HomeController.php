@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\HomeService;
 
 class HomeController extends Controller{
-    public function __construct(){
+    
+    private $homeService;
+
+    public function __construct(HomeService $homeService){
+        $this->homeService = $homeService;
         $this->middleware('auth');
     }
     public function index(){
-        return view('home');
+        $jadval = $this->homeService->getJadval();
+        //dd($jadval);
+        return view('home',compact('jadval'));
     }
     
 }

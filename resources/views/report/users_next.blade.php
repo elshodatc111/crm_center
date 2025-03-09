@@ -6,6 +6,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('report_users') }}">Talabalar</a></li>
                 <li class="breadcrumb-item">Hisobot</li>
             </ol>
         </nav>
@@ -20,7 +21,7 @@
                         @elseif($type=='debet')
                             Qarzdor Talabalar
                         @elseif($type=='active')
-                            Aktiv talabalar
+                            Aktiv talabalar ({{ $active['count'] }})
                         @endif
                     </h3>
                 </div>
@@ -62,7 +63,9 @@
                                 <td>{{ $item['created_at'] }}</td>
                             </tr>
                             @empty
-
+                                <tr>
+                                    <td colspan=11 class="text-center">Talabalar mavjud emas.</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -84,7 +87,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($all as $item)
+                            @forelse($debit as $item)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
                                 <td>{{ $item['name'] }}</td>
@@ -99,7 +102,9 @@
                                 <td>{{ $item['created_at'] }}</td>
                             </tr>
                             @empty
-
+                                <tr>
+                                    <td colspan=11 class="text-center">Qarzdor talabalar mavjud emas.</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -108,48 +113,30 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Guruh</th>
+                                <th>Guruh boshlanish vaqti</th>
+                                <th>Guruh yakunlanish vaqti</th>
                                 <th>Talaba FIO</th>
-                                <th>Telefon raqami</th>
-                                <th>Guruhlar soni</th>
-                                <th>Login</th>
+                                <th>Talaba haqida</th>
+                                <th>Talaba balansi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($active['users'] as $item)
                             <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item['group_name'] }}</td>
+                                <td>{{ $item['lessen_start'] }}</td>
+                                <td>{{ $item['lessen_end'] }}</td>
+                                <td>{{ $item['user_name'] }}</td>
+                                <td>{{ $item['about'] }}</td>
+                                <td>{{ $item['balans'] }}</td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=7 class="text-center">Joriy oyda active talabalar mavjud emas.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 @endif

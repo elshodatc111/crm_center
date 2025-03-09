@@ -7,21 +7,25 @@ use Illuminate\Http\Request;
 
 use App\Services\report\UsersService;
 use App\Services\report\MessageService;
+use App\Services\report\GroupService;
 use App\Services\report\PaymartService;
 
 class ReportController extends Controller{
     protected $usersService;
     protected $messageService;
     protected $paymartService;
+    protected $groupService;
 
     public function __construct(
         UsersService $usersService,
         MessageService $messageService,
         PaymartService $paymartService,
+        GroupService $groupService,
         ){
     $this->usersService = $usersService;
     $this->messageService = $messageService;
     $this->paymartService = $paymartService;
+    $this->groupService = $groupService;
 }
 
     public function users(){
@@ -63,12 +67,18 @@ class ReportController extends Controller{
         $end = $request->end." 23:59:59";
         $type = $request->type;
         $response = $this->paymartService->paymart($type, $start, $end);
-        //dd($response);
         return view('report.paymart_next',compact('type','start','end','response'));
     }
 
     public function group(){
         return view('report.group');
+    }
+
+    public function group_next(Request $request){
+        $type = $request->type;
+        $response = $this->groupService->response($type);
+        //dd($response);
+        return view('report.group_next',compact('type','response'));
     }
 
 

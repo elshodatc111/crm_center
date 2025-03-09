@@ -139,6 +139,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('report/paymart', [ReportController::class, 'paymart'])->name('report_paymart');
     Route::get('report/paymart_next', [ReportController::class, 'paymart_next'])->name('report_paymart_next');
     Route::get('report/group', [ReportController::class, 'group'])->name('report_group');
+    Route::get('report/group_next', [ReportController::class, 'group_next'])->name('report_group_next');
     Route::get('report/message', [ReportController::class, 'message'])->name('report_message');
     Route::get('report/message_next', [ReportController::class, 'message_next'])->name('report_message_next');
     

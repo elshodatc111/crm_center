@@ -97,48 +97,28 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-receipt"></i><span>Hisobot (Kutilmoqda)</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link {{ request()->routeIs(['report_users','report_paymart','report_users_next','report_group','report_message']) ? '' : 'collapsed' }}" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-receipt"></i><span>Hisobot</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="report-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="report-nav" class="nav-content collapse {{ request()->routeIs(['report_users','report_users_next','report_paymart','report_group','report_message']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Barcha talabalar</span>
+            <a href="{{ route('report_users') }}"  class="{{ request()->routeIs(['report_users','report_users_next']) ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Talabalar</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Barcha to'lovlar</span>
+            <a href="{{ route('report_paymart') }}"  class="{{ request()->routeIs(['report_paymart']) ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>To'lovlar</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Aktiv talabalar</span>
+            <a href="{{ route('report_group') }}"  class="{{ request()->routeIs(['report_group']) ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Guruhlar</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Barcha hodimlar</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Ish haqi to'lovlari</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Xarajatlar tarixi</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Kirimlar tarixi</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Barcha guruhlar</span>
+            <a href="{{ route('report_message') }}"  class="{{ request()->routeIs(['report_message']) ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>SMS</span>
             </a>
           </li>
         </ul>

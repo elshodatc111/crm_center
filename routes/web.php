@@ -24,6 +24,7 @@ use App\Http\Controllers\hodim\HodimController;
 use App\Http\Controllers\varonka\VaronkaController;
 use App\Http\Controllers\varonka\VaronkaMenegerController;
 use App\Http\Controllers\chart\ChartController;
+use App\Http\Controllers\report\ReportController;
 
 Auth::routes();
 
@@ -127,13 +128,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/hodim/update', [HodimController::class, 'updateStore'])->name('compamy_hodim_techer_update');
     Route::post('/hodim/update/status', [HodimController::class, 'updateStatus'])->name('compamy_hodim_techer_update_status');
     Route::post('/hodim/paymart/status', [HodimController::class, 'paymartStory'])->name('compamy_hodim_paymart_story');
-
-    
     Route::get('chart/vised', [ChartController::class, 'vised'])->name('chart_vised');
     Route::get('chart/paymart', [ChartController::class, 'paymart'])->name('chart_paymart');
     Route::get('chart/paymarts/{data}', [ChartController::class, 'paymart_show'])->name('chart_paymart_show');
     Route::get('chart/techer', [ChartController::class, 'techer'])->name('chart_techer');
     Route::get('chart/techerReyting', [ChartController::class, 'techerReyting'])->name('chart_techer_reyting');
+
+    Route::get('report/users', [ReportController::class, 'users'])->name('report_users');
+    Route::get('report/users_next', [ReportController::class, 'users_next'])->name('report_users_next');
+    Route::get('report/paymart', [ReportController::class, 'paymart'])->name('report_paymart');
+    Route::get('report/group', [ReportController::class, 'group'])->name('report_group');
+    Route::get('report/message', [ReportController::class, 'message'])->name('report_message');
     
 });
 

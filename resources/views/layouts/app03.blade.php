@@ -34,5 +34,12 @@
   <script src="../../../assets/vendor/php-email-form/validate.js"></script>
   <script src="../../../assets/js/main.js"></script>
   @yield('scripts')
+  <script src="../../../assets/js/table2excel.js"></script>
+  <script>
+    var table2excel = new Table2Excel();
+    document.getElementById('export').addEventListener('click', function() {
+      table2excel.export(document.getElementById('table'));
+    });
+  </script>
 </body>
 </html>

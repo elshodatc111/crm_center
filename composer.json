@@ -12,6 +12,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",
+        "maatwebsite/excel": "^1.1",
         "symfony/http-client": "*"
     },
     "require-dev": {

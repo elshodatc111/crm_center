@@ -97,17 +97,17 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['report_users','report_paymart','report_users_next','report_group','report_message']) ? '' : 'collapsed' }}" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['report_users','report_paymart','report_users_next','report_group','report_paymart_next','report_message']) ? '' : 'collapsed' }}" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Hisobot</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="report-nav" class="nav-content collapse {{ request()->routeIs(['report_users','report_users_next','report_paymart','report_group','report_message']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="report-nav" class="nav-content collapse {{ request()->routeIs(['report_users','report_users_next','report_paymart','report_paymart_next','report_group','report_message']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('report_users') }}"  class="{{ request()->routeIs(['report_users','report_users_next']) ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Talabalar</span>
             </a>
           </li>
           <li>
-            <a href="{{ route('report_paymart') }}"  class="{{ request()->routeIs(['report_paymart']) ? 'active' : '' }}">
+            <a href="{{ route('report_paymart') }}"  class="{{ request()->routeIs(['report_paymart','report_paymart_next']) ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>To'lovlar</span>
             </a>
           </li>

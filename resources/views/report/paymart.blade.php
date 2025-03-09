@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-body">
         <h3 class="card-title w-100 text-center mb-0 pb-0">To'lovlar</h3>
-        <form action="" method="get" class="row">
+        <form action="{{ route('report_paymart_next') }}" method="get" class="row">
             <div class="col-lg-4 col-12">
                 <select name="type" required class="form-select my-2">
                     <option value="">Tanlang</option>

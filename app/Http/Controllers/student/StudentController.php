@@ -95,7 +95,7 @@ class StudentController extends Controller{
         return redirect()->back()->with('success', 'Talaba ma’lumotlari yangilandi.');
     }
 
-    public function addGroups(AddStudentToGroupRequest $request){
+    public function addGroups(AddStudentToGroupRequest $request){ 
         $this->studentService->addGroups($request->validated());
         return redirect()->back()->with('success', 'Yangi guruhga qo\'shildi.');
     }

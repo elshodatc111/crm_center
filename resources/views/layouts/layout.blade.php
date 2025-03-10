@@ -10,6 +10,12 @@
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#">
+            <i class="bi bi-cash-stack text-danger"></i>
+            <span class="badge bg-success badge-number">@include('layouts.returnPaymart')</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#">
             <i class="bi bi-cake2"></i>
             <span class="badge bg-success badge-number">@include('layouts.tkun')</span>
           </a>

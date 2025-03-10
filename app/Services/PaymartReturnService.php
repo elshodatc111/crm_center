@@ -11,6 +11,7 @@ use App\Models\Kassa;
 use App\Models\GroupUser;
 use App\Models\SettingPaymart;
 use App\Models\Paymart;
+use App\Models\RefundStatus;
 use App\Models\UserHistory;
 use App\Models\MenegerChart;
 
@@ -62,6 +63,9 @@ class PaymartReturnService{
         $this->updateUserBalance($user_id,$return);
         $this->updateMenegerChart($return);
         $this->updateKassa($return);
+        RefundStatus::create([
+            'paymart_id' => $id,
+        ]);
         return $id;
     }
 

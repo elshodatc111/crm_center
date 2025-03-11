@@ -166,6 +166,6 @@ class TecherAppService{
         return TecherPaymart::where('techer_paymarts.user_id',auth()->user()->id)
             ->join('groups','groups.id','techer_paymarts.group_id')
             ->select('groups.group_name','techer_paymarts.type','techer_paymarts.amount','techer_paymarts.created_at')->get();
-    }
+    } 
 
 }

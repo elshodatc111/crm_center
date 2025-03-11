@@ -41,8 +41,8 @@ class TecherController extends Controller{
         $techer = $this->techerService->techerShow($id);
         $groups = $this->techerService->techerGroups($id);
         $balans = $this->settingService->getSetting();
-        $paymart = $this->techerService->techerPaymart($id);
-        //dd($paymart);
+        $paymart = $this->techerService->techerPaymart($id); 
+        dd($groups);
         return view('techer.show',compact('techer','groups','balans','paymart'));
     }
 

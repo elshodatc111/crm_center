@@ -129,7 +129,7 @@
                                 <option value="social_facebook" @if(old('about_me') == 'social_facebook') selected @endif>Facebook</option>
                                 <option value="social_youtube" @if(old('about_me') == 'social_youtube') selected @endif>Youtube</option>
                                 <option value="social_banner" @if(old('about_me') == 'social_banner') selected @endif>Bannerlar</option>
-                                <option value="social_tanish" @if(old('about_me') == 'social_tanish') selected @endif>Tabishlar</option>
+                                <option value="social_tanish" @if(old('about_me') == 'social_tanish') selected @endif>Tanishlar</option>
                                 <option value="social_boshqa" @if(old('about_me') == 'social_boshqa') selected @endif>Boshqa</option>
                             </select>
                             @error('address')

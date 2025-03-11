@@ -48,9 +48,11 @@
                             <i class="bi bi-percent"></i> CHEGIRMALI TO'LOV
                         </button>
                         @endif
+                        @if($student['balans']>0)
                         <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#refundModal">
                             <i class="bi bi-arrow-counterclockwise"></i> To'lovni qaytarish
                         </button>
+                        @endif
                         <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
                             <i class="bi bi-people"></i> GURUHGA QO'SHISH
                         </button>
@@ -307,7 +309,7 @@
                             @endforeach
                         </select>
                         <label for="payment_info" class="form-label mt-2">To'lov haqida</label>
-                        <textarea type="text" class="form-control" id="payment_info" name="payment_info" required></textarea>
+                        <textarea type="text" class="form-control" id="payment_info" name="payment_info" required>...</textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -355,7 +357,7 @@
                             <option value="plastik">Plastik</option>
                         </select>
                         <label for="discription" class="form-label mt-2">To'lov haqida</label>
-                        <textarea type="text" name="discription" class="form-control" required></textarea>
+                        <textarea type="text" name="discription" class="form-control" required>...</textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -426,7 +428,7 @@
                             @endforeach
                         </select>
                         <label for="start_discription" class="form-label mt-2">Guruhdan qo'shish haqida</label>
-                        <textarea type="text" name="start_discription" class="form-control" required></textarea>
+                        <textarea type="text" name="start_discription" class="form-control" required>...</textarea>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>

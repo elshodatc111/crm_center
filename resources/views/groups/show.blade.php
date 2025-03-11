@@ -36,12 +36,12 @@
                     </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" 
-                        data-bs-target="#dars-kunlari" type="button" role="tab" 
-                        aria-controls="profile" aria-selected="false">
-                        <i class="bi bi-calendar-check"></i> Dars kunlari
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
+                        data-bs-target="#davomat" type="button" role="tab" 
+                        aria-controls="contact" aria-selected="false">
+                        <i class="bi bi-check2-circle"></i> Davomad
                     </button>
-                </li>
+                </li> 
                 <li class="nav-item flex-fill" role="presentation">
                     <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
                         data-bs-target="#guruh_talabalari" type="button" role="tab" 
@@ -57,12 +57,12 @@
                     </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
-                        data-bs-target="#davomat" type="button" role="tab" 
-                        aria-controls="contact" aria-selected="false">
-                        <i class="bi bi-check2-circle"></i> Davomad
+                    <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" 
+                        data-bs-target="#dars-kunlari" type="button" role="tab" 
+                        aria-controls="profile" aria-selected="false">
+                        <i class="bi bi-calendar-check"></i> Dars kunlari
                     </button>
-                </li> 
+                </li>
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
                 <div class="tab-pane fade show active pt-2" id="guruh-haqida" role="tabpanel" aria-labelledby="home-tab">
@@ -252,12 +252,15 @@
                             <thead>
                                 <tr>
                                     <th>Talaba / Dars kunlari</th>
+                                    @if($response['davomad'])
                                     @foreach($response['davomad'][0]['kunlar'] as $item)
                                     <th>{{$item}}</th>
                                     @endforeach
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($response['davomad'])
                                 @foreach($response['davomad'][0]['users'] as $item)
                                 <tr>
                                     <th style="text-align:left"><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['name'] }}</a></th>
@@ -276,6 +279,7 @@
                                     @endforeach
                                 </tr>
                                 @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -286,6 +290,7 @@
                         <div class="col-3"><b class="text-success" style="font-size:20px"><i class="bi bi-eye-slash"></i></b> Davomad kutilmoqda</div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

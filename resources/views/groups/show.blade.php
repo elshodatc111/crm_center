@@ -29,7 +29,7 @@
         <div class="card-body pt-4">
             <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100 active" id="home-tab" 
+                    <button class="nav-link w-100" id="home-tab" 
                         data-bs-toggle="tab" data-bs-target="#guruh-haqida" 
                         type="button" role="tab" aria-controls="home" aria-selected="true">
                         <i class="bi bi-info-circle"></i> Guruh haqida
@@ -43,7 +43,7 @@
                     </button>
                 </li> 
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
+                    <button class="nav-link w-100 active" id="contact-tab" data-bs-toggle="tab" 
                         data-bs-target="#guruh_talabalari" type="button" role="tab" 
                         aria-controls="contact" aria-selected="false">
                         <i class="bi bi-people"></i> Guruh talabalari
@@ -65,7 +65,7 @@
                 </li>
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
-                <div class="tab-pane fade show active pt-2" id="guruh-haqida" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade  pt-2" id="guruh-haqida" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="card-title w-100 text-center">{{ $response['group']['group'] }}</h3>
                     <div class="row">
                         <div class="col-lg-6">
@@ -174,7 +174,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane fade pt-2" id="guruh_talabalari" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="tab-pane fade show active pt-2" id="guruh_talabalari" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="table-responsive">
                         <table class="table table-bordered text-center" style="font-size:12px;">
                             <thead>
@@ -350,6 +350,17 @@
                                 <option value="{{ $item['id'] }}">{{ $item['cours_name'] }}</option>
                             @endforeach
                         </select>
+                        <label for="techer_id">Guruh o'qituvchisi</label>
+                        <select name="techer_id" class="form-select mb-3 mt-2" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            @foreach($response['techers'] as $item)
+                                <option value="{{ $item['id'] }}">{{ $item['user_name'] }}</option>
+                            @endforeach
+                        </select>
+                        <label for="techer_paymart">O'qituvchiga to'lov</label>
+                        <input name="techer_paymart" type="number" required value="{{ $response['group']['techer_paymart'] }}" class="form-control mb-3 mt-2">
+                        <label for="techer_bonus">O'qituvchiga bonus</label>
+                        <input name="techer_bonus" type="number" required value="{{ $response['group']['techer_bonus'] }}" class="form-control mb-3 mt-2">
                         <button type="submit" class="btn btn-primary w-100" id="submit-btn">Saqlash</button>
                     </form>
                 </div>

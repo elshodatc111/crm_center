@@ -13,6 +13,9 @@ class GroupUpdateRequest extends FormRequest{
             'id' => 'required',
             'group_name' => 'required|string|max:255',
             'cours_id' => 'required|exists:cours,id',
+            'techer_id' => 'required|exists:users,id',
+            'techer_paymart' => 'required',
+            'techer_bonus' => 'required',
         ];
     }
 }

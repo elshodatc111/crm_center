@@ -42,10 +42,9 @@ class TecherController extends Controller{
         $groups = $this->techerService->techerGroups($id);
         $balans = $this->settingService->getSetting();
         $paymart = $this->techerService->techerPaymart($id); 
-        dd($groups);
         return view('techer.show',compact('techer','groups','balans','paymart'));
     }
-
+ 
     public function techerUpdate(UpdateTeacherRequest $request){
         $this->techerService->update($request->validated());
         return redirect()->back()->with('success', 'O‘qituvchi malumotlari yangilandi.');

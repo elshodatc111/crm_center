@@ -40,7 +40,6 @@ class GroupsController extends Controller{
 
     public function show(int $id){
         $response = $this->groupService->groupsShow($id); 
-        //dd($response);
         return view('groups.show', compact('response'));
     }
 
@@ -60,7 +59,7 @@ class GroupsController extends Controller{
         $group_ids = $request['group_ids'];
         $groups_id_new = $new_groups->id;
         $Group = Group::find($group_ids);
-        $Group->next = $groups_id_new;
+        $Group->next = $groups_id_new; 
         $Group->save();
         foreach ($student as $key => $value) {
             $this->studentService->addGroups([

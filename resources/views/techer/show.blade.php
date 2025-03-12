@@ -145,7 +145,7 @@
                                 <button type="submit" class="btn btn-success w-100">Ha, Ishga qabul qilish</button> 
                             </form>
                         </div>
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>

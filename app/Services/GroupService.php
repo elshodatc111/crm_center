@@ -216,7 +216,7 @@ class GroupService{
         if(count($users)>0){
             foreach ($users as $key => $user) {
                 $User[$key]['user_id'] = $user->id;
-                $User[$key]['name'] = $user->user_name;
+                $User[$key]['name'] = $user->user_name; 
                 foreach ($days as $key1 => $day) {
                     if($now>$day){
                         $Davomad = Davomad::where('group_id',$id)->where('data',$day)->get();
@@ -241,6 +241,9 @@ class GroupService{
             ];
         }else{return [];}
     }
+    protected function getTecher(){
+        return User::where('type','techer')->where('status','true')->select('id','user_name',)->get();
+    }
     public function groupsShow(int $id){
         $davomi = $this->groupAbout($id);
         $next='new';
@@ -260,6 +263,7 @@ class GroupService{
             'time' => LessenTime::select('id', 'number', 'time')->get(),
             'testlar' => $this->TestCheck($id),
             'davomad' => $this->davomad($id),
+            'techers' =>$this->getTecher(),
         ];
     }
 
@@ -267,6 +271,9 @@ class GroupService{
         $Group = Group::find($data['id']);
         $Group->group_name = $data['group_name'];
         $Group->cours_id = $data['cours_id'];
+        $Group->techer_id = $data['techer_id'];
+        $Group->techer_paymart = intval($data['techer_paymart']);
+        $Group->techer_bonus = intval($data['techer_bonus']);
         return $Group->save();
     }
 

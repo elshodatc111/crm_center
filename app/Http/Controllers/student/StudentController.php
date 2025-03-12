@@ -124,6 +124,17 @@ class StudentController extends Controller{
         $type = $this->adminChegirmaService->storeHolidayDiscount($request->validated());
         return redirect()->back()->with('success', 'Chegirma to\'lov qabul qilindi.');
     }
+
+    public function returnPay(){
+        $Refund = $this->paymartReturnService->returnAllPaymart();
+        //dd($patmart_id);
+        return view('student.return',compact('Refund'));
+    }
+
+    public function returnPayDel(Request $request){
+        $Refund = $this->paymartReturnService->returnPayDel($request->id);
+        return redirect()->back()->with('success', 'Qaytarilgan to\'lov tasdiqlandi.');
+    }
     
 
 }

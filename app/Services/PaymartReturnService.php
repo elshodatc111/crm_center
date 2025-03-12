@@ -69,6 +69,28 @@ class PaymartReturnService{
         return $id;
     }
 
+    public function returnAllPaymart(){
+        $RefundStatus = RefundStatus::where('status', false)->get();
+        $data = [];
+        foreach ($RefundStatus as $key => $value) {
+            $valuePaymart = Paymart::find($value->id);
+            $data[$key]['user_id'] = $valuePaymart->user_id;
+            $data[$key]['user_name'] = User::find($valuePaymart->user_id)->user_name;
+            $data[$key]['amonut'] = $valuePaymart->amount;
+            $data[$key]['description'] = $valuePaymart->description;
+            $data[$key]['meneger'] = User::find($valuePaymart->admin_id)->user_name;
+            $data[$key]['created_at'] = $valuePaymart->created_at;
+            $data[$key]['refund_id'] = $value->id;
+        }
+        return $data;
+    }
+
+    public function returnPayDel(int $id){
+        $RefundStatus = RefundStatus::find($id);
+        $RefundStatus->status = true;
+        return $RefundStatus->save();
+    }
+
 
 
 }

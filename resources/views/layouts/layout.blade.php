@@ -9,7 +9,7 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#">
+          <a class="nav-link nav-icon" href="{{ route('all_student_return') }}">
             <i class="bi bi-cash-stack text-danger"></i>
             <span class="badge bg-success badge-number">@include('layouts.returnPaymart')</span>
           </a>

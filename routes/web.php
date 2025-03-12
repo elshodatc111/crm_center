@@ -80,6 +80,9 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
     Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
     Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
+
+    Route::get('student/return', [StudentController::class, 'returnPay'])->name('all_student_return'); 
+    Route::post('student/return/delete', [StudentController::class, 'returnPayDel'])->name('all_student_return_del'); 
     
 });
 

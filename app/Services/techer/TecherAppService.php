@@ -102,7 +102,7 @@ class TecherAppService{
             'lessen_end' => $group['lessen_end'],
             'techer_paymart' => $group['techer_paymart'],
             'techer_bonus' => $group['techer_bonus'],
-            'davomad_day' => true,
+            'davomad_day' => $status,
             'status' => $stat,
         ];
     }

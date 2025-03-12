@@ -75,6 +75,22 @@ class TecherAppService{
         } else {
             $stat = 'end';
         }
+        $status = false;
+        $Davomad = Davomad::where('group_id',$id)->where('data',$today)->first();
+        
+        $Dayss = $this->day($id);
+        $count = 0;
+        foreach ($Dayss as $key => $value) {
+            if($value['data'] == $today){
+                $count = $count + 1;
+            }
+        }
+        if($count==1){
+            if(!$Davomad){
+                $status = true;
+            }
+        }
+
         return [
             'id' => $group['id'],
             'group_name' => $group['group_name'],

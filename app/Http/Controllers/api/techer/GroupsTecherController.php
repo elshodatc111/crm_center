@@ -35,14 +35,9 @@ class GroupsTecherController extends Controller{
 
     public function davomadPost(DavomadPostRequest $request){
         foreach ($request->attendances as $attendanceData) {
-            $check = $this->techerAppService->checkDavomadDay($attendanceData);
-            if($check){
-                $res = $this->techerAppService->CreateDavomad($attendanceData);
-                return response()->json(['message' => 'Davomad olindi'], 201);
-            }else{
-                return response()->json(['message' => 'Bugun davomad kuni emas'], 422);
-            }
+            $res = $this->techerAppService->CreateDavomad($attendanceData);
         }
+        return response()->json(['message' => 'Davomad olindi'], 201);
     }
 
     public function paymarts(){

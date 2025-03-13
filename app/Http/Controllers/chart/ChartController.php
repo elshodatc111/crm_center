@@ -9,6 +9,7 @@ use App\Services\chart\VisedService;
 use App\Services\chart\PaymartService;
 use App\Services\chart\TecherService;
 use App\Services\chart\TecherReytingService;
+use App\Services\chart\TecherReytingServiceTwo;
 
 class ChartController extends Controller{
     protected $visedService;
@@ -18,6 +19,7 @@ class ChartController extends Controller{
 
     public function __construct(
             VisedService $visedService,
+            TecherReytingServiceTwo $techerReytingServiceTwo,
             PaymartService $paymartService,
             TecherService $techerService,
             TecherReytingService $techerReytingService){
@@ -25,6 +27,7 @@ class ChartController extends Controller{
         $this->paymartService = $paymartService;
         $this->techerService = $techerService;
         $this->techerReytingService = $techerReytingService;
+        $this->techerReytingServiceTwo = $techerReytingServiceTwo;
     }
 
     public function vised(){
@@ -59,6 +62,11 @@ class ChartController extends Controller{
         $techer = $this->techerReytingService->reyting();
         //dd($techer);
         return view('chart.reyting',compact('techer'));
+    }
+
+    public function techerReytingTwo(){
+        $return = $this->techerReytingServiceTwo->getCharts();
+        return view('chart.techer_one',compact('return'));
     }
     
 }

@@ -137,6 +137,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('chart/techer', [ChartController::class, 'techer'])->name('chart_techer');
     Route::get('chart/techerReyting', [ChartController::class, 'techerReyting'])->name('chart_techer_reyting');
 
+    
+    Route::get('chart/techerReytingTwo', [ChartController::class, 'techerReytingTwo'])->name('chart_techer_reyting_two');
+
     Route::get('report/users', [ReportController::class, 'users'])->name('report_users');
     Route::get('report/users_next', [ReportController::class, 'users_next'])->name('report_users_next');
     Route::get('report/paymart', [ReportController::class, 'paymart'])->name('report_paymart');

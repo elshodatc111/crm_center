@@ -41,8 +41,11 @@ class GroupsTecherController extends Controller{
     }
 
     public function paymarts(){
-        $TecherPaymart = TecherPaymart::where('user_id',auth()->user()->id)->get();
-        return response()->json(['message' => $TecherPaymart], 422);
+        $TecherPaymart = TecherPaymart::where('techer_paymarts.user_id',auth()->user()->id)
+        ->join('groups','groups.id','techer_paymarts.group_id')
+        ->select('groups.group_name','techer_paymarts.amount','techer_paymarts.type','techer_paymarts.created_at')
+        ->get();
+        return response()->json(['message' => $TecherPaymart], 200);
     }
 
 }

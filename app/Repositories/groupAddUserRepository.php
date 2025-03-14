@@ -10,29 +10,26 @@ use App\Models\Paymart;
 use Illuminate\Support\Facades\Auth;
 
 class groupAddUserRepository {
+
     protected function addChegirma(int $group_id, int $user_id){
         $user = User::find($user_id);
         $group = Group::find($group_id);
-        $SettingPaymart = SettingPaymart::find($group->setting_paymarts);
-        $mavjud = intval($SettingPaymart->amount)-intval($SettingPaymart->chegirma);
-        $user_balans = $user->balans;
-        if($user_balans>=$mavjud){
-            UserHistory::create([
-                'user_id' => $user_id,
-                'type' => 'chegirma_add',
-                'type_commit' => "Admin tamonidan ".intval($SettingPaymart->chegirma)." so'm chegirma(Oldindan to'lov uchun chegirma)",
-                'admin_id' => auth()->id(),
-            ]);
-            $user->increment('balans', intval($SettingPaymart->chegirma));
-            Paymart::create([
-                'user_id' => $user_id,
-                'group_id' => $group_id,
-                'amount' => intval($SettingPaymart->chegirma),
-                'paymart_type' => 'chegirma',
-                'description' => 'Oldindan to\'lov uchun chegirma',
-                'admin_id' => auth()->id(),
-            ]);
+        if (!$user || !$group) {
+            return 0;
         }
+        $SettingPaymart = SettingPaymart::find($group->setting_paymarts ?? 0);
+        if (!$SettingPaymart) {
+            dd("Error");
+            return 0;
+        }
+        $amount = intval($SettingPaymart->amount ?? 0);
+        $chegirma = intval($SettingPaymart->chegirma ?? 0);
+        $mavjud = $amount - $chegirma;
+        $user_balans = intval($user->balans ?? 0);
+        if ($user_balans >= $mavjud) {
+            return $chegirma;
+        }
+        return 0;
     }
 
 
@@ -41,14 +38,31 @@ class groupAddUserRepository {
         $group = Group::findOrFail($data['group_id']);
         $user->group_count += 1;
         $user->balans -= $group->price;
-        $user->save();
-        $this->addChegirma($group->id, $user->id);
+        $check = $this->addChegirma($group->id, $user->id);
+        if($check>0){
+            UserHistory::create([
+                'user_id' => $user->id,
+                'type' => 'chegirma_add',
+                'type_commit' => "Admin tamonidan {$check} so'm chegirma (Oldindan to'lov uchun chegirma)",
+                'admin_id' => Auth::id(),
+            ]);
+            $user->balans += $check;
+            Paymart::create([
+                'user_id' => $user->id,
+                'group_id' => $group->id,
+                'amount' => $check,
+                'paymart_type' => 'chegirma',
+                'description' => 'Oldindan to\'lov uchun chegirma',
+                'admin_id' => Auth::id(),
+            ]);
+        }
         UserHistory::create([
             'user_id' => $user->id,
             'type' => 'group_add',
             'type_commit' => '"' . $group->group_name . "' Guruhga qo'shildi",
             'admin_id' => Auth::id(),
         ]);
+        $user->save();
         return GroupUser::create([
             'user_id' => $user->id,
             'group_id' => $group->id,
@@ -56,5 +70,6 @@ class groupAddUserRepository {
             'start_discription' => $data['start_discription'],
             'status' => 1,
         ]);
+        
     }
 }

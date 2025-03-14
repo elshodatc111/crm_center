@@ -155,7 +155,7 @@ class StudentService{
         return $filteredGroups->values();
     }
 
-    public function addGroups(array $data){
+    public function addGroups(array $data){ 
         return $this->groupAddUserRepository->addGroups($data);
     }
 

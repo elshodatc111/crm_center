@@ -100,7 +100,7 @@
                         </ul>
 
                         <div class="tab-content pt-2">
-                            <!-- Talaba haqida -->
+                            <!-- Talaba haqida --> 
                             <div class="tab-pane fade show active" id="profile-overview">
                                 <div class="row">
                                     <div class="col-6 text-center">

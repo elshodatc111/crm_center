@@ -21,22 +21,26 @@ use App\Http\Requests\AddStudentToGroupRequest;
 use App\Http\Requests\RefundRequest;
 use App\Http\Requests\ChegirmaRequest;
 use App\Http\Requests\DiscountPaymentRequest;
+use App\Services\message\SendMessageEndService;
 
 class StudentController extends Controller{
 
     private StudentService $studentService;
+    private SendMessageEndService $sendMessageEndService;
     private PaymartService $paymartService;
     private KassaService $kassaService;
     private PaymartReturnService $paymartReturnService;
     private AdminChegirmaService $adminChegirmaService;
 
     public function __construct(
+                                SendMessageEndService $sendMessageEndService,
                                 StudentService $studentService,
                                 PaymartService $paymartService,
                                 KassaService $kassaService,
                                 PaymartReturnService $paymartReturnService,
                                 AdminChegirmaService $adminChegirmaService
                             ){
+        $this->sendMessageEndService = $sendMessageEndService;
         $this->paymartService = $paymartService;
         $this->studentService = $studentService;
         $this->kassaService = $kassaService;
@@ -61,7 +65,8 @@ class StudentController extends Controller{
         $users = $this->studentService->createStudent($request->validated());
         $this->studentService->sotsials($request->about_me);
         $this->studentService->countAddres($users->address);
-        dispatch(new SendMessageWork($users->id, 'new_student_sms',auth()->user()->id)); // SendMessageWork(user_id, message_type, admin_id) 
+        $message = "Hurmatli ".$request->user_name." Siz ".config('app.APP_NAME')." o'quv markazimizga xush kelibsiz. Sizning login: ".$users->email." parol: password";
+        $this->sendMessageEndService->SendMessage($users->id, $message, 'new_student_sms');
         return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
     }
 
@@ -86,7 +91,8 @@ class StudentController extends Controller{
 
     public function update_password(Request $request){
         $this->studentService->updatePassword($request->user_id);
-        dispatch(new SendMessageWork($request->user_id, 'update_pass_sms',auth()->user()->id));
+        $message = "Sizning yangi parolingiz: password ";
+        $this->sendMessageEndService->SendMessage($request->user_id, $message, 'update_pass_sms');
         return redirect()->back()->with('success', 'Parol yangilandi.');
     }
 

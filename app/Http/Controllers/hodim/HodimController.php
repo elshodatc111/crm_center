@@ -9,19 +9,21 @@ use App\Http\Requests\HodimUpdateRequest;
 use App\Http\Requests\PaymentHodimRequest;
 use App\Services\StudentService;
 use App\Services\HodimService;
+use App\Models\User;
 use App\Services\SettingService;
-use App\Jobs\SendMessageWork;
-use App\Jobs\PaymartMessageWork;
+use App\Services\message\SendMessageEndService;
 
 class HodimController extends Controller{
     protected $hodimService;
     protected $studentService;
     protected $settingService;
+    protected $sendMessageEndService;
 
-    public function __construct(HodimService $hodimService, StudentService $studentService,SettingService $settingService){
+    public function __construct(HodimService $hodimService,SendMessageEndService $sendMessageEndService, StudentService $studentService,SettingService $settingService){
         $this->hodimService = $hodimService;
         $this->studentService = $studentService;
         $this->settingService = $settingService;
+        $this->sendMessageEndService = $sendMessageEndService;
     }
 
     public function index(){
@@ -34,7 +36,8 @@ class HodimController extends Controller{
         $validate = $request->validated();
         $users = $this->hodimService->create($validate);
         $user_id = $this->hodimService->userID($validate);
-        dispatch(new SendMessageWork($user_id, 'new_hodim_sms',auth()->user()->id));
+        $message = "Hurmatli ".$request->user_name." ".config('app.APP_NAME')." o'quv markazimizga ishga olindingiz. Login:".User::find($user_id)->email." parol: password";
+        $this->sendMessageEndService->SendMessage($user_id, $message, 'pay_hodim_sms');
         return redirect()->back()->with('success', 'Yangi hodim ishga olindi!');
     }
 
@@ -68,7 +71,8 @@ class HodimController extends Controller{
         $check = $this->hodimService->hodimPaymartCheck($request->validated());
         if($check){
             $patmart_id = $this->hodimService->hodimPaymartStore($request->validated());
-            dispatch(new PaymartMessageWork($patmart_id,'hodim', $user_id, auth()->user()->id, 'pay_hodim_sms'));
+            $message = "Sizga ".$request->amount." so'm ish haqi to'landi. ";
+            $this->sendMessageEndService->SendMessage($user_id, $message, 'pay_hodim_sms');
             return redirect()->back()->with('success', 'Ish haqi to\'lov amalga oshirildi!');
         }else{
             return redirect()->back()->with('success', 'Balansda yetarli mablag\' mavjud emas!');

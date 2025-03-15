@@ -7,21 +7,23 @@ use Illuminate\Http\Request;
 use App\Services\TecherService;
 use App\Services\StudentService;
 use App\Services\SettingService;
+use App\Models\User;
+use App\Services\message\SendMessageEndService;
 use App\Http\Requests\TeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Http\Requests\TecherPaymartRequest;
-use App\Jobs\SendMessageWork;
-use App\Jobs\PaymartMessageWork;
 
 class TecherController extends Controller{
+    private SendMessageEndService $sendMessageEndService;
     private StudentService $studentService;
     private TecherService $techerService;
     private SettingService $settingService;
 
-    public function __construct(StudentService $studentService, TecherService $techerService, SettingService $settingService){
+    public function __construct(StudentService $studentService, SendMessageEndService $sendMessageEndService, TecherService $techerService, SettingService $settingService){
         $this->studentService = $studentService;
         $this->techerService = $techerService;
         $this->settingService = $settingService;
+        $this->sendMessageEndService = $sendMessageEndService;
     }
 
     public function index(){
@@ -33,7 +35,8 @@ class TecherController extends Controller{
     public function store(TeacherRequest $request){
         $users = $this->techerService->create($request->validated());
         $user_id = $this->techerService->userID($request->validated());
-        dispatch(new SendMessageWork($user_id, 'new_hodim_sms',auth()->user()->id));
+        $message = "Hurmatli ".$request->user_name." ".config('app.APP_NAME')." o'quv markazimizga ishga olindingiz. Login:".User::find($user_id)->email." parol: password";
+        $this->sendMessageEndService->SendMessage($user_id, $message, 'pay_hodim_sms');
         return redirect()->back()->with('success', 'O‘qituvchi muvaffaqiyatli qo‘shildi.');
     }
 
@@ -63,7 +66,8 @@ class TecherController extends Controller{
         $validatedData = $request->validated();
         if ($this->techerService->check($validatedData)) {
             $patmart_id = $this->techerService->PaymartStore($validatedData);
-            dispatch(new PaymartMessageWork($patmart_id, 'techer', $validatedData['techer_id'], auth()->user()->id, 'pay_hodim_sms'));
+            $message = "Sizga ".$request->amount." so'm ish haqi to'landi. ";
+            $this->sendMessageEndService->SendMessage($request->techer_id, $message, 'pay_hodim_sms');
             return redirect()->back()->with('success', "Ish haqi to'lovi amalga oshirildi.");
         }
         return redirect()->back()->with('error', "Balansda yetarli mablag' mavjud emas.");
@@ -71,7 +75,8 @@ class TecherController extends Controller{
 
     public function techerUpdatePassword(Request $request){
         $this->techerService->updatePassword($request->techer_id);
-        dispatch(new SendMessageWork($request->techer_id, 'update_pass_sms',auth()->user()->id));
+        $message = "Sizning yangi parolingiz: password ";
+        $this->sendMessageEndService->SendMessage($request->techer_id, $message, 'update_pass_sms');
         return redirect()->back()->with('success', "Hodim paroli yangilandi.");
     }
 }

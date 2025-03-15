@@ -1,5 +1,5 @@
 <?php
-namespace App\Services;
+namespace App\Services\message;
 
 use App\Models\Holiday;
 use Illuminate\Database\Eloquent\Collection;
@@ -9,8 +9,9 @@ use App\Models\User;
 use App\Models\Setting;
 use App\Models\SendMessage;
 use App\Services\SmsService;
+use Illuminate\Support\Facades\Log;
 
-class AdminChegirmaService{
+class SendMessageEndService{
     
     private SmsService $smsService;
 
@@ -67,10 +68,15 @@ class AdminChegirmaService{
         }
         $phone = str_replace("+","",str_replace(" ","",$user->phone1));
         $message = $message." Websayt: ".config('app.url');
+        Log::info("Update Password: ".$message);
         $smsService = new SmsService();
         $response = $smsService->sendSms($phone, $message);
         if (is_array($response) && isset($response['status']) && $response['status'] == 'waiting') {
             $this->saveSmsHistory($phone, $message, auth()->user()->id);
+            $Setting->message_mavjud = $Setting->message_mavjud-1;
+            $Setting->message_count = $Setting->message_count+1;
+            $Setting->save();
+            Log::info('Send Message');
         } else {
             Log::error("SMS jo‘natishda xatolik: " . json_encode($response));
         }

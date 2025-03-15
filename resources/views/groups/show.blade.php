@@ -296,24 +296,6 @@
     </div>
 
 
-    <div class="modal fade" id="sendmessage" tabindex="-1" aria-labelledby="addVisitModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addVisitModalLabel">Barcha talabalarga sms yuborish</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="POST" id="visitForm">
-                        @csrf
-                        <label for="">SMS matni</label>
-                        <textarea name="" required class="form-control mb-3 mt-2"></textarea>
-                        <button type="submit" class="btn btn-primary w-100" id="submit-btn">SMS yuborish</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="debetsendmessage" tabindex="-1" aria-labelledby="addVisitModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -322,14 +304,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="POST" id="visitForm">
+                    <form action="{{ route('groups_debet_message') }}" method="POST" id="visitForm">
                         @csrf
+                        <input type="hidden" name="group_id" value="{{ $response['group']['id'] }}">
                         <button type="submit" class="btn btn-primary w-100" id="submit-btn">SMS yuborish</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="updateGroups" tabindex="-1" aria-labelledby="addVisitModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

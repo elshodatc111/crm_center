@@ -80,7 +80,6 @@ class StudentController extends Controller{
         $paymarts = $this->paymartService->getPaymarts($id);
         $adminChegirmaGroup = $this->adminChegirmaService->getGroups($id);
         $holidayDiscount = $this->adminChegirmaService->holidayDiscount();
-        //dd($holidayDiscount);
         return view('student.show', compact('student','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup','holidayDiscount'));
     }
 
@@ -113,7 +112,8 @@ class StudentController extends Controller{
             return redirect()->back()->with('success', 'Kassada yetarli mablag\' mavjud emas.');
         }
         $patmart_id = $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description);
-        dispatch(new PaymartMessageWork($patmart_id,'qaytarildi', $request->user_id, auth()->user()->id, 'pay_student_sms'));
+        $message = "Hurmatli ".User::find($request->user_id)->user_name." ".str_replace(" ","",$request->amount)." so'm to'lovingiz qaytarildi. ";
+        $this->sendMessageEndService->SendMessage($request->user_id, $message, 'pay_student_sms');
         return redirect()->back()->with('success', 'To\'lov qaytarish yakunlandi.');
     }
 
@@ -128,6 +128,8 @@ class StudentController extends Controller{
 
     public function discountPayment(DiscountPaymentRequest $request){
         $type = $this->adminChegirmaService->storeHolidayDiscount($request->validated());
+        $message = "Hurmatli ".User::find($request->user_id)->user_name." ".str_replace(" ","",$request->amount)." so'm to'lovingiz uchun ".str_replace(" ","",$request->chegirma)." so'm chegirma berildi. ";
+        $this->sendMessageEndService->SendMessage($request->user_id, $message, 'pay_student_sms');
         return redirect()->back()->with('success', 'Chegirma to\'lov qabul qilindi.');
     }
 

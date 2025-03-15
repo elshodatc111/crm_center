@@ -39,7 +39,7 @@ class GroupsController extends Controller{
     }
 
     public function show(int $id){
-        $response = $this->groupService->groupsShow($id); 
+        $response = $this->groupService->groupsShow($id);
         return view('groups.show', compact('response'));
     }
 

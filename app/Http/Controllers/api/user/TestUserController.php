@@ -19,7 +19,7 @@ class TestUserController extends Controller{
         $now = date('Y-m-d H:i:s');
         $GroupUser = GroupUser::where('group_users.user_id', auth()->user()->id)
             ->where('group_users.status', 1)
-            ->where('groups.lessen_end', '<=', $now)
+            //->where('groups.lessen_end', '<=', $now)
             ->join('groups', 'group_users.group_id', '=', 'groups.id')
             ->select('groups.cours_id', 'groups.id as group_id', 'groups.group_name')
             ->get();
@@ -46,7 +46,7 @@ class TestUserController extends Controller{
                 'group_id' => $value['group_id'],
                 'user_id' => auth()->user()->id,
                 'group_name' => $value['group_name'],
-                'testlar' => 15,
+                'test' => 15,
                 'urinishlar' => $TestCheck ? $TestCheck->count : 0,
                 'tugri_javob' => $TestCheck ? $TestCheck->count_true : 0,
                 'ball' => $TestCheck ? ($TestCheck->count_true * 2) : 0,

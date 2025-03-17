@@ -19,14 +19,22 @@ class TestUserController extends Controller{
         $now = date('Y-m-d H:i:s');
         $GroupUser = GroupUser::where('group_users.user_id', auth()->user()->id)
             ->where('group_users.status', 1)
-            //->where('groups.lessen_end', '<=', $now)
             ->join('groups', 'group_users.group_id', '=', 'groups.id')
             ->select('groups.cours_id', 'groups.id as group_id', 'groups.group_name')
             ->get();
+        
         $Testlar = [];
+        
         foreach ($GroupUser as $key => $value) {
-            $TestCheck = TestCheck::where('user_id', auth()->user()->id)->where('group_id', $value['group_id'])->first();
-            $CoursTest = CoursTest::where('cours_id', $value['cours_id'])->inRandomOrder()->limit(15)->get();
+            $TestCheck = TestCheck::where('user_id', auth()->user()->id)
+                ->where('group_id', $value['group_id'])
+                ->first();
+            
+            $CoursTest = CoursTest::where('cours_id', $value['cours_id'])
+                ->inRandomOrder()
+                ->limit(15)
+                ->get();
+    
             $Test = [];
             foreach ($CoursTest as $key2 => $value2) {
                 $answers = [
@@ -41,20 +49,26 @@ class TestUserController extends Controller{
                     'javob' => $answers
                 ];
             }
-            $Testlar[$key] = [
-                'cours_id' => $value['cours_id'],
-                'group_id' => $value['group_id'],
-                'user_id' => auth()->user()->id,
-                'group_name' => $value['group_name'],
-                'test' => 15,
-                'urinishlar' => $TestCheck ? $TestCheck->count : 0,
-                'tugri_javob' => $TestCheck ? $TestCheck->count_true : 0,
-                'ball' => $TestCheck ? ($TestCheck->count_true * 2) : 0,
-                'testlar' => $Test,
-            ];
+    
+            // Agar $Test bo'sh bo'lsa, massivga qo'shmaslik
+            if (!empty($Test)) {
+                $Testlar[] = [
+                    'cours_id' => $value['cours_id'],
+                    'group_id' => $value['group_id'],
+                    'user_id' => auth()->user()->id,
+                    'group_name' => $value['group_name'],
+                    'test' => count($Test),
+                    'urinishlar' => $TestCheck ? $TestCheck->count : 0,
+                    'tugri_javob' => $TestCheck ? $TestCheck->count_true : 0,
+                    'ball' => $TestCheck ? ($TestCheck->count_true * 2) : 0,
+                    'testlar' => $Test,
+                ];
+            }
         }
+        
         return response()->json(['testlar' => $Testlar], 200);
     }
+    
 
     public function store(Request $request){
         $TestCheck = TestCheck::where('user_id',auth()->user()->id)->where('group_id',$request->group_id)->first();

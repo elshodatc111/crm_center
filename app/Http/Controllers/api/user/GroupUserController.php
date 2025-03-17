@@ -14,11 +14,15 @@ use Illuminate\Support\Facades\Log;
 class GroupUserController extends Controller
 {
     public function index(){
-        $GroupUser = GroupUser::where('group_users.user_id',auth()->user()->id)
-            ->where('group_users.status',1)
-            ->join('groups','group_users.group_id','groups.id')
-            ->select('groups.id','groups.group_name','groups.lessen_start','groups.lessen_end')
+        $now = date('Y-m-d H:i:s', strtotime('-30 days')); // 30 kun oldingi sana
+    
+        $GroupUser = GroupUser::where('group_users.user_id', auth()->user()->id)
+            ->where('group_users.status', 1)
+            ->join('groups', 'group_users.group_id', '=', 'groups.id')
+            ->where('groups.lessen_end', '>=', $now) // lessen_end 30 kundan eski bo'lmasligi kerak
+            ->select('groups.id', 'groups.group_name', 'groups.lessen_start', 'groups.lessen_end')
             ->get();
+    
         return response()->json(['groups' => $GroupUser], 200);
     }
     public function show($id){

@@ -57,6 +57,10 @@
                         <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
                             <i class="bi bi-people"></i> GURUHGA QO'SHISH
                         </button>
+                        @elseif(auth()->user()->type=='sAdmin' || auth()->user()->type=='admin')
+                        <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+                            <i class="bi bi-people"></i> GURUHGA QO'SHISH
+                        </button>
                         @endif
                         @if(auth()->user()->type!='meneger')
                         <button class="btn btn-dark w-100 mb-2" data-bs-toggle="modal" data-bs-target="#adminDiscountModal">

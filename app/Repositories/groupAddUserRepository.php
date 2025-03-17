@@ -43,7 +43,7 @@ class groupAddUserRepository {
             UserHistory::create([
                 'user_id' => $user->id,
                 'type' => 'chegirma_add',
-                'type_commit' => "Admin tamonidan {$check} so'm chegirma (Oldindan to'lov uchun chegirma)",
+                'type_commit' => "{$check} so'm (Oldindan to'lov uchun chegirma)",
                 'admin_id' => Auth::id(),
             ]);
             $user->balans += $check;
@@ -59,7 +59,7 @@ class groupAddUserRepository {
         UserHistory::create([
             'user_id' => $user->id,
             'type' => 'group_add',
-            'type_commit' => '"' . $group->group_name . "' Guruhga qo'shildi",
+            'type_commit' => '"'.$group->group_name .'" Narxi: '.$group->price.' Guruhga qo\'shildi',
             'admin_id' => Auth::id(),
         ]);
         $user->save();

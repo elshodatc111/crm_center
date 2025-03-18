@@ -53,9 +53,10 @@ class GroupService{
         $data = [];
         $TestCheck = TestCheck::get();
         foreach ($TestCheck as $key => $value) {
+            $group = Group::find($value->group_id);
             $data[$key]['user'] = User::find($value->user_id)->user_name;
-            $data[$key]['kurs'] = Cours::find(Group::find($value->group_id)->id)->cours_name;
-            $data[$key]['guruh'] = Group::find($value->group_id)->group_name;
+            $data[$key]['kurs'] = Cours::find($group->cours_id)->cours_name;
+            $data[$key]['guruh'] = $group->group_name;
             $data[$key]['urinishlar'] = $value->count;
             $data[$key]['tugri'] = $value->count_true;
             $data[$key]['notugri'] = 15-$value->count_true;

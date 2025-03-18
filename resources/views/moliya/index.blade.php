@@ -118,10 +118,7 @@
             <div class="card-body pt-3">
                 <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
                     <li class="nav-item flex-fill" role="presentation">
-                        <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#chiqimlar-justified" type="button" role="tab" aria-controls="home" aria-selected="true">Kassadan chiqim tarixi (oxirgi 3 oy)</button>
-                    </li>
-                    <li class="nav-item flex-fill" role="presentation">
-                        <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#balans-justified" type="button" role="tab" aria-controls="profile" aria-selected="false">Balansdan chiqim tarixi (oxirgi 3 oy)</button>
+                        <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#chiqimlar-justified" type="button" role="tab" aria-controls="home" aria-selected="true">Kirim chiqimlar tarixi (oxirgi 3 oy)</button>
                     </li>
                 </ul>
                 
@@ -142,7 +139,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($chiqim as $item)
+                                    @forelse($history as $item) 
                                     <tr>
                                         <td>{{ $loop->index+1 }}</td>
                                         <td>{{ $item['meneger'] }}</td>
@@ -155,6 +152,20 @@
                                                 <i class="text-danger">Xarajat (Plastik)</i>
                                             @elseif($item['type']=='plastik_chiq')
                                                 <i class="text-success">Balansga kirim (Plastik)</i>
+                                            @elseif($item['type']=='chiq_plastik')
+                                                <i class="text-primary">Daromad (Plastik)</i>
+                                            @elseif($item['type']=='chiq_naqt')
+                                                <i class="text-primary">Daromad (Naqt)</i>
+                                            @elseif($item['type']=='chiq_exson')
+                                                <i class="text-success">Exson</i>
+                                            @elseif($item['type']=='xar_naqt')
+                                                <i class="text-danger">Xarajat (Naqt)</i>
+                                            @elseif($item['type']=='xar_plastik')
+                                                <i class="text-danger">Xarajat (Plastik)</i>
+                                            @elseif($item['type']=='ish_naqt')
+                                                <i class="text-info">Ish haqi (Naqt)</i>
+                                            @elseif($item['type']=='ish_plas')
+                                                <i class="text-info">Ish haqi (Plastik)</i>
                                             @endif
                                         </td>
                                         <td>{{ $item['amount'] }}</td>
@@ -166,54 +177,6 @@
                                     @empty
                                         <tr>
                                             <td colspan=8 class="text-center">Oxirgi 3 oyda chiqimlar tarixi mavjud emas.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="balans-justified" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="table-responsive">
-                            <table class="table text-center table-bordered" style="font-size:14px;">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Chiqim turi</th>
-                                        <th>Chiqim summasi</th>
-                                        <th>Chiqim haqida</th>
-                                        <th>Admin</th>
-                                        <th>Chiqim vaqti</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($moliya as $item)
-                                        <tr>
-                                            <td>{{ $loop->index+1 }}</td>
-                                            <td>
-                                                @if($item['type']=='chiq_plastik')
-                                                    <i class="text-primary">Daromad (Plastik)</i>
-                                                @elseif($item['type']=='chiq_naqt')
-                                                    <i class="text-primary">Daromad (Naqt)</i>
-                                                @elseif($item['type']=='chiq_exson')
-                                                    <i class="text-success">Exson</i>
-                                                @elseif($item['type']=='xar_naqt')
-                                                    <i class="text-danger">Xarajat (Naqt)</i>
-                                                @elseif($item['type']=='xar_plastik')
-                                                    <i class="text-danger">Xarajat (Plastik)</i>
-                                                @elseif($item['type']=='ish_naqt')
-                                                    <i class="text-info">Ish haqi (Naqt)</i>
-                                                @elseif($item['type']=='ish_plas')
-                                                    <i class="text-info">Ish haqi (Plastik)</i>
-                                                @endif
-                                            </td>
-                                            <td>{{ number_format($item['amount'], 0, '.', ' ') }}</td>
-                                            <td>{{ $item['comment'] }}</td>
-                                            <td>{{ $item['user_name'] }}</td>
-                                            <td>{{ $item['created_at'] }}</td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan=6 class="text-center"></td>
                                         </tr>
                                     @endforelse
                                 </tbody>

@@ -78,4 +78,35 @@ class MoliyaService{
             ->get();
     }
 
+    public function history($chiqim, $moliya) {
+        $historeys = [];
+        $k = 0;
+        foreach ($chiqim as $key => $item) {
+            $historeys[$key]['meneger'] = $item['meneger'];
+            $historeys[$key]['type'] = $item['type'];
+            $historeys[$key]['amount'] = $item['amount'];
+            $historeys[$key]['create_time'] = $item['create_time'];
+            $historeys[$key]['description'] = $item['description'];
+            $historeys[$key]['succes_time'] = $item['succes_time'];
+            $historeys[$key]['admin'] = $item['admin'];
+            $k++;
+        }
+        foreach ($moliya as $key => $item) {
+            $historeys[$k]['meneger'] = $item['user_name'];
+            $historeys[$k]['type'] = $item['type'];
+            $historeys[$k]['amount'] = $item['amount'];
+            $historeys[$k]['create_time'] = "";
+            $historeys[$k]['description'] = $item['comment'];
+            $historeys[$k]['succes_time'] = $item['created_at'];
+            $historeys[$k]['admin'] = $item['user_name'];
+            $k++;
+        }
+        usort($historeys, function ($a, $b) {
+            return strtotime($b['succes_time']) - strtotime($a['succes_time']);
+        });
+        return $historeys;
+    }
+    
+    
+
 }

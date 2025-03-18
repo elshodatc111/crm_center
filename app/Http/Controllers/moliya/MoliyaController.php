@@ -26,9 +26,9 @@ class MoliyaController extends Controller{
         $service = $this->settingService->getSetting();
         $kassa = $this->kassaService->getKassa();
         $chiqim = $this->kassaService->successAllKassa();
-        $moliya = $this->moliyaService->MoliyaHistory();
-        //dd($moliya);
-        return view('moliya.index',compact('service','kassa','chiqim','moliya'));
+        $moliya = $this->moliyaService->MoliyaHistory(); 
+        $history = $this->moliyaService->history($chiqim, $moliya); 
+        return view('moliya.index',compact('service','kassa','chiqim','history','moliya'));
     }
 
     public function updateExson(Request $request){

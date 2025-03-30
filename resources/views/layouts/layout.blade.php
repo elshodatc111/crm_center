@@ -15,7 +15,7 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#">
+          <a class="nav-link nav-icon" href="{{ route('user_brithday') }}">
             <i class="bi bi-cake2"></i>
             <span class="badge bg-success badge-number">@include('layouts.tkun')</span>
           </a>

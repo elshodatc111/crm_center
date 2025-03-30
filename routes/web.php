@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserBritisday;
 use App\Http\Controllers\sadmin\sSettingController;
 use App\Http\Controllers\sadmin\sSmsSettingController;
 use App\Http\Controllers\sadmin\sTimeController;
@@ -29,8 +30,6 @@ use App\Http\Controllers\report\ReportController;
 
 Auth::routes();
 
-
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile-update');
@@ -38,6 +37,7 @@ Route::post('/profile/password', [ProfileController::class, 'changePassword'])->
 Route::get('/varonka/user/{visited}', [VaronkaController::class, 'user'])->name('user_varonka');
 Route::post('/varonka/register', [VaronkaController::class, 'register'])->name('user_varonka_varonka');
 Route::get('/varonka/success', [VaronkaController::class, 'success'])->name('user_varonka_success');
+Route::get('/user/brithday', [UserBritisday::class, 'index'])->name('user_brithday');
 
 Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('student', [StudentController::class, 'index'])->name('all_student'); 

@@ -13,6 +13,7 @@ use App\Models\MoliyaHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class TecherService{
     public function allTecher(){
@@ -23,12 +24,13 @@ class TecherService{
         $user = User::where('user_name',$data['user_name'])->where('phone1',$data['phone1'])->first();
         return $user->id;
     }
-
+ 
     public function create(array $data){
         $data['address'] = Social::find($data['address_id'])->name;
         $data['email'] = time()."gmail.com";
         $data['password'] = Hash::make('password');
         $data['type'] = 'techer';
+        $data['user_name'] = Str::upper($data['user_name']);
         return User::create($data); 
     }
 

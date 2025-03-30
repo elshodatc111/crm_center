@@ -33,6 +33,8 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile-update');
+Route::post('/profile/password', [ProfileController::class, 'changePassword'])->name('password-update');
 Route::get('/varonka/user/{visited}', [VaronkaController::class, 'user'])->name('user_varonka');
 Route::post('/varonka/register', [VaronkaController::class, 'register'])->name('user_varonka_varonka');
 Route::get('/varonka/success', [VaronkaController::class, 'success'])->name('user_varonka_success');
@@ -83,16 +85,12 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
     Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
     Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
-
     Route::get('student/return', [StudentController::class, 'returnPay'])->name('all_student_return'); 
     Route::post('student/return/delete', [StudentController::class, 'returnPayDel'])->name('all_student_return_del'); 
-
-    
     Route::get('s/uploadUser', [sSettingController::class, 'uploadUser'])->name('sadmin_upload_user');
     Route::post('/upload-excel', [sSettingController::class, 'uploadExcel'])->name('upload.excel');
     Route::post('/upload-trash', [sSettingController::class, 'trashExcel'])->name('trash.excel');
     Route::post('/upload-run', [sSettingController::class, 'runExcel'])->name('run.excel');
-    
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {

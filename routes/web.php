@@ -86,6 +86,12 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
 
     Route::get('student/return', [StudentController::class, 'returnPay'])->name('all_student_return'); 
     Route::post('student/return/delete', [StudentController::class, 'returnPayDel'])->name('all_student_return_del'); 
+
+    
+    Route::get('s/uploadUser', [sSettingController::class, 'uploadUser'])->name('sadmin_upload_user');
+    Route::post('/upload-excel', [sSettingController::class, 'uploadExcel'])->name('upload.excel');
+    Route::post('/upload-trash', [sSettingController::class, 'trashExcel'])->name('trash.excel');
+    Route::post('/upload-run', [sSettingController::class, 'runExcel'])->name('run.excel');
     
 });
 

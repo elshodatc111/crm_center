@@ -218,10 +218,10 @@
       @endif
       @if(auth()->user()->type === 'sAdmin')
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs(['sadmin_setting', 'sadmin_sms', 'sadmin_time']) ? '' : 'collapsed' }}" data-bs-target="#setting-nav" data-bs-toggle="collapse" href="#">
+          <a class="nav-link {{ request()->routeIs(['sadmin_setting', 'sadmin_sms','sadmin_upload_user', 'sadmin_time']) ? '' : 'collapsed' }}" data-bs-target="#setting-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-gear"></i><span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
-          <ul id="setting-nav" class="nav-content collapse {{ request()->routeIs(['sadmin_setting', 'sadmin_sms', 'sadmin_time']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <ul id="setting-nav" class="nav-content collapse {{ request()->routeIs(['sadmin_setting','sadmin_upload_user', 'sadmin_sms', 'sadmin_time']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
             <li>
               <a href="{{ route('sadmin_setting') }}" class="{{ request()->routeIs(['sadmin_setting']) ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Tizim sozlamalari</span>
@@ -235,6 +235,11 @@
             <li>
               <a href="{{ route('sadmin_sms') }}" class="{{ request()->routeIs(['sadmin_sms']) ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>SMS paketlari</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ route('sadmin_upload_user') }}" class="{{ request()->routeIs(['sadmin_upload_user']) ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Upload User</span>
               </a>
             </li>
           </ul>

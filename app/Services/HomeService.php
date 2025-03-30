@@ -32,7 +32,7 @@ class HomeService{
             if(!$Holiday){
                 $days[] = [
                     'date' => $date,
-                    'day' => $daysUz[$dayOfWeek]
+                    'day' => $daysUz[$dayOfWeek]=null?$daysUz[$dayOfWeek]:null
                 ];
                 $k++;
             }

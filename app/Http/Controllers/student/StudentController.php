@@ -135,7 +135,6 @@ class StudentController extends Controller{
 
     public function returnPay(){
         $Refund = $this->paymartReturnService->returnAllPaymart();
-        //dd($Refund);
         return view('student.return',compact('Refund'));
     }
 

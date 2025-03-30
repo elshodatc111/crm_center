@@ -124,4 +124,10 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'aliases' => [
+        // Other aliases here...
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class, // Excel fasadini qo‘shing
+        'Auth' => Illuminate\Support\Facades\Auth::class,
+    ],
+
 ];

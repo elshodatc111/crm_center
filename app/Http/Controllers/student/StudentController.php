@@ -20,8 +20,9 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Requests\AddStudentToGroupRequest;
 use App\Http\Requests\RefundRequest;
 use App\Http\Requests\ChegirmaRequest;
-use App\Http\Requests\DiscountPaymentRequest;
+use App\Http\Requests\DiscountPaymentRequest; 
 use App\Services\message\SendMessageEndService;
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller{
 
@@ -66,6 +67,7 @@ class StudentController extends Controller{
         $this->studentService->sotsials($request->about_me);
         $this->studentService->countAddres($users->address);
         $message = "Hurmatli ".$request->user_name." Siz ".config('app.APP_NAME')." o'quv markazimizga xush kelibsiz. Sizning login: ".$users->email." parol: password";
+        Log::info("Tashrif: ".$message);
         $this->sendMessageEndService->SendMessage($users->id, $message, 'new_student_sms');
         return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
     }

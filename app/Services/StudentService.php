@@ -11,6 +11,7 @@ use App\Models\Group;
 use App\Models\Social;
 use App\Models\GroupUser;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,10 +27,11 @@ class StudentService{
 
     public function createStudent(array $data){
         $data['group_count'] = 0;
-        $data['email'] = time().'@login.com';
+        $data['email'] = time().'@atko.uz';
         $data['type'] = 'student';
         $data['status'] = 'true';
         $data['balans'] = 0;
+        $data['user_name'] = Str::upper($data['user_name']);
         $data['password'] = Hash::make('password');
         $User = User::create($data);
         UserHistory::create([

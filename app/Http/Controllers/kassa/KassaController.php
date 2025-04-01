@@ -20,7 +20,8 @@ class KassaController extends Controller{
         $getKassa = $this->kassaService->getKassa();
         $returnPaymart = $this->kassaService->returnPaymart();
         $pedding = $this->kassaService->peddingKassa();
-        return view('kassa.index',compact('getKassa','returnPaymart','pedding'));
+        $paymarts = $this->kassaService->tulovlar();
+        return view('kassa.index',compact('getKassa','returnPaymart','pedding','paymarts'));
     }
 
     public function chiqim(ChiqimRequest $request){

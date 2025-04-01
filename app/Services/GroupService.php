@@ -17,6 +17,7 @@ use App\Models\Holiday;
 use App\Models\MenegerChart;
 use App\Models\UserHistory;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class GroupService{
     
@@ -25,8 +26,6 @@ class GroupService{
         ->withCount(['groupUsers' => function ($query) {
             $query->where('status', 1);
         }])->orderBy('lessen_start', 'desc');
-
-        //dd($query);
         if ($search) {
             $query->where('group_name', 'LIKE', '%' . $search . '%');
         }
@@ -102,7 +101,7 @@ class GroupService{
             'cours_id' => $data['cours_id'], 
             'setting_rooms_id' => $data['setting_rooms_id'], 
             'techer_id' => $data['techer_id'], 
-            'group_name' => $data['group_name'], 
+            'group_name' => Str::upper($data['group_name']),  // ####################
             'price' => SettingPaymart::find($data['setting_paymarts'])->amount, 
             'setting_paymarts' => $data['setting_paymarts'], 
             'weekday' => $data['weekday'], 

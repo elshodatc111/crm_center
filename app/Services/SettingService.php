@@ -45,7 +45,7 @@ class SettingService{
             $res[$key]['amount'] = $value->amount;
             $res[$key]['chegirma'] = $value->chegirma;
             $res[$key]['admin_chegirma'] = $value->admin_chegirma;
-            $res[$key]['user_id'] = User::find($value->id)->user_name;
+            $res[$key]['user_id'] = auth()->user()->user_name;
         }
         return $res;
     }
@@ -53,11 +53,12 @@ class SettingService{
         $SettingPaymart = SettingPaymart::where('status','delete')->get();
         $res = array();
         foreach ($SettingPaymart as $key => $value) {
+            print($value);
             $res[$key]['id'] = $value->id;
             $res[$key]['amount'] = $value->amount;
             $res[$key]['chegirma'] = $value->chegirma;
             $res[$key]['admin_chegirma'] = $value->admin_chegirma;
-            $res[$key]['user_id'] = User::find($value->id)->user_name;
+            $res[$key]['user_id'] = auth()->user()->user_name;
         }
         return $res;
     }

@@ -61,12 +61,14 @@ class GroupsController extends Controller{
         $Group = Group::find($group_ids);
         $Group->next = $groups_id_new; 
         $Group->save();
-        foreach ($student as $key => $value) {
-            $this->studentService->addGroups([
-                "user_id" => $value,
-                "group_id" => $groups_id_new,
-                "start_discription" => $new_groups->group_name,
-            ]);
+        if($student){
+            foreach ($student as $key => $value) {
+                $this->studentService->addGroups([
+                    "user_id" => $value,
+                    "group_id" => $groups_id_new,
+                    "start_discription" => $new_groups->group_name,
+                ]);
+            }
         }
         return back()->with('success', 'Guruh davom ettirildi.');
     }

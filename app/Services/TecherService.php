@@ -27,7 +27,7 @@ class TecherService{
  
     public function create(array $data){
         $data['address'] = Social::find($data['address_id'])->name;
-        $data['email'] = time()."gmail.com";
+        $data['email'] = time()."@atko.uz";
         $data['password'] = Hash::make('password');
         $data['type'] = 'techer';
         $data['user_name'] = Str::upper($data['user_name']);

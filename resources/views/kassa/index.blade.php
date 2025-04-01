@@ -134,6 +134,45 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center w-100">
+                    To'lovlar (oxirgi 7 kun)
+                </h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:14px">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Talaba</th>
+                                <th>To'lov summasi</th>
+                                <th>To'lov turi</th>
+                                <th>To'lov vaqti</th>
+                                <th>To'lov haqida</th>
+                                <th>Meneger</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($paymarts as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['user'] }}</a></td>
+                                    <td>{{ $item['amount'] }}</td>
+                                    <td>{{ $item['paymart_type'] }}</td>
+                                    <td>{{ $item['created_at'] }}</td>
+                                    <td>{{ $item['description'] }}</td>
+                                    <td>{{ $item['admin'] }}</td>
+                                </tr>
+                            @empty
+
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="refundModal" tabindex="-1" aria-labelledby="refundModalLabel" aria-hidden="true">

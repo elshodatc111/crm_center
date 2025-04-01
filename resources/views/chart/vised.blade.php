@@ -2,68 +2,7 @@
 @section('title','Tashrif Statistika')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title w-100 text-center">Hududlardan tashriflar</h5>
-                <div id="HududCharts"></div>
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        new ApexCharts(document.querySelector("#HududCharts"), {
-                            series: [
-                                @foreach($Hudud as $item)
-                                    {{ $item['count'] }},
-                                @endforeach
-                            ],
-                            chart: {
-                                height: 320,
-                                type: 'pie',
-                                toolbar: {
-                                    show: true
-                                }
-                            },
-                            labels: [
-                                @foreach($Hudud as $item)
-                                    "{{ $item['name'] }}",
-                                @endforeach
-                            ]
-                        }).render();
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title w-100 text-center">Sotsial tashriflar</h5>
-                <div id="pieChart"></div>
-                <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#pieChart"), {
-                    series: [
-                        {{ $Social['telegram'] }},
-                        {{ $Social['instagram'] }},
-                        {{ $Social['facebook'] }},
-                        {{ $Social['youtube'] }},
-                        {{ $Social['bannner'] }},
-                        {{ $Social['tanish'] }},
-                        {{ $Social['boshqa'] }},
-                    ],
-                    chart: {
-                        height: 320,
-                        type: 'pie',
-                        toolbar: {
-                            show: true
-                        }
-                    },
-                    labels: ['Telegram', 'Instagram', 'Facebook', 'Youtube', 'Banner','Tanishlar','Boshqa']
-                    }).render();
-                });
-                </script>
-            </div>
-        </div>
-    </div>
+
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
@@ -183,6 +122,70 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title w-100 text-center">Hududlardan tashriflar</h5>
+                <div id="HududCharts"></div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        new ApexCharts(document.querySelector("#HududCharts"), {
+                            series: [
+                                @foreach($Hudud as $item)
+                                    {{ $item['count'] }},
+                                @endforeach
+                            ],
+                            chart: {
+                                height: 320,
+                                type: 'pie',
+                                toolbar: {
+                                    show: true
+                                }
+                            },
+                            labels: [
+                                @foreach($Hudud as $item)
+                                    "{{ $item['name'] }}",
+                                @endforeach
+                            ]
+                        }).render();
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title w-100 text-center">Sotsial tashriflar</h5>
+                <div id="pieChart"></div>
+                <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    new ApexCharts(document.querySelector("#pieChart"), {
+                    series: [
+                        {{ $Social['telegram'] }},
+                        {{ $Social['instagram'] }},
+                        {{ $Social['facebook'] }},
+                        {{ $Social['youtube'] }},
+                        {{ $Social['bannner'] }},
+                        {{ $Social['tanish'] }},
+                        {{ $Social['boshqa'] }},
+                    ],
+                    chart: {
+                        height: 320,
+                        type: 'pie',
+                        toolbar: {
+                            show: true
+                        }
+                    },
+                    labels: ['Telegram', 'Instagram', 'Facebook', 'Youtube', 'Banner','Tanishlar','Boshqa']
+                    }).render();
+                });
+                </script>
             </div>
         </div>
     </div>

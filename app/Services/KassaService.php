@@ -21,6 +21,33 @@ class KassaService{
     public function getKassa() {
         return Kassa::first();
     }
+
+    public function tulovlar(){
+        $sevenDaysAgo = Carbon::now()->subDays(7)->format('Y-m-d');
+        $paymarts = Paymart::join('users', 'users.id', '=', 'paymarts.user_id')
+            ->where('paymarts.created_at', '>=', $sevenDaysAgo)
+            ->orderby('paymarts.created_at', 'desc')
+            ->select(
+                'users.user_name',
+                'paymarts.user_id',
+                'paymarts.amount',
+                'paymarts.paymart_type',
+                'paymarts.description',
+                'paymarts.admin_id',
+                'paymarts.created_at'
+            )->get();
+        $array = [];
+        foreach($paymarts as $key => $paymart){
+            $array[$key]['user_id'] = $paymart->user_id;
+            $array[$key]['user'] = $paymart->user_name;
+            $array[$key]['amount'] = $paymart->amount;
+            $array[$key]['paymart_type'] = $paymart->paymart_type;
+            $array[$key]['description'] = $paymart->description;
+            $array[$key]['created_at'] = $paymart->created_at;
+            $array[$key]['admin'] = User::find($paymart->admin_id)->user_name;
+        }
+        return $array;
+    }
     
     public function returnPaymart(){
         $status = Carbon::now()->subDays(7)->startOfDay();

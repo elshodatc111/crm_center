@@ -77,7 +77,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered text-center" style="font-size:14px">
                         <thead>
-                            <tr>
+                            <tr> 
                                 <th>#</th>
                                 <th>Meneger</th>
                                 <th>Chiqim turi</th>
@@ -165,7 +165,9 @@
                                     <td>{{ $item['admin'] }}</td>
                                 </tr>
                             @empty
-
+                                <tr>
+                                    <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

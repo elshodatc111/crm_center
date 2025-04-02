@@ -201,7 +201,6 @@ class KassaService{
         $KassaHistory->admin_id = auth()->user()->id;
         $KassaHistory->succes_time = date('Y-m-d h:i:s');
         $type = $KassaHistory->type;
-        
         if($type == 'naqt_chiq' OR $type == 'naqt_xar'){
             if($type == 'naqt_chiq'){
                 $Kassa->decrement('naqt_chiq_pedding',intval(str_replace(" ", "", $KassaHistory['amount'])));
@@ -214,20 +213,25 @@ class KassaService{
             }elseif($type == 'plastik_xar'){
                 $Kassa->decrement('plastik_xar_pedding',intval(str_replace(" ", "", $KassaHistory['amount'])));
             }
-        }
+        } 
         $KassaHistory->save();
-
         $Setting = Setting::first();
-        $exson = $Setting->exson_foiz * $KassaHistory->amount / 100;
-        $amount = $KassaHistory->amount - $exson;
         if($KassaHistory->type=='naqt_chiq'){
+            $exson = $Setting->exson_foiz * $KassaHistory->amount / 100;
+            $amount = $KassaHistory->amount - $exson;
             $Setting->increment('balans_naqt',intval(str_replace(" ", "", $amount)));
             $Setting->increment('balans_exson',intval(str_replace(" ", "", $exson)));
         }
         if($KassaHistory->type=='plastik_chiq'){
+            
+            $exson = $Setting->exson_foiz * $KassaHistory->amount / 100;
+            $amount = $KassaHistory->amount;
+
+            $Setting->decrement('balans_naqt',intval(str_replace(" ", "", $exson)));
             $Setting->increment('balans_plastik',intval(str_replace(" ", "", $amount)));
             $Setting->increment('balans_exson',intval(str_replace(" ", "", $exson)));
         }
+        //dd($KassaHistory->amount);
         return $Setting->save();
     }
 

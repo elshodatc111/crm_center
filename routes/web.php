@@ -28,7 +28,7 @@ use App\Http\Controllers\varonka\VaronkaMenegerController;
 use App\Http\Controllers\chart\ChartController;
 use App\Http\Controllers\report\ReportController;
 
-Auth::routes();
+Auth::routes(); 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

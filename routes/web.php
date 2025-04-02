@@ -38,11 +38,14 @@ Route::get('/varonka/user/{visited}', [VaronkaController::class, 'user'])->name(
 Route::post('/varonka/register', [VaronkaController::class, 'register'])->name('user_varonka_varonka');
 Route::get('/varonka/success', [VaronkaController::class, 'success'])->name('user_varonka_success');
 Route::get('/user/brithday', [UserBritisday::class, 'index'])->name('user_brithday');
+Route::get('/user/eslatmalar', [UserBritisday::class, 'eslatmalar'])->name('user_eslatmalar');
+Route::post('/user/eslatmalar/trash', [UserBritisday::class, 'eslatmalar_trash'])->name('user_eslatmalar_trash');
 
 Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::get('student', [StudentController::class, 'index'])->name('all_student'); 
     Route::get('/check-phone-exist', [StudentController::class, 'checkPhoneExist'])->name('checkPhoneExist');
     Route::post('/student/create', [StudentController::class, 'store'])->name('student_store');
+    Route::post('/student/eslatma', [StudentController::class, 'createEslatma'])->name('student_eslatma');
     Route::get('/student/show/{id}', [StudentController::class, 'show'])->name('student_show');
     Route::post('/student/update/about', [StudentController::class, 'update_about'])->name('student_update_about');
     Route::post('/student/update/password', [StudentController::class, 'update_password'])->name('student_update_password');

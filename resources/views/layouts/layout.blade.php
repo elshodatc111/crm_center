@@ -21,6 +21,12 @@
           </a>
         </li>
         <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="{{ route('user_eslatmalar') }}">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span class="badge bg-info badge-number">@include('layouts.eslatma')</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('meneger_varonka_new') }}">
             <i class="bi bi-bell"></i>
             <span class="badge bg-info badge-number">@include('layouts.murojat')</span>

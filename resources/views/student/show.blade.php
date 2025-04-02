@@ -73,6 +73,9 @@
                         <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
                             <i class="bi bi-key"></i> PAROLNI YANGILASH
                         </button>
+                        <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#eslatma">
+                            <i class="bi bi-exclamation-triangle"></i> Eslatma qoldirish
+                        </button>
                     </div>
                 </div>
             </div>
@@ -272,8 +275,65 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-xl-12">
+                <div class="card px-4">
+                    <h2 class="card-title">Eslatmalar tarixi</h2>
+                    <table class="table table-bordered text-center" style="font-size:14px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Eslatma matni</th>
+                                <th>Eslatma vaqti</th>
+                                <th>Meneger</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($eslatma as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item['message'] }}</td>
+                                <td>{{ $item['created_at'] }}</td>
+                                <td>{{ $item['user_name'] }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=4 class="text-center">Eslatmalar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </section>
+
+    <div class="modal fade" id="eslatma" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eslatma qoldirish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('student_eslatma') }}" method="POST">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <label for="message" class="form-label mt-2">Eslatma matni</label>
+                        <textarea type="text" class="form-control" id="message" name="message" required></textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Eslatmani saqlash</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="paymentModal" tabindex="-1">
         <div class="modal-dialog">

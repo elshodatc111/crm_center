@@ -5,6 +5,7 @@ namespace App\Http\Controllers\student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Eslatma;
 use App\Models\Social;
 use App\Http\Requests\StoreVisitRequest;
 use App\Services\StudentService;
@@ -82,7 +83,11 @@ class StudentController extends Controller{
         $paymarts = $this->paymartService->getPaymarts($id);
         $adminChegirmaGroup = $this->adminChegirmaService->getGroups($id);
         $holidayDiscount = $this->adminChegirmaService->holidayDiscount();
-        return view('student.show', compact('student','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup','holidayDiscount'));
+        $eslatma = Eslatma::where('eslatmas.user_id', $id)
+            ->orderBy('eslatmas.created_at', 'desc')
+            ->join('users', 'eslatmas.admin_id', '=', 'users.id')
+            ->get();
+        return view('student.show', compact('student','eslatma','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup','holidayDiscount'));
     }
 
     public function update_about(UserAboutUpdateRequest $request){
@@ -143,6 +148,16 @@ class StudentController extends Controller{
     public function returnPayDel(Request $request){
         $Refund = $this->paymartReturnService->returnPayDel($request->id);
         return redirect()->back()->with('success', 'Qaytarilgan to\'lov tasdiqlandi.');
+    }
+
+    public function createEslatma(Request $request){
+        Eslatma::create([
+            'user_id' => $request->user_id,
+            'message' => $request->message,
+            'admin_id' => auth()->user()->id,
+            
+        ]);
+        return redirect()->back()->with('success', 'Eslatma saqlandi.');
     }
     
 

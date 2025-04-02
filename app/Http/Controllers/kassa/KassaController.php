@@ -27,7 +27,7 @@ class KassaController extends Controller{
     public function chiqim(ChiqimRequest $request){
         $check = $this->kassaService->checkKassa($request->validated()); 
         if($check){
-            $this->kassaService->chiqimPost($request->validated()); 
+            $this->kassaService->chiqimPost($request->validated());  
             return redirect()->back()->with('success', 'Kassadan chiqim tasdiqlash kutilmoqda!');
         }else{
             return redirect()->back()->with('success', 'Kassada mablag\' mavjud emas!');

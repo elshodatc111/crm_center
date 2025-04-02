@@ -201,6 +201,7 @@ class KassaService{
         $KassaHistory->admin_id = auth()->user()->id;
         $KassaHistory->succes_time = date('Y-m-d h:i:s');
         $type = $KassaHistory->type;
+        
         if($type == 'naqt_chiq' OR $type == 'naqt_xar'){
             if($type == 'naqt_chiq'){
                 $Kassa->decrement('naqt_chiq_pedding',intval(str_replace(" ", "", $KassaHistory['amount'])));
@@ -215,6 +216,7 @@ class KassaService{
             }
         }
         $KassaHistory->save();
+
         $Setting = Setting::first();
         $exson = $Setting->exson_foiz * $KassaHistory->amount / 100;
         $amount = $KassaHistory->amount - $exson;

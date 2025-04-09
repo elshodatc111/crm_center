@@ -142,8 +142,7 @@
                             @error('birthday')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            
-                            <span id="birthday-error" class="text-danger" style="display:none;">Bu foydalanuvchi 10 yoshdan kichik!</span>
+                            <span id="birthday-error" class="text-danger" style="display:none;">Bu foydalanuvchi 7 yoshdan kichik!</span>
                         </div>
                         <div class="mb-1">
                             <label for="about" class="form-label">Tashrif haqida</label>
@@ -190,7 +189,7 @@
             if (m < 0 || (m === 0 && currentDate.getDate() < birthDate.getDate())) {
                 age--;
             }
-            if (age < 10) {
+            if (age < 7) {
                 $('#birthday-error').show();
                 $('#submit-btn').prop('disabled', true);
             } else {

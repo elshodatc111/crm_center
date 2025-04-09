@@ -54,7 +54,7 @@
                         @forelse($resours['groups'] as $item)
                         <tr>
                             <td>{{ $loop->iteration + ($resours['groups']->currentPage() - 1) * $resours['groups']->perPage() }}</td>
-                            <td><a href="{{ route('create_show', $item->id) }}">{{ $item->group_name }}</a></td>
+                            <td style="text-align:left"><a href="{{ route('create_show', $item->id) }}">{{ $item->group_name }}</a></td>
                             <td>{{ \Carbon\Carbon::parse($item->lessen_start)->format('Y-m-d') }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->lessen_end)->format('Y-m-d') }}</td>
                             <td>{{ $item->group_users_count }}</td>

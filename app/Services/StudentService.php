@@ -145,9 +145,7 @@ class StudentService{
     }
 
     public function addStudentGroup(int $id){
-        $groups = Group::where('lessen_end', '>=', Carbon::today()->toDateString())
-        ->join('users','users.id','groups.techer_id')
-        ->select('groups.id','groups.group_name','groups.lessen_start','users.user_name')->get();
+        $groups = Group::where('lessen_end', '>=', Carbon::today()->toDateString())->join('users', 'users.id', '=', 'groups.techer_id')->select('groups.id', 'groups.group_name', 'groups.lessen_start', 'users.user_name')->orderBy('groups.group_name', 'desc')->get();
         $excludedGroupIds = DB::table('group_users')
             ->where('user_id', $id)
             ->where('status', true)

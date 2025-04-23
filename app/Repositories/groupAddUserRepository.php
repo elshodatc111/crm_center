@@ -8,6 +8,7 @@ use App\Models\GroupUser;
 use App\Models\SettingPaymart;
 use App\Models\Paymart;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class groupAddUserRepository {
 
@@ -19,15 +20,20 @@ class groupAddUserRepository {
         }
         $SettingPaymart = SettingPaymart::find($group->setting_paymarts ?? 0);
         if (!$SettingPaymart) {
-            dd("Error");
             return 0;
         }
-        $amount = intval($SettingPaymart->amount ?? 0);
-        $chegirma = intval($SettingPaymart->chegirma ?? 0);
-        $mavjud = $amount - $chegirma;
-        $user_balans = intval($user->balans ?? 0);
-        if ($user_balans >= $mavjud) {
-            return $chegirma;
+        $today = Carbon::now()->format('Y-m-d');
+        $lessin_start = $group['lessen_start'];
+        $onlyDate = Carbon::parse($lessin_start)->format('Y-m-d');
+        $uchKunKeyin = Carbon::createFromFormat('Y-m-d', $onlyDate)->addDays(3)->format('Y-m-d');
+        if($uchKunKeyin>=$today){
+            $amount = intval($SettingPaymart->amount ?? 0);
+            $chegirma = intval($SettingPaymart->chegirma ?? 0);
+            $mavjud = $amount - $chegirma;
+            $user_balans = intval($user->balans ?? 0);
+            if ($user_balans >= $mavjud) {
+                return $chegirma;
+            }
         }
         return 0;
     }

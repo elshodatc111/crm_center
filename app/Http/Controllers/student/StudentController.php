@@ -75,7 +75,7 @@ class StudentController extends Controller{
 
     public function show(ShowStudentRequest $request, $id){
         $addGroups = $this->studentService->addStudentGroup($id);
-        $student = $this->studentService->getShow($id);
+        $student = $this->studentService->getShow($id); 
         $history = $this->studentService->getShowHistory($id);
         $user_groups = $this->studentService->studentGroups($id);
         $chegirma_groups = $this->paymartService->chegirmaGroups($id);

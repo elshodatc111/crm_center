@@ -200,7 +200,7 @@
                                         @if($item['status']==1)
                                             Aktiv
                                         @else
-                                            O'chirilgan
+                                            <div class="b p-0 m-0 text-danger">O'chirilgan</div>
                                         @endif
                                     </td>
                                     <td>{{ $item['balans'] }}</td>

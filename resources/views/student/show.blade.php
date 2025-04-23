@@ -197,7 +197,7 @@
                                                     @if($item['status']==1)
                                                         Aktive
                                                     @else
-                                                        O'chirildi: {{ $item['delete'] }}
+                                                        <b class="p-0 m-0 text-danger">O'chirildi: {{ $item['delete'] }}<b>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -381,7 +381,7 @@
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">To'lov qilish</button>
+                                <button type="submit" class="btn btn-primary w-100" onclick="this.style.display='none'" id="saveEdit">To'lov qilish</button>
                             </div>
                         </div>
                     </form>
@@ -429,7 +429,7 @@
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">To'lov qilish</button>
+                                <button type="submit" class="btn btn-primary w-100" onclick="this.style.display='none'" id="saveEdit">To'lov qilish</button>
                             </div>
                         </div>
                     </form>
@@ -466,7 +466,7 @@
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Qaytarish</button>
+                                <button type="submit" class="btn btn-primary w-100" onclick="this.style.display='none'" id="saveEdit">Qaytarish</button>
                             </div>
                         </div>
                     </form>
@@ -491,7 +491,7 @@
                             <option value="" disabled selected>Tanlang...</option>
                             @foreach($addGroups as $item)  
                                 <option value="{{ $item['id'] }}">{{ $item['group_name'].' ('.\Carbon\Carbon::parse($item['lessen_start'])->format('Y-m-d')." - ".$item['user_name'].")" }}</option>
-                            @endforeach
+                            @endforeach 
                         </select>
                         <label for="start_discription" class="form-label mt-2">Guruhdan qo'shish haqida</label>
                         <textarea type="text" name="start_discription" class="form-control" required>...</textarea>
@@ -500,7 +500,7 @@
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                                <button type="submit" onclick="this.style.display='none'" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
                             </div>
                         </div>
                     </form>
@@ -543,7 +543,7 @@
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                                <button type="submit" onclick="this.style.display='none'" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
                             </div>
                         </div>
                     </form>
@@ -578,7 +578,7 @@
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                                <button type="submit" onclick="this.style.display='none'" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
                             </div>
                         </div>
                     </form>

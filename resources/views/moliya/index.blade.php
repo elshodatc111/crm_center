@@ -157,18 +157,18 @@
                                             @elseif($item['type']=='chiq_naqt')
                                                 <i class="text-primary">Daromad (Naqt)</i>
                                             @elseif($item['type']=='chiq_exson')
-                                                <i class="text-success">Exson</i>
+                                                <i style="color:#EB4C42;">Exson</i>
                                             @elseif($item['type']=='xar_naqt')
                                                 <i class="text-danger">Xarajat (Naqt)</i>
                                             @elseif($item['type']=='xar_plastik')
                                                 <i class="text-danger">Xarajat (Plastik)</i>
                                             @elseif($item['type']=='ish_naqt')
-                                                <i class="text-info">Ish haqi (Naqt)</i>
+                                                <i style="color:#CC397B">Ish haqi (Naqt)</i>
                                             @elseif($item['type']=='ish_plas')
-                                                <i class="text-info">Ish haqi (Plastik)</i>
+                                                <i style="color:#CC397B">Ish haqi (Plastik)</i>
                                             @endif
                                         </td>
-                                        <td>{{ $item['amount'] }}</td>
+                                        <td>{{ number_format($item['amount'], 2, '.', ' ') }}   </td>
                                         <td>{{ $item['create_time'] }}</td>
                                         <td>{{ $item['description'] }}</td>
                                         <td>{{ $item['succes_time'] }}</td>

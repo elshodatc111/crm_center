@@ -16,20 +16,20 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('user_brithday') }}">
-            <i class="bi bi-cake2"></i>
-            <span class="badge bg-success badge-number">@include('layouts.tkun')</span>
+            <i class="bi bi-cake2 text-primary"></i>
+            <span class="badge bg-warning badge-number">@include('layouts.tkun')</span>
           </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('user_eslatmalar') }}">
-            <i class="bi bi-exclamation-triangle"></i>
-            <span class="badge bg-info badge-number">@include('layouts.eslatma')</span>
+            <i class="bi bi-exclamation-triangle text-primary"></i>
+            <span class="badge bg-danger badge-number">@include('layouts.eslatma')</span>
           </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('meneger_varonka_new') }}">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-info badge-number">@include('layouts.murojat')</span>
+            <span class="badge bg-primary badge-number">@include('layouts.murojat')</span>
           </a>
         </li>
         <li class="nav-item dropdown pe-3">

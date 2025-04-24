@@ -34,7 +34,7 @@ class TecherService{
         return User::create($data); 
     }
 
-    public function updatePassword(int $id){
+    public function updatePassword(int $id){ 
         $user = User::find($id);
         $user->password = Hash::make('password');
         return $user->save();
@@ -112,6 +112,8 @@ class TecherService{
             $users = count(GroupUser::where('group_id',$value->id)->where('status',1)->get());
             $array[$key]['group_id'] = $value->id;
             $array[$key]['group_name'] = $value->group_name;
+            $array[$key]['lessen_start'] = $value->lessen_start;
+            $array[$key]['lessen_end'] = $value->lessen_end;
             $array[$key]['status'] = $status;
             $array[$key]['users'] = $users;
             $array[$key]['bonus'] = $this->groupBonus($value->id);

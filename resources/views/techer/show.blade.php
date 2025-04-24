@@ -189,6 +189,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Guruh</th>
+                                <th>Guruh boshlanish vaqti</th>
+                                <th>Guruh Tugash vaqti vaqti</th>
                                 <th>Guruh holati</th>
                                 <th>Talabalar</th>
                                 <th>Bonus talaba</th>
@@ -201,6 +203,8 @@
                             <tr> 
                                 <td>{{ $loop->index+1 }}</td>
                                 <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                                <td>{{ \Carbon\Carbon::parse($item['lessen_start'])->format('Y-m-d') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item['lessen_end'])->format('Y-m-d') }}</td>
                                 <td>
                                     @if($item['status']=='active')
                                         <i class="text-success">Faol</i>
@@ -217,7 +221,7 @@
                             </tr>
                             @empty
                                 <tr>
-                                    <td colspan=7 class="text-center">O'qituvchi guruhlari mavjud emas</td>
+                                    <td colspan=9 class="text-center">O'qituvchi guruhlari mavjud emas</td>
                                 </tr>
                             @endforelse
                         </tbody>

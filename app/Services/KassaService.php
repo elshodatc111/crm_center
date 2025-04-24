@@ -95,7 +95,7 @@ class KassaService{
         if($data['type']=='naqt'){
             KassaHistory::create([
                 'meneger_id' => auth()->user()->id,
-                'create_time' => date('Y-m-d h:i:s'),
+                'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
                 'type' => 'naqt_chiq',
@@ -106,7 +106,7 @@ class KassaService{
         }else{
             KassaHistory::create([
                 'meneger_id' => auth()->user()->id,
-                'create_time' => date('Y-m-d h:i:s'),
+                'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
                 'type' => 'plastik_chiq',
@@ -123,7 +123,7 @@ class KassaService{
         if($data['type']=='naqt'){
             KassaHistory::create([
                 'meneger_id' => auth()->user()->id,
-                'create_time' => date('Y-m-d h:i:s'),
+                'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
                 'type' => 'naqt_xar',
@@ -134,7 +134,7 @@ class KassaService{
         }else{
             KassaHistory::create([
                 'meneger_id' => auth()->user()->id,
-                'create_time' => date('Y-m-d h:i:s'),
+                'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
                 'type' => 'plastik_xar',
@@ -199,7 +199,7 @@ class KassaService{
         $KassaHistory = KassaHistory::find($id);
         $KassaHistory->status = 'success';
         $KassaHistory->admin_id = auth()->user()->id;
-        $KassaHistory->succes_time = date('Y-m-d h:i:s');
+        $KassaHistory->succes_time = date('Y-m-d H:i:s');
         $type = $KassaHistory->type;
         if($type == 'naqt_chiq' OR $type == 'naqt_xar'){
             if($type == 'naqt_chiq'){

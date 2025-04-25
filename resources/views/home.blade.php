@@ -31,11 +31,11 @@
                                     @forelse($value['item'] as $item)
                                     <tr>
                                         <td>{{ $loop->index+1 }}</td>
-                                        <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                                        <td style="text-align:left"><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
                                         <td>{{ $item['room'] }}</td>
                                         <td>{{ $item['time'] }}</td>
                                         <td>{{ $item['count'] }}</td>
-                                        <td><a href="{{ route('techer_show',$item['techer_id']) }}">{{ $item['techer_name'] }}</a></td>
+                                        <td style="text-align:right"><a href="{{ route('techer_show',$item['techer_id']) }}">{{ $item['techer_name'] }}</a></td>
                                     </tr>
                                     @empty
                                     <tr>

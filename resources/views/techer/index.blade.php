@@ -50,7 +50,7 @@
                         @forelse($User as $item)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
-                                <td><a href="{{ route('techer_show',$item['id']) }}">{{ $item['user_name'] }}</a></td>
+                                <td style="text-align:left"><a href="{{ route('techer_show',$item['id']) }}">{{ $item['user_name'] }}</a></td>
                                 <td>{{ $item['phone1'] }}</td>
                                 <td>{{ $item['email'] }}</td>
                                 <td>{{ $item['created_at'] }}</td>

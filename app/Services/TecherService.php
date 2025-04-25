@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\Social;
 use App\Models\Setting;
+use App\Models\Davomad;
 use App\Models\TecherPaymart;
 use App\Models\MoliyaHistory;
 use Illuminate\Support\Facades\Auth;
@@ -105,11 +106,15 @@ class TecherService{
             if ($value['lessen_start'] <= $currentDate && $value['lessen_end'] >= $currentDate) {
                 $status = 'active';
             } elseif ($value['lessen_end'] < $currentDate) {
-                $status = 'end';
+                $status = 'end'; 
             } else {
                 $status = 'new';
             }
+            $umumiySon = Davomad::where('group_id', $value->id)
+                    ->distinct('data')
+                    ->count();
             $users = count(GroupUser::where('group_id',$value->id)->where('status',1)->get());
+            $Lessen_count = $value['lessen_count'];
             $array[$key]['group_id'] = $value->id;
             $array[$key]['group_name'] = $value->group_name;
             $array[$key]['lessen_start'] = $value->lessen_start;
@@ -118,8 +123,10 @@ class TecherService{
             $array[$key]['users'] = $users;
             $array[$key]['bonus'] = $this->groupBonus($value->id);
             $array[$key]['xisoblandi'] = $users*$value->techer_paymart + $this->groupBonus($value->id) * $value->techer_bonus;
+            $array[$key]['xisoblandi_davomad'] = $umumiySon * ($users*$value->techer_paymart + $this->groupBonus($value->id) * $value->techer_bonus)/$Lessen_count;
             $array[$key]['tulandi'] = $this->ishHaqiTulandi($value->id);
         }
+        
         return $array;
     }
 

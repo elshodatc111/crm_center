@@ -251,6 +251,7 @@
                         <table class="table table-bordered text-center" style="font-size:12px;">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Talaba / Dars kunlari</th>
                                     @if($response['davomad'])
                                     @foreach($response['davomad'][0]['kunlar'] as $item)
@@ -263,19 +264,20 @@
                                 @if($response['davomad'])
                                 @foreach($response['davomad'][0]['users'] as $item)
                                 <tr>
+                                    <th>{{ $loop->index+1 }}</th>
                                     <th style="text-align:left"><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['name'] }}</a></th>
                                     @foreach($item['davomad'] as $item2)
-                                    <td>
+                                    
                                         @if($item2=='true')
-                                        <b class="text-success p-0 m-0" style="font-size:14px"><i class="bi bi-check-all"></i></b>
+                                        <td class="bg-success"><b class="text-white p-0 m-0" style="font-size:14px"><i class="bi bi-check-all"></i></b></td>
                                         @elseif($item2=='false')
-                                        <b class="text-danger p-0 m-0" style="font-size:14px"><i class="bi bi-exclamation"></i></b>
+                                        <td class="bg-warning"><b class="text-white p-0 m-0" style="font-size:14px"><i class="bi bi-exclamation"></i></b></td>
                                         @elseif($item2=='close')
-                                        <b class="text-warning p-0 m-0" style="font-size:14px"><i class="bi bi-exclamation-diamond"></i></b>
+                                        <td class="bg-danger"><b class="text-white p-0 m-0" style="font-size:14px"><i class="bi bi-exclamation-diamond"></i></b></td>
                                         @else
-                                        <b class="text-info p-0 m-0" style="font-size:14px"><i class="bi bi-eye-slash"></i></b>
+                                        <td class="bg-info"><b class="text-white p-0 m-0" style="font-size:14px"><i class="bi bi-eye-slash"></i></b></td>
                                         @endif
-                                    </td>
+                                    
                                     @endforeach
                                 </tr>
                                 @endforeach

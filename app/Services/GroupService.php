@@ -175,7 +175,7 @@ class GroupService{
                 'group_users.start_discription',
                 'group_users.status',
                 'student.balans'
-            )
+            )->where('group_users.status', 1)
             ->get();
     }
 

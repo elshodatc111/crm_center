@@ -189,7 +189,7 @@
                                         @forelse($user_groups as $item)
                                             <tr>
                                                 <td>{{ $loop->index+1 }}</td>
-                                                <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['name'] }}</a></td>
+                                                <td style="text-align:left"><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['name'] }}</a></td>
                                                 <td>{{ $item['add_plus'] }}</td>
                                                 <td>{{ $item['meneger_add'] }}</td>
                                                 <td>{{ $item['description'] }}</td>
@@ -227,9 +227,9 @@
                                         @forelse($paymarts as $item)
                                             <tr>
                                                 <td>{{ $loop->index+1 }}</td>
-                                                <td>{{ $item['amount'] }}</td>
+                                                <td>{{ number_format($item['amount'], 0, '.', ' ') }}</td>
                                                 <td>{{ $item['paymart_type'] }}</td>
-                                                <td>{{ $item['description'] }}</td>
+                                                <td style="text-align:left">{{ $item['description'] }}</td>
                                                 <td>{{ $item['created_at'] }}</td>
                                                 <td>{{ $item['user_name'] }}</td>
                                             </tr>
@@ -259,8 +259,28 @@
                                         <tr>
                                             <td>{{ $loop->index+1 }}</td>
                                             <td>{{ $item['created_at'] }}</td>
-                                            <td>{{ $item['type'] }}</td>
-                                            <td>{{ $item['type_commit'] }}</td>
+                                            <td>
+                                                @if($item['type']=='visited')
+                                                    <span class="badge bg-primary">Tashrif</span>
+                                                @elseif($item['type']=='paymart_add')
+                                                    <span class="badge bg-success">To'lov</span>        
+                                                @elseif($item['type']=='paymart_return')
+                                                    <span class="badge bg-danger">To'lov qaytarish</span>
+                                                @elseif($item['type']=='paymart_jarima')
+                                                    <span class="badge bg-warning">Jarima</span>        
+                                                @elseif($item['type']=='chegirma_add')
+                                                    <span class="badge bg-info">Chegirma</span> 
+                                                @elseif($item['type']=='group_add') 
+                                                    <span class="badge bg-secondary">Guruhga qo'shildi</span>   
+                                                @elseif($item['type']=='group_delete')
+                                                    <span class="badge bg-dark">Guruhdan o'chirildi</span>  
+                                                @elseif($item['type']=='password_update')
+                                                    <span class="badge bg-light text-dark">Parol o'zgartirildi</span>       
+                                                @else
+                                                    <span class="badge bg-secondary">Boshqa</span>      
+                                                @endif
+                                            </td>
+                                            <td style="text-align:left">{{ $item['type_commit'] }}</td>
                                             <td>{{ $item['user_name'] }}</td>
                                         </tr>
                                         @empty
@@ -292,7 +312,7 @@
                             @forelse($eslatma as $item)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
-                                <td>{{ $item['message'] }}</td>
+                                <td style="text-align:left">{{ $item['message'] }}</td>
                                 <td>{{ $item['created_at'] }}</td>
                                 <td>{{ $item['user_name'] }}</td>
                             </tr>

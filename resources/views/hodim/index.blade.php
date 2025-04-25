@@ -49,7 +49,7 @@
                             @forelse($user as $item)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
-                                <td><a href="{{ route('compamy_hodim_show',$item['id']) }}">{{ $item['user_name'] }}</a></td>
+                                <td style="text-align:left"><a href="{{ route('compamy_hodim_show',$item['id']) }}">{{ $item['user_name'] }}</a></td>
                                 <td>{{ $item['phone1'] }}</td>
                                 <td>{{ $item['address'] }}</td>
                                 <td>{{ $item['type'] }}</td>

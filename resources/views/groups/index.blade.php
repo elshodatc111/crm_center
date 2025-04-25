@@ -165,12 +165,12 @@
                         </select>
                         <div class="row pt-2">
                             <div class="col-6">
-                                <label for="techer_bonus" class="mb-1">O'qituvchiga bonus</label>
-                                <input type="text" name="techer_bonus" value="0" id="paymentAmount" required class="form-control">
-                            </div>
-                            <div class="col-6">
                                 <label for="techer_paymart" class="mb-1">O'qituvchiga to'lov</label>
                                 <input type="text" name="techer_paymart" value="0" id="paymentAmount1" required class="form-control">
+                            </div>
+                            <div class="col-6">
+                                <label for="techer_bonus" class="mb-1">O'qituvchiga bonus</label>
+                                <input type="text" name="techer_bonus" value="0" id="paymentAmount" required class="form-control">
                             </div>
                         </div>
                         <hr>

@@ -27,7 +27,7 @@
 @endif
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title w-100 text-center">O'qituvchi haqida</h3>
@@ -36,32 +36,22 @@
                     <input type="hidden" value="{{ $techer['id'] }}" name="techer_id">
                     <label for="user_name">O'qituvchi</label>
                     <input type="text" name="user_name" value="{{ $techer['user_name'] }}" required class="form-control">
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="phone1" class="mt-1">Telefon raqam 1</label>
-                            <input type="text" name="phone1" value="{{ $techer['phone1'] }}" required class="form-control phone">
-                        </div>
-                        <div class="col-6">
-                            <label for="phone2" class="mt-1">Telefon raqam 2</label>
-                            <input type="text" name="phone2" value="{{ $techer['phone2'] }}" required class="form-control phone">
-                        </div>
-                        <div class="col-6">
-                            <label for="birthday" class="mt-1">Tug'ilgan kuni</label>
-                            <input type="date" name="birthday" value="{{ $techer['birthday'] }}" required class="form-control">
-                        </div>
-                        <div class="col-6">
-                            <label for="status" class="mt-1">Ish faoliyati</label>
-                            <p class="form-control p-0 m-0">
-                                @if($techer['status']=='true')
-                                    Aktive
-                                @elseif($techer['status']=='false')
-                                    Ishdan bo'shatildi
-                                @else
-                                    Vaqtinchalik bloklandi
-                                @endif
-                            </p>
-                        </div>
-                    </div>
+                    <label for="phone1" class="mt-1">Telefon raqam 1</label>
+                    <input type="text" name="phone1" value="{{ $techer['phone1'] }}" required class="form-control phone">
+                    <label for="phone2" class="mt-1">Telefon raqam 2</label>
+                    <input type="text" name="phone2" value="{{ $techer['phone2'] }}" required class="form-control phone">
+                    <label for="birthday" class="mt-1">Tug'ilgan kuni</label>
+                    <input type="date" name="birthday" value="{{ $techer['birthday'] }}" required class="form-control">
+                    <label for="status" class="mt-1">Ish faoliyati</label>
+                    <p class="form-control px-2 m-0">
+                        @if($techer['status']=='true')
+                            Aktive
+                        @elseif($techer['status']=='false')
+                            Ishdan bo'shatildi
+                        @else
+                            Vaqtinchalik bloklandi
+                        @endif
+                    </p>
                     <label for="email">Login</label>
                     <input type="text" name="email" value="{{ $techer['email'] }}" required class="form-control" disabled>
                     <label for="address" class="mt-1">Yashash manzili</label>
@@ -179,12 +169,12 @@
         </div>
     </div>
 
-    <div class="col-lg-8">
+    <div class="col-lg-9">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title w-100 text-center">Guruhlar (Guruh yakunlanganiga 30 kundan kiyin o'chiriladi)</h3>
                 <div class="table-responsive">
-                    <table class="table table-bordered text-center" style="font-size:14px">
+                    <table class="table table-bordered text-center" style="font-size:12px">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -195,6 +185,7 @@
                                 <th>Talabalar</th>
                                 <th>Bonus talaba</th>
                                 <th>Ish haqi</th>
+                                <th>Ish haqi(Davomad)</th>
                                 <th>To'langan ish haqi</th>
                             </tr>
                         </thead>
@@ -207,7 +198,7 @@
                                 <td>{{ \Carbon\Carbon::parse($item['lessen_end'])->format('Y-m-d') }}</td>
                                 <td>
                                     @if($item['status']=='active')
-                                        <i class="text-success">Faol</i>
+                                        <i class="text-success">Faol</i> 
                                     @elseif($item['status']=='end')
                                         <i class="text-danger">Yakunlangan</i>
                                     @else
@@ -217,6 +208,7 @@
                                 <td>{{ $item['users'] }}</td>
                                 <td>{{ $item['bonus'] }}</td>
                                 <td>{{ number_format($item['xisoblandi'], 0, '.', ' ') }}</td>
+                                <td>{{ number_format($item['xisoblandi_davomad'], 0, '.', ' ') }}</td>
                                 <td>{{ number_format($item['tulandi'], 0, '.', ' ') }}</td>
                             </tr>
                             @empty
@@ -229,7 +221,10 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+    </div>
+    <div class="col-12">
+        
+    <div class="card">
             <div class="card-body">
                 <h3 class="card-title w-100 text-center">Ish haqi to'lovlari (Oxirgi 3 oylik to'lovlar tarixi)</h3>
                 <div class="table-responsive">

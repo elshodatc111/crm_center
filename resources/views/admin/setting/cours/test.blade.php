@@ -51,43 +51,45 @@
         <div class="col-9">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Testlar</h3>    
-                    <table class="table table-bordered text-center">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Savol</th>
-                                <th>To'g'ri javob</th>
-                                <th>Noto'g'ri javob</th>
-                                <th>Noto'g'ri javob</th>
-                                <th>Noto'g'ri javob</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($test as $item)
+                    <h3 class="card-title">Testlar</h3>   
+                    <div class="table-responsive">     
+                        <table class="table table-bordered text-center">
+                            <thead>
                                 <tr>
-                                    <td>{{ $loop->index+1 }}</td>
-                                    <td>{{ $item['test'] }}</td>
-                                    <td>{{ $item['javob_true'] }}</td>
-                                    <td>{{ $item['javob_false_first'] }}</td>
-                                    <td>{{ $item['javob_false_two'] }}</td>
-                                    <td>{{ $item['javob_false_thre'] }}</td>
-                                    <td>
-                                        <form action="{{ route('setting_test_delete') }}" method="post">
-                                            @csrf 
-                                            <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                            <button class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
-                                        </form>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Savol</th>
+                                    <th>To'g'ri javob</th>
+                                    <th>Noto'g'ri javob</th>
+                                    <th>Noto'g'ri javob</th>
+                                    <th>Noto'g'ri javob</th>
+                                    <th>Status</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan=7 class="text-center">Testlar mavjud emas.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>   
+                            </thead>
+                            <tbody>
+                                @forelse($test as $item)
+                                    <tr>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['test'] }}</td>
+                                        <td>{{ $item['javob_true'] }}</td>
+                                        <td>{{ $item['javob_false_first'] }}</td>
+                                        <td>{{ $item['javob_false_two'] }}</td>
+                                        <td>{{ $item['javob_false_thre'] }}</td>
+                                        <td>
+                                            <form action="{{ route('setting_test_delete') }}" method="post">
+                                                @csrf 
+                                                <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                                <button class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan=7 class="text-center">Testlar mavjud emas.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>   
+                    </div>
                 </div>
             </div>
         </div>

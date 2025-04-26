@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Cours;
+use App\Models\CoursAudio;
 use App\Models\CoursTest;
 use App\Models\CoursVideo;
 
@@ -19,6 +20,7 @@ class CoursService{
             $response[$key]['cours_name'] = $value->cours_name;
             $response[$key]['video'] = count(CoursVideo::where('cours_id',$value->id)->get());
             $response[$key]['test'] = count(CoursTest::where('cours_id',$value->id)->get());
+            $response[$key]['audio'] = count(CoursAudio::where('cours_id',$value->id)->get());
         }
         return $response;
     }

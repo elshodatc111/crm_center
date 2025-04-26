@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Book;
 use App\Models\TestCheck;
 use App\Models\TecherPaymart;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,11 @@ class GroupsTecherController extends Controller{
 
     public function groups(){
         $res = $this->techerAppService->allGroups();
+        return response()->json($res, 200);
+    }
+
+    public function books(){
+        $res = Book::get();
         return response()->json($res, 200);
     }
 

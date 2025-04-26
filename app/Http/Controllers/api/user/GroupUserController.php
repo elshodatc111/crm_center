@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\GroupUser;
 use App\Models\Group;
+use App\Models\CoursAudio;
 use App\Models\GroupDays;
 use App\Models\LessenTime;
 use Illuminate\Support\Facades\Log;
@@ -31,10 +32,11 @@ class GroupUserController extends Controller
             ->join('lessen_times','groups.cours_id','lessen_times.id')
             ->join('users','groups.techer_id','users.id')
             ->join('setting_rooms','groups.setting_rooms_id','setting_rooms.id')
-            ->select('groups.id','groups.group_name','groups.price','groups.lessen_count','groups.lessen_start','groups.lessen_end','cours.cours_name','users.user_name as techer','setting_rooms.room_name','lessen_times.time')
+            ->select('groups.id','groups.cours_id','groups.group_name','groups.price','groups.lessen_count','groups.lessen_start','groups.lessen_end','cours.cours_name','users.user_name as techer','setting_rooms.room_name','lessen_times.time')
             ->first();
         $days = GroupDays::where('group_id',$id)->select('date')->get();
-        return response()->json(['groups' => $Group,'days'=>$days], 200);
+        $audios = CoursAudio::where('cours_id',$Group->cours_id)->select('audio_name','audio_number','audio_url')->orderby('audio_number','asc')->get();
+        return response()->json(['groups' => $Group,'days'=>$days,'audios'=>$audios], 200);
     }
     
 }

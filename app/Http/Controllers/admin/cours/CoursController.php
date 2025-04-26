@@ -17,7 +17,7 @@ class CoursController extends Controller{
         $this->coursService = $coursService;
         $this->middleware('admin');
     }
-    public function index(){
+    public function index(){ 
         $cours = $this->coursService->getAllCours();
         return view('admin.setting.cours.index',compact('cours'));
     }

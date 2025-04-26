@@ -42,38 +42,42 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Kurslar</h3>    
-                    <table class="table table-bordered text-center">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Kurs nomi</th>
-                                <th>Video Darslar soni</th>
-                                <th>Testlar Soni</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($cours as $item)
-                            <tr>
-                                <td>{{ $loop->index+1 }}</td>
-                                <td>{{ $item['cours_name'] }}</td>
-                                <td><a href="{{ route('setting_cours_video', $item['id']) }}">{{ $item['video'] }}</a></td>
-                                <td><a href="{{ route('setting_cours_test', $item['id']) }}">{{ $item['test'] }}</a></td>
-                                <td>
-                                    <form action="{{ route('setting_cours_update') }}" method="post">
-                                        @csrf 
-                                        <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                        <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @empty
+                    <div class="table-responsive">    
+                        <table class="table table-bordered text-center">
+                            <thead>
                                 <tr>
-                                    <td colspan=5 class="text-center">Kurslar mavjud emas.</td>
+                                    <th>#</th>
+                                    <th>Kurs nomi</th>
+                                    <th>Video Darslar soni</th>
+                                    <th>Testlar Soni</th>
+                                    <th>Audio</th>
+                                    <th>Status</th>
                                 </tr>
-                            @endforelse
-                        </tbody>
-                    </table>   
+                            </thead>
+                            <tbody>
+                                @forelse($cours as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td>{{ $item['cours_name'] }}</td>
+                                    <td><a href="{{ route('setting_cours_video', $item['id']) }}">{{ $item['video'] }}</a></td>
+                                    <td><a href="{{ route('setting_cours_test', $item['id']) }}">{{ $item['test'] }}</a></td>
+                                    <td><a href="{{ route('setting_cours_audio', $item['id']) }}">{{ $item['audio'] }}</a></td>
+                                    <td>
+                                        <form action="{{ route('setting_cours_update') }}" method="post">
+                                            @csrf 
+                                            <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                            <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan=5 class="text-center">Kurslar mavjud emas.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>   
+                    </div>
                 </div>
             </div>
         </div>

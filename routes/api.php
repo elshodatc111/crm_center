@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/techer/group/{id}', [GroupsTecherController::class, 'group']);
     Route::post('/techer/davomad', [GroupsTecherController::class, 'davomadPost']);
     Route::get('/techer/paymart', [GroupsTecherController::class, 'paymarts']);
+    Route::get('/techer/books', [GroupsTecherController::class, 'books']);
 }); 
 
 Route::post('/user/login', [AuthUserController::class, 'login']);

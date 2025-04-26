@@ -180,10 +180,10 @@
         </ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['setting_cours','all_social','setting_sms', 'setting_holiday','setting_paymart','setting_chegirma','setting_rooms']) ? '' : 'collapsed' }}" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['setting_book','setting_cours','setting_cours_audio','all_social','setting_cours_video','setting_cours_test','setting_sms', 'setting_holiday','setting_paymart','setting_chegirma','setting_rooms']) ? '' : 'collapsed' }}" data-bs-target="#gear-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gear"></i><span>Sozlamalar</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="gear-nav" class="nav-content collapse {{ request()->routeIs(['setting_cours','all_social','setting_sms', 'setting_holiday','setting_paymart','setting_chegirma','setting_rooms']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="gear-nav" class="nav-content collapse {{ request()->routeIs(['setting_book','setting_cours','setting_cours_video','setting_cours_test','setting_cours_audio','all_social','setting_sms', 'setting_holiday','setting_paymart','setting_chegirma','setting_rooms']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('setting_sms') }}" class="{{ request()->routeIs(['setting_sms']) ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>SMS sozlamalari</span>
@@ -210,7 +210,11 @@
             </a>
           </li>
           <li>
-            <a href="{{ route('setting_cours') }}" class="{{ request()->routeIs(['setting_cours']) ? 'active' : '' }}">
+            <a href="{{ route('setting_book') }}" class="{{ request()->routeIs(['setting_book']) ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Kitoblar</span>
+            </a>
+          <li>
+            <a href="{{ route('setting_cours') }}" class="{{ request()->routeIs(['setting_cours','setting_cours_audio','setting_cours_video','setting_cours_test',]) ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Kurslar</span>
             </a>
           </li>

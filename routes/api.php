@@ -10,6 +10,7 @@ use App\Http\Controllers\api\user\GroupUserController;
 use App\Http\Controllers\api\user\PaymartUserController;
 use App\Http\Controllers\api\user\VideoUserController;
 use App\Http\Controllers\api\user\TestUserController;
+use App\Http\Controllers\api\user\AuthAdminController;
 
 
 Route::post('/techer/login', [AuthController::class, 'login']);
@@ -36,4 +37,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/video/show/{id}', [VideoUserController::class, 'shows']);
     Route::get('/user/tests', [TestUserController::class, 'index']);
     Route::post('/user/tests/check', [TestUserController::class, 'store']);
+}); 
+
+Route::post('/admin/login', [AuthAdminController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/admin/logout', [AuthAdminController::class, 'logout']);
+    Route::get('/admin/profile', [AuthAdminController::class, 'profile']);
+    Route::post('/admin/change/password', [AuthAdminController::class, 'changePassword']);
+    
 }); 

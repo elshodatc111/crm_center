@@ -42,6 +42,9 @@ class TecherAppService{
             $res[$key]['lessen_end'] = Carbon::parse($value['lessen_end'])->format('Y-m-d');
             $res[$key]['lessen_start'] = Carbon::parse($value['lessen_start'])->format('Y-m-d'); 
         }
+        usort($res, function($a, $b) {
+            return strtotime($b['lessen_end']) <=> strtotime($a['lessen_end']);
+        });
         return $res;
     }
 

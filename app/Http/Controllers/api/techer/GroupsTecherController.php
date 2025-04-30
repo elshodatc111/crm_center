@@ -25,7 +25,7 @@ class GroupsTecherController extends Controller{
     } 
 
     public function groups(){
-        $res = $this->techerAppService->allGroups();
+        $res = $this->techerAppService->allGroups(); 
         return response()->json($res, 200);
     }
 

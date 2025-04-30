@@ -10,8 +10,22 @@ use App\Http\Controllers\api\user\GroupUserController;
 use App\Http\Controllers\api\user\PaymartUserController;
 use App\Http\Controllers\api\user\VideoUserController;
 use App\Http\Controllers\api\user\TestUserController;
-use App\Http\Controllers\api\user\AuthAdminController;
+use App\Http\Controllers\api\admin\AuthAdminController;
+use App\Http\Controllers\api\admin\HomeAdminController;
 
+Route::post('/admin/login', [AuthAdminController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/admin/logout', [AuthAdminController::class, 'logout']);
+    Route::get('/admin/profile', [AuthAdminController::class, 'profile']);
+    Route::post('/admin/change/password', [AuthAdminController::class, 'changePassword']);    
+    Route::get('/admin/home', [HomeAdminController::class, 'index']);
+    Route::get('/admin/paymart', [HomeAdminController::class, 'paymart']);
+    Route::get('/admin/paymart/show/{data}', [HomeAdminController::class, 'paymart_show']);
+    Route::get('/admin/groups', [HomeAdminController::class, 'groups']);
+    Route::get('/admin/kassa', [HomeAdminController::class, 'kassa']);
+    Route::get('/admin/moliya', [HomeAdminController::class, 'moliya']);
+    Route::get('/admin/jadval', [HomeAdminController::class, 'jadval']);    
+}); 
 
 Route::post('/techer/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
@@ -39,10 +53,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/tests/check', [TestUserController::class, 'store']);
 }); 
 
-Route::post('/admin/login', [AuthAdminController::class, 'login']);
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/admin/logout', [AuthAdminController::class, 'logout']);
-    Route::get('/admin/profile', [AuthAdminController::class, 'profile']);
-    Route::post('/admin/change/password', [AuthAdminController::class, 'changePassword']);
-    
-}); 

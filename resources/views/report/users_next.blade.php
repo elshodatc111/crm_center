@@ -44,6 +44,7 @@
                                 <th>Guruhlar soni</th>
                                 <th>Login</th>
                                 <th>Balans</th>
+                                <th>Meneger</th>
                                 <th>Ro'yhatga olindi</th>
                             </tr>
                         </thead>
@@ -60,11 +61,12 @@
                                 <td>{{ $item['group_count'] }}</td>
                                 <td>{{ $item['email'] }}</td>
                                 <td>{{ $item['balans'] }}</td>
+                                <td>{{ $item['meneger'] }}</td>
                                 <td>{{ $item['created_at'] }}</td>
                             </tr>
                             @empty
                                 <tr>
-                                    <td colspan=11 class="text-center">Talabalar mavjud emas.</td>
+                                    <td colspan=12 class="text-center">Talabalar mavjud emas.</td>
                                 </tr>
                             @endforelse
                         </tbody>

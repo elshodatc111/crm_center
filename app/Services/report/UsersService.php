@@ -22,6 +22,9 @@ class UsersService{
         $data = [];
         $Users = User::where('type','student')->where('status','true')->get();
         foreach ($Users as $key => $value) {
+            $UserHistory = UserHistory::where('user_id',$value->id)->first();
+            $admin_id = $UserHistory ? $UserHistory->admin_id : null;
+            $Admin = User::find($admin_id)->user_name ?? null;
             $data[$key]['name'] = $value->user_name;
             $data[$key]['phone1'] = $value->phone1;
             $data[$key]['phone2'] = $value->phone2;
@@ -31,6 +34,7 @@ class UsersService{
             $data[$key]['group_count'] = $value->group_count;
             $data[$key]['email'] = $value->email;
             $data[$key]['balans'] = $value->balans;
+            $data[$key]['meneger'] = $Admin;
             $data[$key]['created_at'] = Carbon::parse($value->created_at)->format('Y-m-d');
         }
         return $data;

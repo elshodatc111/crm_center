@@ -189,7 +189,7 @@
                                         @forelse($user_groups as $item)
                                             <tr>
                                                 <td>{{ $loop->index+1 }}</td>
-                                                <td style="text-align:left"><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['name'] }}</a></td>
+                                                <td style="text-align:left"><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['name'] }} <b>({{ $item['create'] }})</b></a></td>
                                                 <td>{{ $item['add_plus'] }}</td>
                                                 <td>{{ $item['meneger_add'] }}</td>
                                                 <td>{{ $item['description'] }}</td>

@@ -166,6 +166,7 @@ class StudentService{
             ->select(
                 'groups.id as group_id',
                 'groups.group_name as name',
+                'groups.created_at as create',
                 'group_users.created_at as add_plus',
                 'meneger_start.user_name as meneger_add',
                 'group_users.start_discription as description',

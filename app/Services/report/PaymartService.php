@@ -31,7 +31,7 @@ class PaymartService{
             $data[$key]['amount'] = $value->amount;
             $data[$key]['paymart_type'] = $value->paymart_type;
             $data[$key]['about'] = $value->description;
-            $data[$key]['admin'] = User::find($value->user_id)->admin_id;
+            $data[$key]['admin'] = User::find($value->admin_id)->user_name;
             $data[$key]['created_at'] = $value->created_at;
         }
         return $data;

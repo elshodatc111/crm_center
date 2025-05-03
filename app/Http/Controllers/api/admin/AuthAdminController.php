@@ -20,10 +20,10 @@ class AuthAdminController extends Controller{
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
-            ]);
+            ],401);
         }
         $token = $user->createToken('auth-token')->plainTextToken;
-        return response()->json(['token' => $token], 200);
+        return response()->json(['first' => substr($user->user_name, 0, 1),'name' => $user->user_name,'email' => $user->email,'token' => $token], 200);
     }
 
     public function logout(Request $request){

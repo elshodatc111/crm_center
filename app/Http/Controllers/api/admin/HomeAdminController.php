@@ -75,7 +75,7 @@ class HomeAdminController extends Controller{
         ];
     }
     protected function paymartPrice(){
-        $paymart = Paymart::where('paymarts.created_at', '>=', now()->subDays(1))
+        $paymart = Paymart::where('paymarts.created_at', '>=', date('Y-m-d')." 00:00:00")
         ->join('users', 'users.id', '=', 'paymarts.user_id')
         ->select(
             'users.user_name',
@@ -92,7 +92,12 @@ class HomeAdminController extends Controller{
         $summa = 0;
         $array = [];
         foreach($paymart as $key => $value){
-            $summa += $value['amount'];
+            if($value->paymart_type == 'naqt'){
+                $summa += $value['amount'];
+            }else if($value->paymart_type == 'plastik'){
+                $summa += $value['amount'];
+            }
+            
             $array[$key]['user'] = $value->user_name;
             $array[$key]['amount'] = number_format($value->amount, 0, '', ' ') . " UZS";
             $array[$key]['paymart_type'] = $value->paymart_type;
@@ -103,8 +108,41 @@ class HomeAdminController extends Controller{
             'paymarts' => $array,
         ];
     }
+    protected function DebetAll(){
+        $Users = User::where('type', 'student')
+        ->where('balans', '<', 0)
+        ->orderBy('balans', 'asc')
+        ->get();
+        $summa = 0;
+        $array = [];
+        foreach ($Users as $key => $value) {
+            $summa += $value->balans;
+            $array[$key]['user'] = $value->user_name;
+            $array[$key]['phone1'] = $value->phone1;
+            $array[$key]['phone2'] = $value->phone2;
+            $array[$key]['address'] = $value->address;
+            $array[$key]['birthday'] = $value->birthday;
+            $array[$key]['about'] = $value->about;
+            $array[$key]['group_count'] = $value->group_count;
+            $array[$key]['balans'] = number_format($value->balans, 0, '', ' ') . " UZS";
+        }
+        return [
+            'users' => $array,
+            'summa' => $summa,
+            'count' => count($Users),
+            'limit' => array_slice($array, 0, 3),
+        ];
+    }
+    public function debet(){
+        $debit = $this->DebetAll();
+        return response()->json([
+            'status' => true,
+            'message' => 'Qarzdorlar',
+            'data' => $debit['users'],
+        ],200);
+    }
     public function users(){
-        $users = User::where('type', 'student')->where('users.created_at', '>=', now()->subDays(1))->get();
+        $users = User::where('type', 'student')->where('users.created_at', '>=', date("Y-m-d")." 00:00:00")->get();
         $array = [];
         foreach($users as $key => $value){
             $array[$key]['id'] = $value->id;
@@ -126,6 +164,8 @@ class HomeAdminController extends Controller{
     public function index(){
         $jadval = $this->homeService->getJadval();
         $Useers = $this->users();
+        $debit = $this->DebetAll();
+        Log::info($Useers);
         $active = $this->usersService->activeUser();
         return response()->json([
             'status' => true,
@@ -135,6 +175,11 @@ class HomeAdminController extends Controller{
             'paymarts' => $this->paymartPrice(),
             'tashrif_count' => $Useers['count'],
             'active_count' => $active['count'],
+            'debet_count' => [
+                'count' => $debit['count'],
+                'summa' => number_format($debit['summa'], 0, '', ' ') . " UZS",
+                'users' => $debit['limit'],
+            ],
             'jadval' => [
                 'data'=>$jadval[0]['date'],
                 'count' => count($jadval[0]['item']),
@@ -143,10 +188,12 @@ class HomeAdminController extends Controller{
         ],200);
     }
     public function balans(){
+        $chiqim = $this->kassaService->successAllKassa();
+        $moliya = $this->moliyaService->MoliyaHistory(); 
         return response()->json([
             'status' => true,
             'message' => 'Balans tarixi',
-            'data' => $this->moliyaService->MoliyaHistory()
+            'data' => $this->moliyaService->history($chiqim, $moliya)
         ],200);
     }
     public function kassa(){
@@ -160,7 +207,7 @@ class HomeAdminController extends Controller{
         return response()->json([
             'status' => true,
             'message' => 'Kunlik to\'lovlar',
-            'data' => Paymart::where('paymarts.created_at', '>=', now()->subDays(1))
+            'data' => Paymart::where('paymarts.created_at', '>=', date('Y-m-d')." 00:00:00")
                 ->join('users', 'users.id', '=', 'paymarts.user_id') 
                 ->join('users as admin', 'admin.id', '=', 'paymarts.admin_id')
                 ->select(

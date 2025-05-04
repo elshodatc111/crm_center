@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/tashrif', [HomeAdminController::class, 'tashrif']);
     Route::get('/admin/active', [HomeAdminController::class, 'active']);
     Route::get('/admin/jadval', [HomeAdminController::class, 'jadval']);
+    Route::get('/admin/debet', [HomeAdminController::class, 'debet']);
     Route::get('/admin/chart_tashrif', [HomeAdminController::class, 'chart_tashrif']);
     Route::get('/admin/chart_paymart', [HomeAdminController::class, 'chart_paymart']);
        

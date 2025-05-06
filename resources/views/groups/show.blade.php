@@ -409,7 +409,10 @@
                                 <div class="col-6">
                                     <label for="cours_id" class="mb-1">Guruh uchun kurs</label>
                                     <select name="cours_id" class="form-select">
-                                        <option value="{{ $response['group']['cours_id'] }}">{{ $response['group']['cours_name'] }}</option>
+                                        <option value="">Tanlang</option>
+                                        @foreach($response['cours'] as $item)
+                                            <option value="{{ $item['id'] }}">{{ $item['cours_name'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-6">

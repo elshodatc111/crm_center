@@ -69,6 +69,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/kassa/delete', [KassaController::class, 'delete'])->name('compamy_kassa_delete');
     Route::post('/kassa/success', [KassaController::class, 'success'])->name('compamy_kassa_success');
     Route::get('/varonka/meneger', [VaronkaMenegerController::class, 'index'])->name('meneger_varonka');
+    Route::get('/varonka/menegerall', [VaronkaMenegerController::class, 'index_all'])->name('meneger_varonka_alls');
     Route::get('/varonka/new', [VaronkaMenegerController::class, 'newAll'])->name('meneger_varonka_new');
     Route::get('/varonka/pedding', [VaronkaMenegerController::class, 'newPedding'])->name('meneger_varonka_pedding');
     Route::get('/varonka/success', [VaronkaMenegerController::class, 'newSuccess'])->name('meneger_varonka_success');

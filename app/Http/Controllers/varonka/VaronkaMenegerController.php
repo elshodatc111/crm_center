@@ -108,4 +108,8 @@ class VaronkaMenegerController extends Controller{
     }
 
 
+    public function index_all(){
+        $user = Varonka::get();
+        return view('varonka.admin.show_all',compact('user'));
+    }
 }

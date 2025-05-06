@@ -31,6 +31,9 @@
                         <span><i class="bi bi-x-circle"></i> Bekor qilindi</span>
                         <span class="badge bg-white text-danger">{{ $charts['cancel'] }}</span>
                     </a>
+                    <a href="{{ route('meneger_varonka_alls') }}" class="btn btn-danger d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-check"></i>Barcha mirojatlar</span>
+                    </a>
                 </div>
             </div>
         </div>

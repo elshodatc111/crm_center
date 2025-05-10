@@ -17,7 +17,7 @@ Route::post('/admin/login', [AuthAdminController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/admin/logout', [AuthAdminController::class, 'logout']);
     Route::get('/admin/profile', [AuthAdminController::class, 'profile']);
-    Route::post('/admin/change/password', [AuthAdminController::class, 'changePassword']);    
+    Route::post('/admin/change/password', [AuthAdminController::class, 'changePassword']);
     Route::get('/admin/home', [HomeAdminController::class, 'index']);
     Route::get('/admin/balans', [HomeAdminController::class, 'balans']);
     Route::get('/admin/kassa', [HomeAdminController::class, 'kassa']);
@@ -28,8 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/debet', [HomeAdminController::class, 'debet']);
     Route::get('/admin/chart_tashrif', [HomeAdminController::class, 'chart_tashrif']);
     Route::get('/admin/chart_paymart', [HomeAdminController::class, 'chart_paymart']);
-       
-}); 
+
+});
 
 Route::post('/techer/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/techer/davomad', [GroupsTecherController::class, 'davomadPost']);
     Route::get('/techer/paymart', [GroupsTecherController::class, 'paymarts']);
     Route::get('/techer/books', [GroupsTecherController::class, 'books']);
-}); 
+});
 
 Route::post('/user/login', [AuthUserController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
@@ -55,5 +55,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/video/show/{id}', [VideoUserController::class, 'shows']);
     Route::get('/user/tests', [TestUserController::class, 'index']);
     Route::post('/user/tests/check', [TestUserController::class, 'store']);
-}); 
+});
 

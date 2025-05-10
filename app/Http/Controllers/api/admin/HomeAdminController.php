@@ -86,18 +86,20 @@ class HomeAdminController extends Controller{
             'paymarts.admin_id',
             'paymarts.created_at'
         )
-        ->orderBy('paymarts.created_at', 'desc') 
+        ->orderBy('paymarts.created_at', 'desc')
         ->limit(3)
         ->get();
         $summa = 0;
         $array = [];
         foreach($paymart as $key => $value){
             if($value->paymart_type == 'naqt'){
-                $summa += $value['amount'];
+                $summa = $summa + $value['amount'];
+            }else if($value->paymart_type == 'qaytarildi'){
+                $summa = $summa - $value['amount'];
             }else if($value->paymart_type == 'plastik'){
-                $summa += $value['amount'];
+                $summa = $summa + $value['amount'];
             }
-            
+
             $array[$key]['user'] = $value->user_name;
             $array[$key]['amount'] = number_format($value->amount, 0, '', ' ') . " UZS";
             $array[$key]['paymart_type'] = $value->paymart_type;
@@ -180,16 +182,11 @@ class HomeAdminController extends Controller{
                 'summa' => number_format($debit['summa'], 0, '', ' ') . " UZS",
                 'users' => $debit['limit'],
             ],
-            'jadval' => [
-                'data'=>$jadval[0]['date'],
-                'count' => count($jadval[0]['item']),
-                'jadval' => $jadval[0]['item'],
-            ],
         ],200);
     }
     public function balans(){
         $chiqim = $this->kassaService->successAllKassa();
-        $moliya = $this->moliyaService->MoliyaHistory(); 
+        $moliya = $this->moliyaService->MoliyaHistory();
         return response()->json([
             'status' => true,
             'message' => 'Balans tarixi',
@@ -208,7 +205,7 @@ class HomeAdminController extends Controller{
             'status' => true,
             'message' => 'Kunlik to\'lovlar',
             'data' => Paymart::where('paymarts.created_at', '>=', date('Y-m-d')." 00:00:00")
-                ->join('users', 'users.id', '=', 'paymarts.user_id') 
+                ->join('users', 'users.id', '=', 'paymarts.user_id')
                 ->join('users as admin', 'admin.id', '=', 'paymarts.admin_id')
                 ->select(
                     'users.user_name as user_name',
@@ -216,12 +213,12 @@ class HomeAdminController extends Controller{
                     'paymarts.amount',
                     'paymarts.paymart_type',
                     'paymarts.description',
-                    'admin.user_name as admin_name', 
+                    'admin.user_name as admin_name',
                     'paymarts.created_at'
                 )
                 ->orderBy('paymarts.created_at', 'desc')
                 ->get()
-        ], 200);        
+        ], 200);
     }
     public function tashrif(){
         $Useers = $this->users();
@@ -238,29 +235,40 @@ class HomeAdminController extends Controller{
             'data' => $this->usersService->activeUser()
         ],200);
     }
-    public function jadval(){
-        return response()->json([
-            'status' => true,
-            'message' => 'Dars jadvali',
-            'data' => $this->homeService->getJadval()
-        ],200);
-    }
-    
+
     public function chart_tashrif(){
+        $Hudud = $this->visedService->Hudud();
+        $Social = $this->visedService->Social();
+        $tashrif = $this->visedService->tashriflar();
+        $activeUser = $this->visedService->activeUser();
         return response()->json([
             'status' => true,
-            'message' => 'Jadval Statistikasi',
+            'message' => 'Tashriflar Statistikasi',
             'data' => [
-                'jadval' => 0,
+                'hudud' => $Hudud,
+                'social' => $Social,
+                'tashrif' => $tashrif,
+                'active' => $activeUser,
             ]
         ],200);
     }
     public function chart_paymart(){
+        $allMurojat = $this->paymartService->allMurojat();
+        $monchMurojat = $this->paymartService->monchMurojat();
+        $days = $this->paymartService->getLastNineDays();
+        $monch = $this->visedService->getLastSixMonths();
+        $DaysChart = $this->paymartService->DaysChart();
+        $MonchChart = $this->paymartService->MonchChart();
         return response()->json([
             'status' => true,
             'message' => 'Jadval Statistikasi',
             'data' => [
-                'jadval' => 0,
+                'allMurojat' => $allMurojat,
+                'monchMurojat' => $monchMurojat,
+                'days' => $days,
+                'MonchChart' => $MonchChart,
+                'monch' => $monch,
+                'DaysChart' => $DaysChart,
             ]
         ],200);
     }

@@ -18,12 +18,12 @@ use App\Services\chart\VisedService;
 use App\Services\chart\TecherService;
 
 
-class TecherReytingServiceTwo{ 
+class TecherReytingServiceTwo{
 
     protected function getTime(){
         $now = Carbon::now();
-        $lastMonth = $now->copy()->subMonth();
-        $twoMonthsAgo = $now->copy()->subMonths(2);
+        $lastMonth = $now;
+        $twoMonthsAgo = $now->copy()->subMonths(1);
         return [
             'oldMonth' => [
                 'ym' => $twoMonthsAgo->format('Y-m'),
@@ -48,7 +48,7 @@ class TecherReytingServiceTwo{
             $GroupUser = GroupUser::where('group_id', $value->id)
                 ->where('status', true)
                 ->get();
-    
+
             foreach ($GroupUser as $value2) {
                 $user_ids[$value2->user_id] = $value2->user_id;
             }
@@ -64,6 +64,7 @@ class TecherReytingServiceTwo{
         $time = $this->getTime();
         $old = $time['oldMonth']['ym'];
         $now = $time['nowMonth']['ym'];
+        //dd($old);
         $data = [];
         foreach ($User as $key => $value) {
             $data[$key]['techer'] = $value->user_name;
@@ -76,7 +77,7 @@ class TecherReytingServiceTwo{
     public function getCharts(){
         $time = $this->getTime();
         return [
-            'oldMonth' => $time['oldMonth']['m'], 
+            'oldMonth' => $time['oldMonth']['m'],
             'nowMonth' => $time['nowMonth']['m'],
             'teachers' => $this->charts(),
         ];

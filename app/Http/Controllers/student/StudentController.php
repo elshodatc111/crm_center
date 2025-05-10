@@ -21,7 +21,7 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Requests\AddStudentToGroupRequest;
 use App\Http\Requests\RefundRequest;
 use App\Http\Requests\ChegirmaRequest;
-use App\Http\Requests\DiscountPaymentRequest; 
+use App\Http\Requests\DiscountPaymentRequest;
 use App\Services\message\SendMessageEndService;
 use Illuminate\Support\Facades\Log;
 
@@ -74,7 +74,7 @@ class StudentController extends Controller{
 
     public function show(ShowStudentRequest $request, $id){
         $addGroups = $this->studentService->addStudentGroup($id);
-        $student = $this->studentService->getShow($id); 
+        $student = $this->studentService->getShow($id);
         $history = $this->studentService->getShowHistory($id);
         $user_groups = $this->studentService->studentGroups($id);
         $chegirma_groups = $this->paymartService->chegirmaGroups($id);
@@ -106,11 +106,11 @@ class StudentController extends Controller{
         return redirect()->back()->with('success', 'Talaba ma’lumotlari yangilandi.');
     }
 
-    public function addGroups(AddStudentToGroupRequest $request){  
+    public function addGroups(AddStudentToGroupRequest $request){
         $this->studentService->addGroups($request->validated());
         return redirect()->back()->with('success', 'Yangi guruhga qo\'shildi.');
     }
-    
+
     public function returnPaymarts(RefundRequest $request){
         $Kassa = intval($request->kassa_amount);
         $Amount = intval(str_replace(" ","",$request->amount));
@@ -154,10 +154,10 @@ class StudentController extends Controller{
             'user_id' => $request->user_id,
             'message' => $request->message,
             'admin_id' => auth()->user()->id,
-            
+
         ]);
         return redirect()->back()->with('success', 'Eslatma saqlandi.');
     }
-    
+
 
 }

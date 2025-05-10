@@ -19,7 +19,7 @@
                                 <th>Guruhlar soni</th>
                                 <th>Talabalar soni</th>
                                 <th>Guruhlar soni</th>
-                                <th>Talabalar soni</th>
+                                <th>Talabalar soni</th> 
                             </tr>
                         </thead>
                         <tbody>

@@ -35,9 +35,9 @@ class StudentService{
         $data['password'] = Hash::make('password');
         $User = User::create($data);
         UserHistory::create([
-            'user_id' => $User['id'], 
-            'type' => 'visited', 
-            'type_commit' => 'Markazga tashrif', 
+            'user_id' => $User['id'],
+            'type' => 'visited',
+            'type_commit' => 'Markazga tashrif',
             'admin_id' => auth()->user()->id,
         ]);
         $MenegerChart = MenegerChart::where('user_id',auth()->user()->id)->first();
@@ -50,7 +50,7 @@ class StudentService{
                 'create_student' => 1
             ]);
         }
-        return $User; 
+        return $User;
     }
 
     public function getStudents($search = null){
@@ -85,7 +85,7 @@ class StudentService{
         }
         return $Setting->save();
     }
- 
+
     public function getShow(int $id){
         return User::where('type', 'student')->findOrFail($id);
     }
@@ -96,7 +96,7 @@ class StudentService{
             ->join('users','user_histories.admin_id','=','users.id')
             ->select('users.id','users.user_name','user_histories.type','user_histories.type_commit','user_histories.created_at')
             ->get();
-    }   
+    }
 
     public function updateAbout(int $id, String $about){
         $User = User::find($id);
@@ -108,9 +108,9 @@ class StudentService{
         $User = User::find($id);
         $User->password = Hash::make('password');
         UserHistory::create([
-            'user_id' => $User['id'], 
-            'type' => 'password_update', 
-            'type_commit' => 'Parol yangilandi', 
+            'user_id' => $User['id'],
+            'type' => 'password_update',
+            'type_commit' => 'Parol yangilandi',
             'admin_id' => auth()->user()->id,
         ]);
         return $User->save();
@@ -126,9 +126,9 @@ class StudentService{
             'address' => $data['address'],
         ]);
         UserHistory::create([
-            'user_id' => $student['id'], 
-            'type' => 'password_update', 
-            'type_commit' => 'Profile ma\'lumotlari yangilandi', 
+            'user_id' => $student['id'],
+            'type' => 'password_update',
+            'type_commit' => 'Profile ma\'lumotlari yangilandi',
             'admin_id' => auth()->user()->id,
         ]);
         return $student;
@@ -136,7 +136,7 @@ class StudentService{
 
     public function getAddres(){
         return Social::get();
-    } 
+    }
 
     public function countAddres(string $addres){
         $Social = Social::where('name',$addres)->first();
@@ -155,7 +155,7 @@ class StudentService{
         return $filteredGroups->values();
     }
 
-    public function addGroups(array $data){ 
+    public function addGroups(array $data){
         return $this->groupAddUserRepository->addGroups($data);
     }
 
@@ -166,13 +166,13 @@ class StudentService{
             ->select(
                 'groups.id as group_id',
                 'groups.group_name as name',
-                'groups.created_at as create',
+                'groups.lessen_start as create',
                 'group_users.created_at as add_plus',
                 'meneger_start.user_name as meneger_add',
                 'group_users.start_discription as description',
                 'group_users.status as status',
                 'group_users.updated_at as delete'
             )->get();
-    } 
+    }
 
 }

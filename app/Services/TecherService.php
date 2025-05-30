@@ -69,25 +69,25 @@ class TecherService{
         }
     }
 
-    protected function groupBonus(int $id){
-        $GroupUser = GroupUser::where('group_id', $id)->where('status', 1)->get();
-        if ($GroupUser->isEmpty()) {
-            return 0;
-        }
-        $group = Group::find($id);
-        $Groups_id = Group::where('lessen_start', '>=', $group->lessen_end)->pluck('id');
-        $user = [];
-        foreach ($Groups_id as $guruh_id) {
-            foreach ($GroupUser as $value) {
-                $user_id = $value->user_id;
-                $check = GroupUser::where('group_id', $guruh_id)->where('user_id', $user_id)->exists();
-                if ($check) {
-                    $user[$user_id] = true; 
-                }
-            }
-        }
-        return count($user);
+    protected function groupBonus(int $group_id){
+        $activeUsers = GroupUser::where('group_id', $group_id)
+            ->where('status', 1)
+            ->pluck('user_id')
+            ->toArray();
+        $lessen_end = Group::find($group_id)->lessen_end;
+        $dateOnly = Carbon::parse($lessen_end)->format('Y-m-d')." 00:00:00";
+        $nextGroupIds = Group::where('lessen_start', '>=', $dateOnly)
+            ->pluck('id')
+            ->toArray();
+        $usersInNextGroups = GroupUser::whereIn('group_id', $nextGroupIds)
+            ->whereIn('user_id', $activeUsers)
+            ->where('status', 1)
+            ->pluck('user_id')
+            ->unique()
+            ->toArray();
+        return count($usersInNextGroups);
     }
+    
     protected function ishHaqiTulandi(int $id){
         $summa = 0;
         $TecherPaymart = TecherPaymart::where('group_id',$id)->get();
@@ -102,6 +102,7 @@ class TecherService{
         $group = Group::where('techer_id',$id)->where('lessen_end','>=',$date)->get();
         $array = [];
         foreach ($group as $key => $value) {
+            $id = $value->id;
             $currentDate = date("Y-m-d H:i:s");
             if ($value['lessen_start'] <= $currentDate && $value['lessen_end'] >= $currentDate) {
                 $status = 'active';
@@ -110,9 +111,7 @@ class TecherService{
             } else {
                 $status = 'new';
             }
-            $umumiySon = Davomad::where('group_id', $value->id)
-                    ->distinct('data')
-                    ->count();
+            $umumiySon = Davomad::where('group_id', $value->id)->distinct('data')->count();
             $users = count(GroupUser::where('group_id',$value->id)->where('status',1)->get());
             $Lessen_count = $value['lessen_count'];
             $array[$key]['group_id'] = $value->id;
@@ -121,9 +120,9 @@ class TecherService{
             $array[$key]['lessen_end'] = $value->lessen_end;
             $array[$key]['status'] = $status;
             $array[$key]['users'] = $users;
-            $array[$key]['bonus'] = $this->groupBonus($value->id);
-            $array[$key]['xisoblandi'] = $users*$value->techer_paymart + $this->groupBonus($value->id) * $value->techer_bonus;
-            $array[$key]['xisoblandi_davomad'] = $umumiySon * ($users*$value->techer_paymart + $this->groupBonus($value->id) * $value->techer_bonus)/$Lessen_count;
+            $array[$key]['bonus'] = $this->groupBonus($id);
+            $array[$key]['xisoblandi'] = $users*$value->techer_paymart + $this->groupBonus($id) * $value->techer_bonus;
+            $array[$key]['xisoblandi_davomad'] = $umumiySon * ($users*$value->techer_paymart + $this->groupBonus($id) * $value->techer_bonus)/$Lessen_count;
             $array[$key]['tulandi'] = $this->ishHaqiTulandi($value->id);
         }
         

@@ -20,27 +20,27 @@ class TecherService{
     public function allTecher(){
         return User::where('type','techer')->get();
     }
-    
+
     public function userID(array $data){
         $user = User::where('user_name',$data['user_name'])->where('phone1',$data['phone1'])->first();
         return $user->id;
     }
- 
+
     public function create(array $data){
         $data['address'] = Social::find($data['address_id'])->name;
         $data['email'] = time()."@atko.uz";
         $data['password'] = Hash::make('password');
         $data['type'] = 'techer';
         $data['user_name'] = Str::upper($data['user_name']);
-        return User::create($data); 
+        return User::create($data);
     }
 
-    public function updatePassword(int $id){ 
+    public function updatePassword(int $id){
         $user = User::find($id);
         $user->password = Hash::make('password');
         return $user->save();
     }
-     
+
     public function techerShow(int $id){
         return User::find($id);
     }
@@ -74,9 +74,9 @@ class TecherService{
             ->where('status', 1)
             ->pluck('user_id')
             ->toArray();
-        $lessen_end = Group::find($group_id)->lessen_end;
+        $lessen_end = Group::find($group_id)->lessen_start;
         $dateOnly = Carbon::parse($lessen_end)->format('Y-m-d')." 00:00:00";
-        $nextGroupIds = Group::where('lessen_start', '>=', $dateOnly)
+        $nextGroupIds = Group::where('lessen_start', '>=', $dateOnly)->where('id','!=',$group_id)
             ->pluck('id')
             ->toArray();
         $usersInNextGroups = GroupUser::whereIn('group_id', $nextGroupIds)
@@ -87,7 +87,7 @@ class TecherService{
             ->toArray();
         return count($usersInNextGroups);
     }
-    
+
     protected function ishHaqiTulandi(int $id){
         $summa = 0;
         $TecherPaymart = TecherPaymart::where('group_id',$id)->get();
@@ -107,7 +107,7 @@ class TecherService{
             if ($value['lessen_start'] <= $currentDate && $value['lessen_end'] >= $currentDate) {
                 $status = 'active';
             } elseif ($value['lessen_end'] < $currentDate) {
-                $status = 'end'; 
+                $status = 'end';
             } else {
                 $status = 'new';
             }
@@ -125,7 +125,7 @@ class TecherService{
             $array[$key]['xisoblandi_davomad'] = $umumiySon * ($users*$value->techer_paymart + $this->groupBonus($id) * $value->techer_bonus)/$Lessen_count;
             $array[$key]['tulandi'] = $this->ishHaqiTulandi($value->id);
         }
-        
+
         return $array;
     }
 
@@ -133,10 +133,10 @@ class TecherService{
         $data['naqt'] = (int) $data['naqt'];
         $data['plastik'] = (int) $data['plastik'];
         $data['amount'] = (int) str_replace(" ", "", $data['amount']);
-    
+
         return ($data['type'] === 'naqt' ? $data['naqt'] : $data['plastik']) >= $data['amount'];
     }
-    
+
     public function PaymartStore(array $data){
         $Setting = Setting::first();
         $data['naqt'] = intval($data['naqt']);

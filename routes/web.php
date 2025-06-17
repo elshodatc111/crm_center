@@ -30,7 +30,7 @@ use App\Http\Controllers\chart\ChartController;
 use App\Http\Controllers\book\BookController;
 use App\Http\Controllers\report\ReportController;
 
-Auth::routes(); 
+Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -44,7 +44,7 @@ Route::get('/user/eslatmalar', [UserBritisday::class, 'eslatmalar'])->name('user
 Route::post('/user/eslatmalar/trash', [UserBritisday::class, 'eslatmalar_trash'])->name('user_eslatmalar_trash');
 
 Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
-    Route::get('student', [StudentController::class, 'index'])->name('all_student'); 
+    Route::get('student', [StudentController::class, 'index'])->name('all_student');
     Route::get('/check-phone-exist', [StudentController::class, 'checkPhoneExist'])->name('checkPhoneExist');
     Route::post('/student/create', [StudentController::class, 'store'])->name('student_store');
     Route::post('/student/eslatma', [StudentController::class, 'createEslatma'])->name('student_eslatma');
@@ -56,13 +56,13 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
     Route::post('/student/add/pay', [AddPaymartController::class, 'store'])->name('student_add_paymart');
     Route::post('/student/add/return', [StudentController::class, 'returnPaymarts'])->name('student_return_paymart');
     Route::post('/student/chegirma', [StudentController::class, 'discountPayment'])->name('student_bayram_chegirma');
-    Route::get('groups', [GroupsController::class, 'index'])->name('all_groups'); 
-    Route::post('groups/create', [GroupsController::class, 'store'])->name('create_groups'); 
-    Route::get('groups/{id}', [GroupsController::class, 'show'])->name('create_show'); 
-    Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update'); 
-    Route::post('groups/remove/user', [GroupsController::class, 'removeUser'])->name('create_groups_remove_user'); 
-    Route::post('groups/next/store', [GroupsController::class, 'newStore'])->name('create_groups_next_store'); 
-    Route::post('groups/debet/message', [AddPaymartController::class, 'debetMessage'])->name('groups_debet_message'); 
+    Route::get('groups', [GroupsController::class, 'index'])->name('all_groups');
+    Route::post('groups/create', [GroupsController::class, 'store'])->name('create_groups');
+    Route::get('groups/{id}', [GroupsController::class, 'show'])->name('create_show');
+    Route::post('groups/update', [GroupsController::class, 'update'])->name('create_groups_update');
+    Route::post('groups/remove/user', [GroupsController::class, 'removeUser'])->name('create_groups_remove_user');
+    Route::post('groups/next/store', [GroupsController::class, 'newStore'])->name('create_groups_next_store');
+    Route::post('groups/debet/message', [AddPaymartController::class, 'debetMessage'])->name('groups_debet_message');
     Route::get('/kassa', [KassaController::class, 'index'])->name('compamy_kassa');
     Route::post('/kassa/chiqim', [KassaController::class, 'chiqim'])->name('compamy_kassa_chiqim');
     Route::post('/kassa/xarajat', [KassaController::class, 'xarajat'])->name('compamy_kassa_xarajat');
@@ -91,8 +91,8 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::get('s/time', [sTimeController::class, 'index'])->name('sadmin_time');
     Route::post('s/time/story', [sTimeController::class, 'store'])->name('sadmin_time_store');
     Route::post('s/time/delete', [sTimeController::class, 'delete'])->name('sadmin_time_delete');
-    Route::get('student/return', [StudentController::class, 'returnPay'])->name('all_student_return'); 
-    Route::post('student/return/delete', [StudentController::class, 'returnPayDel'])->name('all_student_return_del'); 
+    Route::get('student/return', [StudentController::class, 'returnPay'])->name('all_student_return');
+    Route::post('student/return/delete', [StudentController::class, 'returnPayDel'])->name('all_student_return_del');
     Route::get('s/uploadUser', [sSettingController::class, 'uploadUser'])->name('sadmin_upload_user');
     Route::post('/upload-excel', [sSettingController::class, 'uploadExcel'])->name('upload.excel');
     Route::post('/upload-trash', [sSettingController::class, 'trashExcel'])->name('trash.excel');
@@ -102,6 +102,8 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/holiday', [HolidayController::class, 'index'])->name('setting_holiday');
     Route::post('setting/holiday/update', [HolidayController::class, 'update'])->name('setting_holiday_update');
+    Route::post('setting/holiday/create', [HolidayController::class, 'create'])->name('setting_holiday_create');
+    Route::post('setting/holiday/delete', [HolidayController::class, 'delete'])->name('setting_holiday_delete');
     Route::get('setting/sms', [SmsSettingController::class, 'index'])->name('setting_sms');
     Route::post('/setting/sms/update', [SmsSettingController::class, 'update'])->name('settings_sms_update');
     Route::get('setting/paymart', [PaymartSettingController::class, 'index'])->name('setting_paymart');
@@ -133,7 +135,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('social', [sHududSettingController::class, 'index'])->name('all_social');
     Route::post('/social/store', [sHududSettingController::class, 'store'])->name('social_store');
-    Route::DELETE('/social/delete/{id}', [sHududSettingController::class, 'destroy'])->name('social_delete'); 
+    Route::DELETE('/social/delete/{id}', [sHududSettingController::class, 'destroy'])->name('social_delete');
     Route::post('/student/admin/chegirma', [StudentController::class, 'chegirmaAdmin'])->name('student_admin_chegirma');
     Route::get('/techers', [TecherController::class, 'index'])->name('all_techer');
     Route::post('/techers/create', [TecherController::class, 'store'])->name('techer_create');
@@ -159,7 +161,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('chart/techer', [ChartController::class, 'techer'])->name('chart_techer');
     Route::get('chart/techerReyting', [ChartController::class, 'techerReyting'])->name('chart_techer_reyting');
 
-    
+
     Route::get('chart/techerReytingTwo', [ChartController::class, 'techerReytingTwo'])->name('chart_techer_reyting_two');
 
     Route::get('report/users', [ReportController::class, 'users'])->name('report_users');
@@ -170,6 +172,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('report/group_next', [ReportController::class, 'group_next'])->name('report_group_next');
     Route::get('report/message', [ReportController::class, 'message'])->name('report_message');
     Route::get('report/message_next', [ReportController::class, 'message_next'])->name('report_message_next');
-    
+
 });
 

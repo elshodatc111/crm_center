@@ -112,12 +112,16 @@ class StudentController extends Controller{
     }
 
     public function returnPaymarts(RefundRequest $request){
-        $Kassa = intval($request->kassa_amount);
+        $KassaNaqt = intval($request->kassa_amount_naqt);
+        $KassaPlastik = intval($request->kassa_amount_plastik);
         $Amount = intval(str_replace(" ","",$request->amount));
-        if($Amount>$Kassa){
+        if($request->paymart_type=='naqt' AND $Amount>$KassaNaqt){
             return redirect()->back()->with('success', 'Kassada yetarli mablag\' mavjud emas.');
         }
-        $patmart_id = $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description);
+        if($request->paymart_type=='plastik' AND $Amount>$KassaPlastik){
+            return redirect()->back()->with('success', 'Kassada yetarli mablag\' mavjud emas.');
+        }
+        $patmart_id = $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description,$request->paymart_type);
         $message = "Hurmatli ".User::find($request->user_id)->user_name." ".str_replace(" ","",$request->amount)." so'm to'lovingiz qaytarildi. ";
         $this->sendMessageEndService->SendMessage($request->user_id, $message, 'pay_student_sms');
         return redirect()->back()->with('success', 'To\'lov qaytarish yakunlandi.');

@@ -109,17 +109,17 @@
                         </ul>
 
                         <div class="tab-content pt-2">
-                            <!-- Talaba haqida --> 
+                            <!-- Talaba haqida -->
                             <div class="tab-pane fade show active" id="profile-overview">
                                 <div class="row">
                                     <div class="col-6 text-center">
                                         <h5 class="card-title">{{ $student['user_name'] }}</h5>
                                     </div>
                                     <div class="col-6 text-center">
-                                        <h5 class="card-title">Balans: 
+                                        <h5 class="card-title">Balans:
                                         @if($student['balans']==0)
                                             {{ number_format($student['balans'], 0, '.', ' ') }}
-                                        @elseif($student['balans']>0)   
+                                        @elseif($student['balans']>0)
                                             <b class="text-success">{{ number_format($student['balans'], 0, '.', ' ') }}</b>
                                         @else
                                             <b class="text-danger">{{ number_format($student['balans'], 0, '.', ' ') }}</b>
@@ -145,7 +145,7 @@
                                             <div class="col-lg-6 label">Tug'ilgan kuni:</div>
                                             <div class="col-lg-6 text-end">{{ $student['birthday'] }}</div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="row px-2">
                                             <div class="col-lg-6 label">Guruhlar soni:</div>
@@ -166,7 +166,7 @@
                                     </div>
                                 </div>
                                 <form id="studentAboutForm" action="{{ route('student_update_about') }}" method="post" class="mt-3">
-                                    @csrf 
+                                    @csrf
                                     <input type="hidden" name="id" value="{{ $student['id'] }}">
                                     <textarea type="text" class="form-control" id="aboutInput" name="about" placeholder="Talaba haqida eslatma">{{ $student['about'] }}</textarea>
                                 </form>
@@ -233,7 +233,7 @@
                                                 <td>{{ $item['created_at'] }}</td>
                                                 <td>{{ $item['user_name'] }}</td>
                                             </tr>
-                                        @empty  
+                                        @empty
                                         <tr>
                                             <td colspan="6">To'lovlar mavjud emas</td>
                                         </tr>
@@ -263,21 +263,21 @@
                                                 @if($item['type']=='visited')
                                                     <span class="badge bg-primary">Tashrif</span>
                                                 @elseif($item['type']=='paymart_add')
-                                                    <span class="badge bg-success">To'lov</span>        
+                                                    <span class="badge bg-success">To'lov</span>
                                                 @elseif($item['type']=='paymart_return')
                                                     <span class="badge bg-danger">To'lov qaytarish</span>
                                                 @elseif($item['type']=='paymart_jarima')
-                                                    <span class="badge bg-warning">Jarima</span>        
+                                                    <span class="badge bg-warning">Jarima</span>
                                                 @elseif($item['type']=='chegirma_add')
-                                                    <span class="badge bg-info">Chegirma</span> 
-                                                @elseif($item['type']=='group_add') 
-                                                    <span class="badge bg-secondary">Guruhga qo'shildi</span>   
+                                                    <span class="badge bg-info">Chegirma</span>
+                                                @elseif($item['type']=='group_add')
+                                                    <span class="badge bg-secondary">Guruhga qo'shildi</span>
                                                 @elseif($item['type']=='group_delete')
-                                                    <span class="badge bg-dark">Guruhdan o'chirildi</span>  
+                                                    <span class="badge bg-dark">Guruhdan o'chirildi</span>
                                                 @elseif($item['type']=='password_update')
-                                                    <span class="badge bg-light text-dark">Parol o'zgartirildi</span>       
+                                                    <span class="badge bg-light text-dark">Parol o'zgartirildi</span>
                                                 @else
-                                                    <span class="badge bg-secondary">Boshqa</span>      
+                                                    <span class="badge bg-secondary">Boshqa</span>
                                                 @endif
                                             </td>
                                             <td style="text-align:left">{{ $item['type_commit'] }}</td>
@@ -337,7 +337,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('student_eslatma') }}" method="POST">
-                        @csrf 
+                        @csrf
                         <input type="hidden" name="user_id" value="{{ $student['id'] }}">
                         <label for="message" class="form-label mt-2">Eslatma matni</label>
                         <textarea type="text" class="form-control" id="message" name="message" required></textarea>
@@ -364,13 +364,13 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('student_add_paymart') }}" method="POST">
-                        @csrf 
+                        @csrf
                         <input type="hidden" name="user_id" value="{{ $student['id'] }}">
                         <label for="amount_naqt" class="form-label mt-2">Naqt to'lov summasi</label>
                         <input type="text" name="amount_naqt" value="0" class="form-control" id="paymentAmount4" required>
                         <script>
                             document.getElementById('paymentAmount4').addEventListener('input', function(event) {
-                                let input = event.target.value.replace(/\D/g, ''); 
+                                let input = event.target.value.replace(/\D/g, '');
                                 let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                                 event.target.value = formatted;
                             });
@@ -379,7 +379,7 @@
                         <input type="text" name="amount_plastik" value="0" class="form-control" id="paymentAmount5" required>
                         <script>
                             document.getElementById('paymentAmount5').addEventListener('input', function(event) {
-                                let input = event.target.value.replace(/\D/g, ''); 
+                                let input = event.target.value.replace(/\D/g, '');
                                 let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                                 event.target.value = formatted;
                             });
@@ -390,7 +390,7 @@
                             @foreach($chegirma_groups as $item)
                             <option value="{{ $item['id'] }}">
                                 {{ $item['group_name'] }}
-                                (To'lov: {{ number_format(floatval($item['tulov']), 0, '.', ' ') }} so'm, 
+                                (To'lov: {{ number_format(floatval($item['tulov']), 0, '.', ' ') }} so'm,
                                 Chegirma: {{ number_format(floatval($item['chegirma']), 0, '.', ' ') }} so'm)</option>
                             @endforeach
                         </select>
@@ -409,7 +409,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="discountPaymentModal" tabindex="-1" aria-labelledby="discountPaymentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -419,7 +419,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="discountPaymentForm" action="{{ route('student_bayram_chegirma') }}" method="POST">
-                        @csrf 
+                        @csrf
                         <div class="row">
                             <div class="col-12 text-center">
                                 <b>{{ $holidayDiscount['comment'] }}</b>
@@ -457,7 +457,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="refundModal" tabindex="-1" aria-labelledby="refundModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -466,19 +466,43 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th colspan=2>Kassada mavjud</th>
+                            </tr>
+                            <tr>
+                                <td>Naqt</td>
+                                <td>Plastik</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ number_format($kassa['naqt'], 0, '.', ' ') }} so'm</td>
+                                <td>{{ number_format($kassa['plastik'], 0, '.', ' ') }} so'm</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <form action="{{ route('student_return_paymart') }}" method="POST">
-                        @csrf 
+                        @csrf
                         <input type="hidden" name="user_id" value="{{ $student['id'] }}">
-                        <input type="hidden" name="kassa_amount" value="{{ $kassa['naqt'] }}">
-                        <label for="amount" class="form-label mt-2">Qaytariladigan summa <i class="text-danger">(Kassada mavjud: {{ number_format($kassa['naqt'], 0, '.', ' ') }} so'm)</i></label>
+                        <input type="hidden" name="kassa_amount_naqt" value="{{ $kassa['naqt'] }}">
+                        <input type="hidden" name="kassa_amount_plastik" value="{{ $kassa['plastik'] }}">
+                        <label for="amount" class="form-label mt-2">Qaytariladigan summa <i class="text-danger">(Kassada mavjud bo'lishi kerak)</i></label>
                         <input type="text" name="amount" class="form-control" id="paymentAmount7" required>
                         <script>
                             document.getElementById('paymentAmount7').addEventListener('input', function(event) {
-                                let input = event.target.value.replace(/\D/g, ''); 
+                                let input = event.target.value.replace(/\D/g, '');
                                 let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                                 event.target.value = formatted;
                             });
                         </script>
+                        <label for="amount" class="form-label mt-2">To'lov turi </label>
+                        <select name="paymart_type" required class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="naqt">Naqt</option>
+                            <option value="plastik">Plastik</option>
+                        </select>
                         <label for="description" class="form-label mt-2">Qaytariladigan to'lov haqida</label>
                         <textarea type="text" name="description" class="form-control" required></textarea>
                         <div class="row mt-3">
@@ -494,24 +518,24 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addGroupModalLabel">Guruhga qo'shish</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div> 
+                </div>
                 <div class="modal-body">
                     <form action="{{ route('student_add_group') }}" method="POST" id="addGroupForm">
-                        @csrf 
+                        @csrf
                         <input type="hidden" name="user_id" value="{{ $student['id'] }}">
                         <label for="group_id" class="form-label">Guruhni tanlang</label>
                         <select class="form-select" name="group_id" required>
                             <option value="" disabled selected>Tanlang...</option>
-                            @foreach($addGroups as $item)  
+                            @foreach($addGroups as $item)
                                 <option value="{{ $item['id'] }}">{{ $item['group_name'].' ('.\Carbon\Carbon::parse($item['lessen_start'])->format('Y-m-d')." - ".$item['user_name'].")" }}</option>
-                            @endforeach 
+                            @endforeach
                         </select>
                         <label for="start_discription" class="form-label mt-2">Guruhdan qo'shish haqida</label>
                         <textarea type="text" name="start_discription" class="form-control" required>...</textarea>
@@ -528,7 +552,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="adminDiscountModal" tabindex="-1" aria-labelledby="adminDiscountModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -538,7 +562,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('student_admin_chegirma') }}" method="POST">
-                        @csrf 
+                        @csrf
                         <input type="hidden" name="user_id" value="{{ $student['id'] }}">
                         <label for="guruh_id" class="form-label">Guruhni tanlang</label>
                         <select class="form-select" name="guruh_id" required>
@@ -551,7 +575,7 @@
                         <input type="text" class="form-control" name="chegirma" id="paymentAmount17" required>
                         <script>
                             document.getElementById('paymentAmount17').addEventListener('input', function(event) {
-                                let input = event.target.value.replace(/\D/g, ''); 
+                                let input = event.target.value.replace(/\D/g, '');
                                 let formatted = input.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                                 event.target.value = formatted;
                             });
@@ -616,7 +640,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="updatePasswordForm" action="{{ route('student_update_password') }}" method="POST">
-                        @csrf 
+                        @csrf
                         <input type="hidden" name="user_id" value="{{ $student['id'] }}">
                         <p>Talabaning yangi paroli : <b>password</b></p>
                         <div class="row">

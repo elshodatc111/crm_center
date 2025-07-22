@@ -11,7 +11,9 @@ class RefundRequest extends FormRequest{
     public function rules(): array{
         return [
             'user_id' => 'required|integer|exists:users,id',
-            'kassa_amount' => 'required|string',
+            'kassa_amount_naqt' => 'required|string',
+            'kassa_amount_plastik' => 'required|string',
+            'paymart_type' => 'required|string',
             'amount' => 'required|string',
             'description' => 'required|string|max:200',
         ];

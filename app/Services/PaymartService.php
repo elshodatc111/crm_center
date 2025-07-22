@@ -30,7 +30,7 @@ class PaymartService{
             ->get();
         $Groups = [];
         $today = Carbon::today();
-        $threeDaysAgo = $today->subDays(3);
+        $threeDaysAgo = $today->subDays(1);
         foreach ($GroupUser as $value) {
             $Group = Group::find($value->group_id);
             $start = Carbon::parse($Group->lessen_start);
@@ -53,7 +53,7 @@ class PaymartService{
         }
         return $Groups;
     }
-    
+
     protected function addPay(int $user_id, string $group_id, int $price, string $type, string $description) {
         //dd($type);
         $paymart = Paymart::create([
@@ -67,7 +67,7 @@ class PaymartService{
         dispatch(new PaymartMessageWork($paymart->id, $type , $user_id, auth()->user()->id, 'pay_student_sms'));
         return true;
     }
-    
+
     protected function addHistory(int $user_id, string $type, string $type_commit) {
         return UserHistory::create([
             'user_id' => $user_id,
@@ -76,14 +76,14 @@ class PaymartService{
             'admin_id' => auth()->id(),
         ]);
     }
-    
+
     protected function updateUserBalance(int $user_id, int $price) {
         $User = User::find($user_id);
         if ($User) {
             $User->increment('balans', $price);
         }
     }
-    
+
     protected function updateMenegerChart(int $price, string $type) {
         $User = MenegerChart::find(auth()->id());
         if ($User) {
@@ -96,7 +96,7 @@ class PaymartService{
             }
         }
     }
-    
+
     protected function updateKassa(int $price, string $type) {
         $Kassa = Kassa::firstOrCreate([], ['naqt' => 0, 'plastik' => 0]);
         if ($type == 'naqt') {
@@ -105,7 +105,7 @@ class PaymartService{
             $Kassa->increment('plastik', $price);
         }
     }
-    
+
     protected function handlePayment(int $user_id, string $group_id, int $amount, string $type, string $description) {
         $this->addHistory($user_id, 'paymart_add', "$amount so'm $type to'lov qabul qilindi");
         $this->updateUserBalance($user_id, $amount);
@@ -113,7 +113,7 @@ class PaymartService{
         $this->addPay($user_id, $group_id, $amount, $type, $description);
         $this->updateKassa($amount, $type);
     }
-    
+
     public function addPayUser(array $data) {
         $user_id = $data['user_id'];
         $amount_naqt = intval(str_replace(" ", "", $data['amount_naqt']));
@@ -122,14 +122,14 @@ class PaymartService{
         $payment_info = $data['payment_info'];
         $totalPayment = $amount_naqt + $amount_plastik;
         $text = "$totalPayment so'm to'lov qilindi.";
-    
+
         if ($amount_naqt > 0) {
             $this->handlePayment($user_id, $group_id, $amount_naqt, 'naqt', $payment_info);
         }
         if ($amount_plastik > 0) {
             $this->handlePayment($user_id, $group_id, $amount_plastik, 'plastik', $payment_info);
         }
-    
+
         if (!empty($group_id) && $group_id != 'null') {
             $Group = Group::find($group_id);
             if ($Group) {
@@ -147,7 +147,7 @@ class PaymartService{
                 }
             }
         }
-    
+
         return $data;
     }
 

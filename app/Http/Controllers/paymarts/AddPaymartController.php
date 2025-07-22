@@ -34,6 +34,6 @@ class AddPaymartController extends Controller{
         $count = $this->debetSendMessage->sendMessages($group_id);
         return redirect()->back()->with('success', $count.' ta qarzdor talabaga sms xabar yuborildi.');
     }
-    
+
 
 }

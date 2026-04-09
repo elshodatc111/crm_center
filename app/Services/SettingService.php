@@ -53,7 +53,6 @@ class SettingService{
         $SettingPaymart = SettingPaymart::where('status','delete')->get();
         $res = array();
         foreach ($SettingPaymart as $key => $value) {
-            print($value);
             $res[$key]['id'] = $value->id;
             $res[$key]['amount'] = $value->amount;
             $res[$key]['chegirma'] = $value->chegirma;

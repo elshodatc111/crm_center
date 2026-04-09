@@ -16,7 +16,7 @@ class PaymartSettingController extends Controller{
     public function __construct(SettingService $settingService){
         $this->settingService = $settingService;
         $this->middleware('admin');
-    }
+    } 
 
     public function index(){
         $activPaymart = $this->settingService->getPaymart();

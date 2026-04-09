@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 <script>
     document.getElementById('paymentAmount').addEventListener('input', function(event) {
         let input = event.target.value.replace(/\D/g, ''); 

@@ -1,4 +1,4 @@
-@extends('layouts.app01')
+@extends('layouts.app')
 @section('title','Guruhlar')
 @section('content')
     <div class="pagetitle">

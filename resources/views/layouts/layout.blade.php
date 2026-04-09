@@ -1,8 +1,8 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center text-center justify-content-between">
-      <a href="{{ route('home') }}" class="logo d-flex align-items-center" >
-        <span class="d-block d-lg-none">CRM</span>
-        <span class="d-none d-lg-block">CRM Center</span>
+      <a href="{{ route('home') }}" class="logo d-flex align-items-center text-center w-100" >
+        <img src="{{ asset('images/icon1.jpg') }}" class="d-block d-lg-none">
+        <img src="{{ asset('images/icon.jpg') }}" class="d-none d-lg-block">
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>

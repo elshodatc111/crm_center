@@ -8,46 +8,92 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Auth;
+ 
 class AuthAdminController extends Controller{
 
-    public function login(Request $request){
+    public function login(Request $request){        
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required',
         ]);
-        $user = User::where('email', $request->email)->where('type','sAdmin')->first();
+        $user = User::select(['id', 'user_name', 'type', 'email', 'password'])->where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ],401);
+                'email' => ["Login yoki parol xato"],
+            ]);
         }
+        $user->tokens()->delete();
         $token = $user->createToken('auth-token')->plainTextToken;
-        return response()->json(['first' => substr($user->user_name, 0, 1),'name' => $user->user_name,'email' => $user->email,'token' => $token], 200);
+        return response()->json([
+            'success' => true,
+            'message' => 'Tizimga muvaffaqiyatli kirdingiz',
+            'data' => [
+                'id' => $user->id,
+                'type' => $user->type,
+                'name'     => $user->user_name,
+                'email'    => $user->email,
+                'token'    => $token
+            ]
+        ], 200);
     }
 
     public function logout(Request $request){
-        $request->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out'], 200);
+        try {
+            $request->user()->tokens()->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Tizimdan muvaffaqiyatli chiqdingiz.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Xatolik yuz berdi: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function profile(){
-        return response()->json(auth()->user(), 200);
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Foydalanuvchi topilmadi.'
+            ], 404);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id'         => $user->id,
+                'type'       => $user->type,
+                'name'       => $user->user_name,
+                'email'      => $user->email,
+                'created_at' => $user->created_at->format('d.m.Y'),
+            ]
+        ], 200);
     }
 
     public function changePassword(Request $request){
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
+            'new_password'     => 'required|min:8|confirmed|different:current_password',
+        ], [
+            'new_password.different' => 'Yangi parol eskisidan farq qilishi kerak!',
+            'new_password.confirmed' => 'Yangi parol tasdig‘i mos kelmadi.',
         ]);
         $user = $request->user();
         if (!Hash::check($request->current_password, $user->password)) {
             throw ValidationException::withMessages([
-                'current_password' => ['Joriy parol noto‘g‘ri!']
+                'current_password' => ['Amaldagi parol noto‘g‘ri kiritildi.'],
             ]);
         }
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-        return response()->json(['message' => 'Parol muvaffaqiyatli yangilandi!'], 200);
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+        $user->tokens()->where('id', '!=', $user->currentAccessToken()->id)->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Parol muvaffaqiyatli yangilandi!'
+        ], 200);
     }
 }

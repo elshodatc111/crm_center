@@ -1,24 +1,10 @@
 <?php
 
 namespace App\Services\upload;
-
-use Maatwebsite\Excel\Facades\Excel;  // <-- Add this line
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use App\Models\UserHistory;
-use App\Models\Group;
-use App\Models\Kassa;
-use App\Models\GroupUser;
-use App\Models\SettingPaymart;
-use App\Models\Paymart;
 use App\Models\UploadUser;
-use App\Models\MenegerChart;
-use App\Models\SettingChegirma;
-use App\Jobs\PaymartMessageWork;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 

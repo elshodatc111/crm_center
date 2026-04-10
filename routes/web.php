@@ -29,8 +29,12 @@ use App\Http\Controllers\varonka\VaronkaMenegerController;
 use App\Http\Controllers\chart\ChartController;
 use App\Http\Controllers\book\BookController;
 use App\Http\Controllers\report\ReportController;
+use Illuminate\Support\Facades\Auth;
 
-Auth::routes();
+Auth::routes([
+    'reset' => false, // Parolni tiklash (ForgotPassword) marshrutlarini o'chiradi
+    'verify' => false, // Email tasdiqlashni o'chiradi (agar kerak bo'lmasa)
+]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

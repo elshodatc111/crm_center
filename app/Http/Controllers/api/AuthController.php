@@ -96,4 +96,5 @@ class AuthController extends Controller{
             'message' => 'Parol muvaffaqiyatli yangilandi!'
         ], 200);
     }
+    
 }

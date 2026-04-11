@@ -13,13 +13,15 @@ use App\Http\Controllers\api\admin\HomeAdminController;
 
 Route::post('/v1/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
+    # AUTH
     Route::post('/v1/logout', [AuthController::class, 'logout']);
     Route::get('/v1/profile', [AuthController::class, 'profile']);
     Route::post('/v1/change-password', [AuthController::class, 'changePassword']);
-
+    # HOME
     Route::get('/v1/groups', [GroupController::class, 'index']);
     Route::get('/v1/group/show/{id}', [GroupController::class, 'show']);
     Route::post('/v1/group/davomad', [GroupController::class, 'davomadPost']);
+    
 });
 /*
 Route::middleware('auth:sanctum')->group(function () {

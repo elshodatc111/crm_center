@@ -5,9 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\{Cours, CoursAudio, CoursTest, CoursVideo, GroupDays,GroupUser, TestCheck};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class CoursController extends Controller{
     

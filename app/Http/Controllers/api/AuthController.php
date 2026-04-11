@@ -96,5 +96,31 @@ class AuthController extends Controller{
             'message' => 'Parol muvaffaqiyatli yangilandi!'
         ], 200);
     }
+
+    public function changeEmail(Request $request){
+        $request->validate([
+            'current_email' => 'required|email',
+            'new_email'     => 'required|email|unique:users,email',
+            'password'      => 'required|string',
+        ]);
+        $user = $request->user();
+        if ($user->email !== $request->current_email) {
+            throw ValidationException::withMessages([
+                'current_email' => ['Joriy email noto\'g\'ri.'],
+            ]);
+        }
+        if (!Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'password' => ['Parol noto\'g\'ri.'],
+            ]);
+        }
+        $user->update([
+            'email' => $request->new_email
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Email muvaffaqiyatli yangilandi!'
+        ], 200);
+    }
     
 }

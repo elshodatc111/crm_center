@@ -128,15 +128,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('setting/video/{id}', [VideoController::class, 'index'])->name('setting_cours_video');
     Route::post('setting/video/create', [VideoController::class, 'store'])->name('setting_video_create');
     Route::post('setting/video/delete', [VideoController::class, 'delete'])->name('setting_video_delete');
-
     Route::get('setting/audio/{id}', [AudioController::class, 'index'])->name('setting_cours_audio');
     Route::post('setting/audio/creare', [AudioController::class, 'store'])->name('setting_audio_create');
     Route::post('setting/audio/delete', [AudioController::class, 'delete'])->name('setting_audio_delete');
-
     Route::get('setting/book', [BookController::class, 'index'])->name('setting_book');
     Route::post('setting/book/create', [BookController::class, 'create'])->name('setting_book_create');
     Route::post('setting/book/delete', [BookController::class, 'delete'])->name('setting_book_delete');
-
     Route::get('social', [sHududSettingController::class, 'index'])->name('all_social');
     Route::post('/social/store', [sHududSettingController::class, 'store'])->name('social_store');
     Route::DELETE('/social/delete/{id}', [sHududSettingController::class, 'destroy'])->name('social_delete');
@@ -164,10 +161,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('chart/paymarts/{data}', [ChartController::class, 'paymart_show'])->name('chart_paymart_show');
     Route::get('chart/techer', [ChartController::class, 'techer'])->name('chart_techer');
     Route::get('chart/techerReyting', [ChartController::class, 'techerReyting'])->name('chart_techer_reyting');
-
-
     Route::get('chart/techerReytingTwo', [ChartController::class, 'techerReytingTwo'])->name('chart_techer_reyting_two');
-
     Route::get('report/users', [ReportController::class, 'users'])->name('report_users');
     Route::get('report/users_next', [ReportController::class, 'users_next'])->name('report_users_next');
     Route::get('report/paymart', [ReportController::class, 'paymart'])->name('report_paymart');
@@ -176,6 +170,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('report/group_next', [ReportController::class, 'group_next'])->name('report_group_next');
     Route::get('report/message', [ReportController::class, 'message'])->name('report_message');
     Route::get('report/message_next', [ReportController::class, 'message_next'])->name('report_message_next');
-
 });
 

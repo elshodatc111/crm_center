@@ -74,62 +74,64 @@
                 <h3 class="card-title text-center w-100">
                     <i class="bi bi-cart-check me-1 text-warning"></i> Tasdiqlanmagan chiqimlar
                 </h3>
-                <div class="table-responsive">
-                    <table class="table table-bordered text-center" style="font-size:14px">
-                        <thead>
-                            <tr> 
-                                <th>#</th>
-                                <th>Meneger</th>
-                                <th>Chiqim turi</th>
-                                <th>Chimim summasi</th>
-                                <th>Chiqim vaqti</th>
-                                <th>Chiqim haqida</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($pedding as $item)
-                                <tr>
-                                    <td>{{ $loop->index+1 }}</td>
-                                    <td>{{ $item['user_name'] }}</td>
-                                    <td>
-                                        @if($item['type']=='naqt_chiq')
-                                            <i class="text-primary">Kassadan chiqim (Naqt)</i>
-                                        @elseif($item['type']=='plastik_chiq')
-                                            <i class="text-primary">Kassadan chiqim (Plastik)</i>
-                                        @elseif($item['type']=='naqt_xar')
-                                            <i class="text-danger">Kassadan xarajat (Naqt)</i>
-                                        @elseif($item['type']=='plastik_xar')
-                                            <i class="text-danger">Kassadan xarajat (Plastik)</i>
-                                        @endif
-                                    </td>
-                                    <td>{{ $item['amount'] }}</td>
-                                    <td>{{ $item['create_time'] }}</td>
-                                    <td>{{ $item['description'] }}</td>
-                                    <td>
-                                        <div class="d-flex gap-2 text-center">
-                                            @if(auth()->user()->type != 'meneger')
-                                                <form action="{{ route('compamy_kassa_success') }}" method="post" class="d-inline-block">
+                <div class="notes-wrapper" style="max-height: 300px; overflow-y: auto; overflow-x: hidden;height: 300px;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center" style="font-size:14px">
+                            <thead>
+                                <tr> 
+                                    <th>#</th>
+                                    <th>Meneger</th>
+                                    <th>Chiqim turi</th>
+                                    <th>Chimim summasi</th>
+                                    <th>Chiqim vaqti</th>
+                                    <th>Chiqim haqida</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($pedding as $item)
+                                    <tr>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['user_name'] }}</td>
+                                        <td>
+                                            @if($item['type']=='naqt_chiq')
+                                                <i class="text-primary">Kassadan chiqim (Naqt)</i>
+                                            @elseif($item['type']=='plastik_chiq')
+                                                <i class="text-primary">Kassadan chiqim (Plastik)</i>
+                                            @elseif($item['type']=='naqt_xar')
+                                                <i class="text-danger">Kassadan xarajat (Naqt)</i>
+                                            @elseif($item['type']=='plastik_xar')
+                                                <i class="text-danger">Kassadan xarajat (Plastik)</i>
+                                            @endif
+                                        </td>
+                                        <td>{{ $item['amount'] }}</td>
+                                        <td>{{ $item['create_time'] }}</td>
+                                        <td>{{ $item['description'] }}</td>
+                                        <td>
+                                            <div class="d-flex gap-2 text-center">
+                                                @if(auth()->user()->type != 'meneger')
+                                                    <form action="{{ route('compamy_kassa_success') }}" method="post" class="d-inline-block">
+                                                        @csrf 
+                                                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                                        <button type="submit" class="btn btn-success px-1 py-0"><i class="bi bi-check"></i></button>
+                                                    </form>
+                                                @endif
+                                                <form action="{{ route('compamy_kassa_delete') }}" method="post" class="d-inline-block">
                                                     @csrf 
                                                     <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                                    <button type="submit" class="btn btn-success px-1 py-0"><i class="bi bi-check"></i></button>
+                                                    <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
                                                 </form>
-                                            @endif
-                                            <form action="{{ route('compamy_kassa_delete') }}" method="post" class="d-inline-block">
-                                                @csrf 
-                                                <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                                <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan=7 class="text-center">Tasdiqlanmagan chiqim va xarajatlar mavjud emas.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan=7 class="text-center">Tasdiqlanmagan chiqim va xarajatlar mavjud emas.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,38 +141,40 @@
             <div class="card-body">
                 <h3 class="card-title text-center w-100">
                     To'lovlar (oxirgi 7 kun)
-                </h3>
-                <div class="table-responsive">
-                    <table class="table table-bordered text-center" style="font-size:14px">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Talaba</th>
-                                <th>To'lov summasi</th>
-                                <th>To'lov turi</th>
-                                <th>To'lov vaqti</th>
-                                <th>To'lov haqida</th>
-                                <th>Meneger</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($paymarts as $item)
+                </h3>                
+                <div class="notes-wrapper" style="max-height: 300px; overflow-y: auto; overflow-x: hidden;height: 300px;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center" style="font-size:14px">
+                            <thead>
                                 <tr>
-                                    <td>{{ $loop->index+1 }}</td>
-                                    <td><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['user'] }}</a></td>
-                                    <td>{{ $item['amount'] }}</td>
-                                    <td>{{ $item['paymart_type'] }}</td>
-                                    <td>{{ $item['created_at'] }}</td>
-                                    <td>{{ $item['description'] }}</td>
-                                    <td>{{ $item['admin'] }}</td>
+                                    <th>#</th>
+                                    <th>Talaba</th>
+                                    <th>To'lov summasi</th>
+                                    <th>To'lov turi</th>
+                                    <th>To'lov vaqti</th>
+                                    <th>To'lov haqida</th>
+                                    <th>Meneger</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse($paymarts as $item)
+                                    <tr>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['user'] }}</a></td>
+                                        <td>{{ $item['amount'] }}</td>
+                                        <td>{{ $item['paymart_type'] }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
+                                        <td>{{ $item['description'] }}</td>
+                                        <td>{{ $item['admin'] }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

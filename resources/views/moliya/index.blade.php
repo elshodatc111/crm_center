@@ -115,72 +115,69 @@
 
     <div class="col-12">
         <div class="card mt-3">
-            <div class="card-body pt-3">
-                <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
-                    <li class="nav-item flex-fill" role="presentation">
-                        <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#chiqimlar-justified" type="button" role="tab" aria-controls="home" aria-selected="true">Kirim chiqimlar tarixi (oxirgi 3 oy)</button>
-                    </li>
-                </ul>
-                
+            <div class="card-body">
+                <div class="card-title">Kirim chiqimlar tarixi (oxirgi 3 oy)</div>
                 <div class="tab-content pt-2" id="myTabjustifiedContent">
                     <div class="tab-pane fade show active" id="chiqimlar-justified" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="table-responsive">
-                            <table class="table text-center table-bordered" style="font-size:14px;">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Meneger</th>
-                                        <th>Chiqim turi</th>
-                                        <th>Chiqim summasi</th>
-                                        <th>Chiqim vaqti</th>
-                                        <th>Chiqim haqida</th>
-                                        <th>Tasdiqladi</th>
-                                        <th>Chiqim tasdiqlandi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($history as $item) 
-                                    <tr>
-                                        <td>{{ $loop->index+1 }}</td>
-                                        <td>{{ $item['meneger'] }}</td>
-                                        <td>
-                                            @if($item['type']=='naqt_xar')
-                                                <i class="text-danger">Xarajat (Naqt)</i>
-                                            @elseif($item['type']=='naqt_chiq')
-                                                <i class="text-success">Balansga kirim (Naqt)</i>
-                                            @elseif($item['type']=='plastik_xar')
-                                                <i class="text-danger">Xarajat (Plastik)</i>
-                                            @elseif($item['type']=='plastik_chiq')
-                                                <i class="text-success">Balansga kirim (Plastik)</i>
-                                            @elseif($item['type']=='chiq_plastik')
-                                                <i class="text-primary">Daromad (Plastik)</i>
-                                            @elseif($item['type']=='chiq_naqt')
-                                                <i class="text-primary">Daromad (Naqt)</i>
-                                            @elseif($item['type']=='chiq_exson')
-                                                <i style="color:#EB4C42;">Exson</i>
-                                            @elseif($item['type']=='xar_naqt')
-                                                <i class="text-danger">Xarajat (Naqt)</i>
-                                            @elseif($item['type']=='xar_plastik')
-                                                <i class="text-danger">Xarajat (Plastik)</i>
-                                            @elseif($item['type']=='ish_naqt')
-                                                <i style="color:#CC397B">Ish haqi (Naqt)</i>
-                                            @elseif($item['type']=='ish_plas')
-                                                <i style="color:#CC397B">Ish haqi (Plastik)</i>
-                                            @endif
-                                        </td>
-                                        <td>{{ number_format($item['amount'], 2, '.', ' ') }}   </td>
-                                        <td>{{ $item['create_time'] }}</td>
-                                        <td>{{ $item['description'] }}</td>
-                                        <td>{{ $item['succes_time'] }}</td>
-                                        <td>{{ $item['admin'] }}</td>
-                                    </tr>
-                                    @empty
+                        <div class="table-responsive">                            
+                            <div class="notes-wrapper" style="max-height: 300px; overflow-y: auto; overflow-x: hidden;height: 300px;">
+                                <table class="table text-center table-bordered" style="font-size:14px;">
+                                    <thead>
                                         <tr>
-                                            <td colspan=8 class="text-center">Oxirgi 3 oyda chiqimlar tarixi mavjud emas.</td>
+                                            <th>#</th>
+                                            <th>Meneger</th>
+                                            <th>Chiqim turi</th>
+                                            <th>Chiqim summasi</th>
+                                            <th>Chiqim vaqti</th>
+                                            <th>Chiqim haqida</th>
+                                            <th>Tasdiqladi</th>
+                                            <th>Chiqim tasdiqlandi</th>
                                         </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($history as $item) 
+                                        <tr>
+                                            <td>{{ $loop->index+1 }}</td>
+                                            <td>{{ $item['meneger'] }}</td>
+                                            <td>
+                                                @if($item['type']=='naqt_xar')
+                                                    <i class="text-danger">Xarajat (Naqt)</i>
+                                                @elseif($item['type']=='naqt_chiq')
+                                                    <i class="text-success">Balansga kirim (Naqt)</i>
+                                                @elseif($item['type']=='plastik_xar')
+                                                    <i class="text-danger">Xarajat (Plastik)</i>
+                                                @elseif($item['type']=='plastik_chiq')
+                                                    <i class="text-success">Balansga kirim (Plastik)</i>
+                                                @elseif($item['type']=='chiq_plastik')
+                                                    <i class="text-primary">Daromad (Plastik)</i>
+                                                @elseif($item['type']=='chiq_naqt')
+                                                    <i class="text-primary">Daromad (Naqt)</i>
+                                                @elseif($item['type']=='chiq_exson')
+                                                    <i style="color:#EB4C42;">Exson</i>
+                                                @elseif($item['type']=='xar_naqt')
+                                                    <i class="text-danger">Xarajat (Naqt)</i>
+                                                @elseif($item['type']=='xar_plastik')
+                                                    <i class="text-danger">Xarajat (Plastik)</i>
+                                                @elseif($item['type']=='ish_naqt')
+                                                    <i style="color:#CC397B">Ish haqi (Naqt)</i>
+                                                @elseif($item['type']=='ish_plas')
+                                                    <i style="color:#CC397B">Ish haqi (Plastik)</i>
+                                                @endif
+                                            </td>
+                                            <td>{{ number_format($item['amount'], 2, '.', ' ') }}   </td>
+                                            <td>{{ $item['create_time'] }}</td>
+                                            <td>{{ $item['description'] }}</td>
+                                            <td>{{ $item['succes_time'] }}</td>
+                                            <td>{{ $item['admin'] }}</td>
+                                        </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan=8 class="text-center">Oxirgi 3 oyda chiqimlar tarixi mavjud emas.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

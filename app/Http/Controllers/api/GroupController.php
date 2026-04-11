@@ -13,7 +13,7 @@ class GroupController extends Controller{
 
     public function student(){
         $now = date("Y-m-d");
-        $groupUser = GroupUser::where('user_id',Auth::id())->orderBy('created_at', 'desc')->get();
+        $groupUser = GroupUser::where('user_id',Auth::id())->where('status',true)->orderBy('created_at', 'desc')->get();
         $res = [];
         foreach ($groupUser as $key => $value) {
             if ($now > $value->group->lessen_end) {

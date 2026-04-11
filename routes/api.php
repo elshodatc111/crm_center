@@ -3,7 +3,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\{AuthController,GroupController};
+use App\Http\Controllers\api\{AuthController, CoursController, GroupController};
 use App\Http\Controllers\api\user\GroupUserController;
 use App\Http\Controllers\api\user\PaymartUserController;
 use App\Http\Controllers\api\user\VideoUserController;
@@ -21,6 +21,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/v1/groups', [GroupController::class, 'index']);
     Route::get('/v1/group/show/{id}', [GroupController::class, 'show']);
     Route::post('/v1/group/davomad', [GroupController::class, 'davomadPost']);
+    # Video Test Audio
+    Route::get('/v1/cours/video', [CoursController::class, 'coursVidoe']);
+    Route::get('/v1/cours/video/show/{cours_id}', [CoursController::class, 'coursVideoShow']);
+    Route::get('/v1/cours/audio', [CoursController::class, 'coursAudio']);
+    Route::get('/v1/cours/audio/show/{cours_id}', [CoursController::class, 'coursAudioShow']);
+    Route::get('/v1/cours/test', [CoursController::class, 'coursTest']);
+    Route::get('/v1/cours/test/show/{group_id}/{cours_id}', [CoursController::class, 'coursTestShow']);
+    Route::post('/v1/cours/test/show/post', [CoursController::class, 'TestCheckPost']);
+    # To'lovlar Ish haqlari
     
 });
 /*

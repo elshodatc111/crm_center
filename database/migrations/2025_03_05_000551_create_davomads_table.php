@@ -12,6 +12,7 @@ return new class extends Migration{
             $table->foreignId('group_id')->constrained()->onDelete('cascade');
             $table->date('data');
             $table->boolean('status')->default(false);
+            $table->unique(['user_id', 'group_id', 'data'], 'unique_attendance');
             $table->timestamps();
         });
     }

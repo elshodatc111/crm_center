@@ -3,7 +3,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\techer\GroupsTecherController;
+use App\Http\Controllers\api\{AuthController,GroupController};
 use App\Http\Controllers\api\user\GroupUserController;
 use App\Http\Controllers\api\user\PaymartUserController;
 use App\Http\Controllers\api\user\VideoUserController;
@@ -11,11 +11,15 @@ use App\Http\Controllers\api\user\TestUserController;
 use App\Http\Controllers\api\admin\AuthAdminController;
 use App\Http\Controllers\api\admin\HomeAdminController;
 
-Route::post('/v1/login', [AuthAdminController::class, 'login']);
+Route::post('/v1/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/v1/logout', [AuthAdminController::class, 'logout']);
-    Route::get('/v1/profile', [AuthAdminController::class, 'profile']);
-    Route::post('/v1/change-password', [AuthAdminController::class, 'changePassword']);
+    Route::post('/v1/logout', [AuthController::class, 'logout']);
+    Route::get('/v1/profile', [AuthController::class, 'profile']);
+    Route::post('/v1/change-password', [AuthController::class, 'changePassword']);
+
+    Route::get('/v1/groups', [GroupController::class, 'index']);
+    Route::get('/v1/group/show/{id}', [GroupController::class, 'show']);
+    Route::post('/v1/group/davomad', [GroupController::class, 'davomadPost']);
 });
 /*
 Route::middleware('auth:sanctum')->group(function () {

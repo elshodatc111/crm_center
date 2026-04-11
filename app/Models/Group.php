@@ -28,8 +28,11 @@ class Group extends Model{
     public function course(){
         return $this->belongsTo(Cours::class, 'cours_id');
     }
+    public function groupDays() {
+        return $this->hasMany(GroupDays::class, 'group_id');
+    }
     public function settingRoom(){
-        return $this->belongsTo(SettingRooms::class, 'setting_rooms_id');
+        return $this->belongsTo(SettingRoom::class, 'setting_rooms_id');
     }
     public function teacher(){
         return $this->belongsTo(User::class, 'techer_id')->where('type', 'techer');
@@ -42,11 +45,9 @@ class Group extends Model{
     }
     public function admin(){
         return $this->belongsTo(User::class, 'user_id')->whereIn('type', ['admin', 'sAdmin', 'meneger']);
-    }
-    
+    }   
 
-    public function groupUsers(): HasMany
-    {
+    public function groupUsers(): HasMany{
         return $this->hasMany(GroupUser::class, 'group_id', 'id');
     }
 }

@@ -52,23 +52,35 @@ class GroupController extends Controller{
         ])->where('techer_id', $teacher_id)->orderBy('created_at', 'desc')->get();
         $todayGroupIds = GroupDays::where('date', $now)->pluck('group_id')->toArray();
         $res = $groups->map(function ($group) use ($now, $todayGroupIds) {
-            if ($now > $group->lessen_end) {
-                $status = 'end';
-            } elseif ($now >= $group->lessen_start && $now <= $group->lessen_end) {
-                $status = 'pending';
-            } else {
-                $status = 'new';
+            if($group->group_users_count>0){
+                if ($now > $group->lessen_end) {
+                    $status = 'end';
+                } elseif ($now >= $group->lessen_start && $now <= $group->lessen_end) {
+                    $status = 'pending';
+                    return [
+                        'group_id'     => $group->id,
+                        'group_name'   => $group->group_name,
+                        'status'       => $status,
+                        'dav_status'   => in_array($group->id, $todayGroupIds),
+                        'users_count'  => $group->group_users_count,
+                        'lesson_count' => $group->group_days_count,
+                        'lessen_start' => Carbon::parse($group->lessen_start)->format('Y-m-d'),
+                        'lessen_end'   => Carbon::parse($group->lessen_end)->format('Y-m-d'),
+                    ];
+                } else {
+                    $status = 'new';
+                    return [
+                        'group_id'     => $group->id,
+                        'group_name'   => $group->group_name,
+                        'status'       => $status,
+                        'dav_status'   => in_array($group->id, $todayGroupIds),
+                        'users_count'  => $group->group_users_count,
+                        'lesson_count' => $group->group_days_count,
+                        'lessen_start' => Carbon::parse($group->lessen_start)->format('Y-m-d'),
+                        'lessen_end'   => Carbon::parse($group->lessen_end)->format('Y-m-d'),
+                    ];
+                }
             }
-            return [
-                'group_id'     => $group->id,
-                'group_name'   => $group->group_name,
-                'status'       => $status,
-                'dav_status'   => in_array($group->id, $todayGroupIds),
-                'users_count'  => $group->group_users_count,
-                'lesson_count' => $group->group_days_count,
-                'lessen_start' => Carbon::parse($group->lessen_start)->format('Y-m-d'),
-                'lessen_end'   => Carbon::parse($group->lessen_end)->format('Y-m-d'),
-            ];
         });
         return response()->json([
             'success' => true,
@@ -86,23 +98,35 @@ class GroupController extends Controller{
         ])->orderBy('created_at', 'desc')->get();
         $todayGroupIds = GroupDays::where('date', $now)->pluck('group_id')->toArray();
         $res = $groups->map(function ($group) use ($now, $todayGroupIds) {
-            if ($now > $group->lessen_end) {
-                $status = 'end';
-            } elseif ($now >= $group->lessen_start && $now <= $group->lessen_end) {
-                $status = 'pending';
-            } else {
-                $status = 'new';
+            if($group->group_users_count>0){
+                if ($now > $group->lessen_end) {
+                    $status = 'end';
+                } elseif ($now >= $group->lessen_start && $now <= $group->lessen_end) {
+                    $status = 'pending';
+                    return [
+                        'group_id'     => $group->id,
+                        'group_name'   => $group->group_name,
+                        'status'       => $status,
+                        'dav_status'   => in_array($group->id, $todayGroupIds),
+                        'users_count'  => $group->group_users_count,
+                        'lesson_count' => $group->group_days_count,
+                        'lessen_start' => Carbon::parse($group->lessen_start)->format('Y-m-d'),
+                        'lessen_end'   => Carbon::parse($group->lessen_end)->format('Y-m-d'),
+                    ];
+                } else {
+                    $status = 'new';
+                    return [
+                        'group_id'     => $group->id,
+                        'group_name'   => $group->group_name,
+                        'status'       => $status,
+                        'dav_status'   => in_array($group->id, $todayGroupIds),
+                        'users_count'  => $group->group_users_count,
+                        'lesson_count' => $group->group_days_count,
+                        'lessen_start' => Carbon::parse($group->lessen_start)->format('Y-m-d'),
+                        'lessen_end'   => Carbon::parse($group->lessen_end)->format('Y-m-d'),
+                    ];
+                }
             }
-            return [
-                'group_id'     => $group->id,
-                'group_name'   => $group->group_name,
-                'status'       => $status,
-                'dav_status'   => in_array($group->id, $todayGroupIds),
-                'users_count'  => $group->group_users_count,
-                'lesson_count' => $group->group_days_count,
-                'lessen_start' => Carbon::parse($group->lessen_start)->format('Y-m-d'),
-                'lessen_end'   => Carbon::parse($group->lessen_end)->format('Y-m-d'),
-            ];
         });
         return response()->json([
             'success' => true,

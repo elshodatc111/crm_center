@@ -1,14 +1,5 @@
 <?php
-
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Schedule;
-use App\Jobs\SendBirthdaySms;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
-
-Schedule::command('queue:work --tries=3')->everyMinute();
-Schedule::job(new SendBirthdaySms())->dailyAt('23:33');
+// * * * * * cd /loyihangizning/to'liq/yoli && php artisan schedule:run >> /dev/null 2>&1
+Schedule::command('sms:birthday')->dailyAt('09:00');

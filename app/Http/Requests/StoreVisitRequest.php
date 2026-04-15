@@ -15,7 +15,7 @@ class StoreVisitRequest extends FormRequest{
             'phone2' => 'nullable|string|regex:/^\+998 \d{2} \d{3} \d{4}$/',
             'address' => 'required|string',
             'about_me' => 'required|string',
-            'birthday' => 'required|date|before:'.now()->subYears(12)->toDateString(), 
+            'birthday' => 'required|date|before:'.now()->subYears(6)->toDateString(), 
             'about' => 'nullable|string|max:500',
         ];
     }

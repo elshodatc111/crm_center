@@ -1,38 +1,27 @@
 <?php
 namespace App\Services\message;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use App\Jobs\SendSmsJob;
 use App\Models\User;
 use App\Models\Setting;
 use App\Models\SendMessage;
 use App\Services\SmsService;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Auth;
 
 class SendMessageEndService{
     
     private SmsService $smsService;
 
-    public function __construct(SmsService $smsService){
-        $this->smsService = $smsService;
-    }
+    public function __construct(SmsService $smsService){$this->smsService = $smsService;}
 
     private function saveSmsHistory(string $phone, string $message, ?int $admin_id = null): void {
-        SendMessage::create([
-            'phone' => $phone,
-            'message' => $message,
-            'user_id' => $admin_id,
-        ]);
+        SendMessage::create(['phone' => $phone,'message' => $message,'user_id' => $admin_id,]);
     }
 
     protected function checkSend($user,$Setting,$type){
-        if (!$user || !$Setting || !$type) {
-            return false;
-        }
+        if (!$user || !$Setting || !$type) { return false; }
         if($Setting->message_status==false){return false;}
-
         switch ($type) {
             case 'new_student_sms':   // Yangi Talaba uchun 
                 if($Setting->new_student_sms==false){return false;}
@@ -61,26 +50,17 @@ class SendMessageEndService{
 
     public function SendMessage(int $user_id, string $message, string $type){
         $user = User::find($user_id);
-        $Setting = Setting::first();
-        $check = $this->checkSend($user,$Setting,$type);
-        if($check==false){
+        $Setting = Setting::first();        
+        if (!$this->checkSend($user, $Setting, $type)) {
+            Log::info($type.' SMS yuborish taqiqlangan');
             return 0;
         }
-        $phone = str_replace("+","",str_replace(" ","",$user->phone1));
-        $message = $message." Websayt: ".config('app.url');
-        Log::info("Update Password: ".$message);
-        $smsService = new SmsService();
-        $response = $smsService->sendSms($phone, $message);
-        if (is_array($response) && isset($response['status']) && $response['status'] == 'waiting') {
-            $this->saveSmsHistory($phone, $message, auth()->user()->id);
-            $Setting->message_mavjud = $Setting->message_mavjud-1;
-            $Setting->message_count = $Setting->message_count+1;
-            $Setting->save();
-            Log::info('Send Message');
-        } else {
-            Log::error("SMS jo‘natishda xatolik: " . json_encode($response));
-        }
+        $phone = str_replace(["+", " "], "", $user->phone1);
+        $fullMessage = $message . " Websayt: https://atko.uz";
+        SendSmsJob::dispatch($phone, $fullMessage, Auth::id());
+        Log::info('SMS navbatga qo\'shildi: ' . $phone);
     }
+
 
 
 }

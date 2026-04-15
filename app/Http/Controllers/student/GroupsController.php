@@ -4,12 +4,7 @@ namespace App\Http\Controllers\student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Cours;
 use App\Models\Group;
-use App\Models\SettingRoom;
-use App\Models\SettingPaymart;
-use App\Models\LessenTime;
 use App\Services\GroupService;
 use App\Services\StudentService;
 use App\Http\Requests\StoreGroupRequest;

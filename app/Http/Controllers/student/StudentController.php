@@ -4,26 +4,11 @@ namespace App\Http\Controllers\student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Eslatma;
-use App\Models\Social;
-use App\Http\Requests\StoreVisitRequest;
-use App\Services\StudentService;
-use App\Services\PaymartService;
-use App\Services\PaymartReturnService;
-use App\Services\KassaService;
-use App\Services\AdminChegirmaService;
-use App\Jobs\SendMessageWork;
-use App\Jobs\PaymartMessageWork;
-use App\Http\Requests\ShowStudentRequest;
-use App\Http\Requests\UserAboutUpdateRequest;
-use App\Http\Requests\UpdateStudentRequest;
-use App\Http\Requests\AddStudentToGroupRequest;
-use App\Http\Requests\RefundRequest;
-use App\Http\Requests\ChegirmaRequest;
-use App\Http\Requests\DiscountPaymentRequest;
+use App\Models\{User,Eslatma};
+use App\Services\{StudentService,AdminChegirmaService,KassaService,PaymartReturnService,PaymartService};
+use App\Http\Requests\{StoreVisitRequest,ShowStudentRequest,UserAboutUpdateRequest,UpdateStudentRequest,AddStudentToGroupRequest,RefundRequest,ChegirmaRequest,DiscountPaymentRequest};
 use App\Services\message\SendMessageEndService;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller{
 
@@ -67,7 +52,7 @@ class StudentController extends Controller{
         $users = $this->studentService->createStudent($request->validated());
         $this->studentService->sotsials($request->about_me);
         $this->studentService->countAddres($users->address);
-        $message = "Hurmatli ".$request->user_name." Siz ".config('app.APP_NAME')." o'quv markazimizga xush kelibsiz. Sizning login: ".$users->email." parol: password";
+        $message = "Hurmatli ".$request->user_name." Siz ATKO o'quv markazimizga xush kelibsiz. Sizning login: ".$users->email." parol: password";
         $this->sendMessageEndService->SendMessage($users->id, $message, 'new_student_sms');
         return redirect()->route('all_student')->with('success', 'Tashrif muvaffaqiyatli saqlandi!');
     }
@@ -121,7 +106,7 @@ class StudentController extends Controller{
         if($request->paymart_type=='plastik' AND $Amount>$KassaPlastik){
             return redirect()->back()->with('success', 'Kassada yetarli mablag\' mavjud emas.');
         }
-        $patmart_id = $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description,$request->paymart_type);
+        $this->paymartReturnService->returnPaymart($request->user_id,$Amount,$request->description,$request->paymart_type);
         $message = "Hurmatli ".User::find($request->user_id)->user_name." ".str_replace(" ","",$request->amount)." so'm to'lovingiz qaytarildi. ";
         $this->sendMessageEndService->SendMessage($request->user_id, $message, 'pay_student_sms');
         return redirect()->back()->with('success', 'To\'lov qaytarish yakunlandi.');
@@ -137,7 +122,7 @@ class StudentController extends Controller{
     }
 
     public function discountPayment(DiscountPaymentRequest $request){
-        $type = $this->adminChegirmaService->storeHolidayDiscount($request->validated());
+        $this->adminChegirmaService->storeHolidayDiscount($request->validated());
         $message = "Hurmatli ".User::find($request->user_id)->user_name." ".str_replace(" ","",$request->amount)." so'm to'lovingiz uchun ".str_replace(" ","",$request->chegirma)." so'm chegirma berildi. ";
         $this->sendMessageEndService->SendMessage($request->user_id, $message, 'pay_student_sms');
         return redirect()->back()->with('success', 'Chegirma to\'lov qabul qilindi.');
@@ -149,7 +134,7 @@ class StudentController extends Controller{
     }
 
     public function returnPayDel(Request $request){
-        $Refund = $this->paymartReturnService->returnPayDel($request->id);
+        $this->paymartReturnService->returnPayDel($request->id);
         return redirect()->back()->with('success', 'Qaytarilgan to\'lov tasdiqlandi.');
     }
 
@@ -157,7 +142,7 @@ class StudentController extends Controller{
         Eslatma::create([
             'user_id' => $request->user_id,
             'message' => $request->message,
-            'admin_id' => auth()->user()->id,
+            'admin_id' => Auth::id(),
 
         ]);
         return redirect()->back()->with('success', 'Eslatma saqlandi.');

@@ -37,7 +37,7 @@ class HodimController extends Controller{
         $users = $this->hodimService->create($validate);
         $user_id = $this->hodimService->userID($validate);
         $message = "Hurmatli ".$request->user_name." ".config('app.APP_NAME')." o'quv markazimizga ishga olindingiz. Login:".User::find($user_id)->email." parol: password";
-        $this->sendMessageEndService->SendMessage($user_id, $message, 'pay_hodim_sms');
+        $this->sendMessageEndService->SendMessage($user_id, $message, 'new_hodim_sms'); 
         return redirect()->back()->with('success', 'Yangi hodim ishga olindi!');
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\varonka;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\RegisterUserRequest;
 use App\Services\StudentService;
 use App\Services\VaronkaServise;

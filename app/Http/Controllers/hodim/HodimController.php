@@ -47,7 +47,6 @@ class HodimController extends Controller{
         $user_chart = $this->hodimService->userCart($id);
         $balans = $this->settingService->getSetting();
         $paymart = $this->hodimService->getPaymart($id);
-        //dd($paymart);
         return view('hodim.show',compact('user','user_chart','balans','paymart'));
     }
 

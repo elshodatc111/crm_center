@@ -1,17 +1,10 @@
 <?php
 namespace App\Services\chart;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Social;
-use App\Models\Setting;
 use App\Models\GroupUser;
 use App\Models\Group;
 use App\Models\Paymart;
-use Illuminate\Support\Facades\Log;
 
 class TecherService{
     protected function countUserGroup(int $group_id){

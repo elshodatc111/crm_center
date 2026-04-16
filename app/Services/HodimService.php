@@ -1,10 +1,6 @@
 <?php
 namespace App\Services;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Social;
 use App\Models\HodimPaymart;
@@ -128,7 +124,7 @@ class HodimService{
             'amount' => $data['amount'],
             'type' => $data['type'],
             'description' => $data['discription'],
-            'admin_id' => auth()->user()->id,
+            'admin_id' => Auth::id(),
         ]);
         if($data['type']=='naqt'){
             $type = 'ish_naqt';
@@ -139,7 +135,7 @@ class HodimService{
             'type' => $type,
             'amount' => $data['amount'],
             'comment' => $data['discription']." (Hodim)",
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::id(),
         ]);
         $Setting->save();
         return $id->id;

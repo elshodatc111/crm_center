@@ -8,12 +8,14 @@
     </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
+        @if(auth()->user()->type=='sAdmin')
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('all_student_return') }}">
             <i class="bi bi-cash-stack text-danger"></i>
             <span class="badge bg-success badge-number">@include('layouts.returnPaymart')</span>
           </a>
         </li>
+        @endif
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('user_brithday') }}">
             <i class="bi bi-cake2 text-primary"></i>

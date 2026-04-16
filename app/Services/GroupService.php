@@ -18,6 +18,7 @@ use App\Models\MenegerChart;
 use App\Models\UserHistory;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class GroupService{
     
@@ -72,7 +73,7 @@ class GroupService{
 
     protected function createMenegerCart(){
         return MenegerChart::firstOrCreate(
-            ['user_id' => auth()->user()->id],
+            ['user_id' => Auth::id()],
             ['create_group' => 0]
         )->increment('create_group');
     }
@@ -109,7 +110,7 @@ class GroupService{
             'lessen_start' => $start, 
             'lessen_end' => $end, 
             'lessen_times_id' => $data['lessen_times_id'], 
-            'user_id' => auth()->user()->id, 
+            'user_id' => Auth::id(), 
             'next' => 'new', 
             'techer_paymart' => intval(str_replace(" ","",$data['techer_paymart'])), 
             'techer_bonus' => intval(str_replace(" ","",$data['techer_bonus'])), 
@@ -287,7 +288,7 @@ class GroupService{
             return false;
         }
         $GroupUser->update([
-            'end_meneger' => auth()->id(),
+            'end_meneger' => Auth::id(),
             'end_discription' => $data['description'],
             'status' => 0,
             'jarima_id' => $data['jarima'],
@@ -298,7 +299,7 @@ class GroupService{
             'user_id' => $data['user_id'],
             'type' => 'group_delete',
             'type_commit' => $type_commit,
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
         $User = User::find($data['user_id']);
         if ($User) {

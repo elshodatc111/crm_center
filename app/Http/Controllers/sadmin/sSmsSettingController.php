@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\sadmin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Http\Requests\sadmin\MessageStatusRequest;
 use App\Http\Requests\sadmin\MessageMavjudRequest;

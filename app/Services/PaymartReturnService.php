@@ -1,15 +1,10 @@
 <?php
 namespace App\Services;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Kassa;
-use App\Models\GroupUser;
-use App\Models\SettingPaymart;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Paymart;
 use App\Models\RefundStatus;
 use App\Models\UserHistory;
@@ -24,17 +19,17 @@ class PaymartReturnService{
             'amount' => $price,
             'paymart_type' => $type,
             'description' => $description,
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
         return $id->id;
     }
 
     protected function addHistory(int $user_id, string $type, string $type_commit) {
-        return UserHistory::create([ //
+        return UserHistory::create([
             'user_id' => $user_id,
             'type' => $type,
             'type_commit' => $type_commit,
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
     }
 
@@ -46,7 +41,7 @@ class PaymartReturnService{
     }
 
     protected function updateMenegerChart(int $price) {
-        $User = MenegerChart::find(auth()->id());
+        $User = MenegerChart::find(Auth::id());
         if ($User) {
             $User->increment('qaytarildi_add', $price);
         }

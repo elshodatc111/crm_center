@@ -1,11 +1,8 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use App\Models\Setting;
-use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use App\Models\SettingPaymart;
 use App\Models\SettingChegirma;
 use App\Models\SettingRoom;
@@ -34,7 +31,7 @@ class SettingService{
         $data['amount'] = intval(str_replace(" ","",$data['amount']));
         $data['chegirma'] = intval(str_replace(" ","",$data['chegirma']));
         $data['admin_chegirma'] = intval(str_replace(" ","",$data['admin_chegirma']));
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
         return SettingPaymart::create($data);
     }
     public function getPaymart(){
@@ -45,7 +42,7 @@ class SettingService{
             $res[$key]['amount'] = $value->amount;
             $res[$key]['chegirma'] = $value->chegirma;
             $res[$key]['admin_chegirma'] = $value->admin_chegirma;
-            $res[$key]['user_id'] = auth()->user()->user_name;
+            $res[$key]['user_id'] = Auth::user()->user_name;
         }
         return $res;
     }
@@ -57,14 +54,14 @@ class SettingService{
             $res[$key]['amount'] = $value->amount;
             $res[$key]['chegirma'] = $value->chegirma;
             $res[$key]['admin_chegirma'] = $value->admin_chegirma;
-            $res[$key]['user_id'] = auth()->user()->user_name;
+            $res[$key]['user_id'] = Auth::user()->user_name;
         }
         return $res;
     }
     public function createChegirma(array $data){
         $data['amount'] = intval(str_replace(" ","",$data['amount']));
         $data['chegirma'] = intval(str_replace(" ","",$data['chegirma']));
-        $data['user_id'] = auth()->id(); 
+        $data['user_id'] = Auth::id(); 
         SettingChegirma::where('status','true')->update(['status' => 'delete']);
         return SettingChegirma::create($data);
     }
@@ -80,7 +77,7 @@ class SettingService{
         return SettingRoom::where('status','true')->get();
     }
     public function createRoom(array $data){
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
         return SettingRoom::create($data);
     }
     public function roomDelete(int $id){

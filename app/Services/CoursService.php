@@ -1,14 +1,11 @@
 <?php
 namespace App\Services;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Models\Cours;
 use App\Models\CoursAudio;
 use App\Models\CoursTest;
 use App\Models\CoursVideo;
+use Illuminate\Support\Facades\Auth;
 
 class CoursService{
 
@@ -29,7 +26,7 @@ class CoursService{
     }
 
     public function createCours(array $data){
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
         return Cours::create($data);
     }
 
@@ -43,7 +40,7 @@ class CoursService{
         return CoursVideo::where('cours_id',$cours_id)->orderBy('id','ASC')->get();
     }
     public function createVideo(array $data){
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
         return CoursVideo::create($data);
     }
     
@@ -51,7 +48,7 @@ class CoursService{
         return CoursTest::where('cours_id',$cours_id)->orderBy('id','ASC')->get();
     }
     public function createTest(array $data){
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
         return CoursTest::create($data);
     }
 

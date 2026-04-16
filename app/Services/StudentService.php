@@ -1,7 +1,6 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\Setting;
 use App\Models\UserHistory;
@@ -38,15 +37,15 @@ class StudentService{
             'user_id' => $User['id'],
             'type' => 'visited',
             'type_commit' => 'Markazga tashrif',
-            'admin_id' => auth()->user()->id,
+            'admin_id' => Auth::id(),
         ]);
-        $MenegerChart = MenegerChart::where('user_id',auth()->user()->id)->first();
+        $MenegerChart = MenegerChart::where('user_id',Auth::id())->first();
         if($MenegerChart){
             $MenegerChart->create_student = $MenegerChart->create_student + 1;
             $MenegerChart->save();
         }else{
             MenegerChart::create([
-                'user_id' => auth()->user()->id,
+                'user_id' => Auth::id(),
                 'create_student' => 1
             ]);
         }
@@ -111,7 +110,7 @@ class StudentService{
             'user_id' => $User['id'],
             'type' => 'password_update',
             'type_commit' => 'Parol yangilandi',
-            'admin_id' => auth()->user()->id,
+            'admin_id' => Auth::id(),
         ]);
         return $User->save();
     }
@@ -129,7 +128,7 @@ class StudentService{
             'user_id' => $student['id'],
             'type' => 'password_update',
             'type_commit' => 'Profile ma\'lumotlari yangilandi',
-            'admin_id' => auth()->user()->id,
+            'admin_id' => Auth::id(),
         ]);
         return $student;
     }

@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Social;
 use App\Http\Requests\StoreHududRequest;
-class sHududSettingController extends Controller
-{
+
+class sHududSettingController extends Controller{
     public function index(){
         $Social = Social::get();
         return view('admin.setting.social.index',compact('Social'));

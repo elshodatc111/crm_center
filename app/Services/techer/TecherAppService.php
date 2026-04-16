@@ -1,31 +1,21 @@
 <?php
 namespace App\Services\techer;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Group;
-use App\Models\Kassa;
 use App\Models\GroupUser;
-use App\Models\SettingPaymart;
 use App\Models\GroupDays;
-use App\Models\Paymart;
 use App\Models\Davomad;
 use App\Models\TestCheck;
-use App\Models\UserHistory;
 use App\Models\SettingRoom;
-use App\Models\MenegerChart;
 use App\Models\TecherPaymart;
-use App\Models\SettingChegirma;
-use App\Jobs\PaymartMessageWork;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class TecherAppService{
 
     public function allGroups(){
-        $group = Group::where('techer_id',auth()->user()->id)->get();
+        $group = Group::where('techer_id',Auth::id())->get();
         $res = [];
         foreach ($group as $key => $value) {
             $today = date('Y-m-d');
@@ -182,7 +172,7 @@ class TecherAppService{
     }
 
     public function paymarts(){
-        return TecherPaymart::where('techer_paymarts.user_id',auth()->user()->id)
+        return TecherPaymart::where('techer_paymarts.user_id',Auth::id())
             ->join('groups','groups.id','techer_paymarts.group_id')
             ->select('groups.group_name','techer_paymarts.type','techer_paymarts.amount','techer_paymarts.created_at')->get();
     } 

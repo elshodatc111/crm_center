@@ -77,7 +77,6 @@ class ReportController extends Controller{
     public function group_next(Request $request){
         $type = $request->type;
         $response = $this->groupService->response($type);
-        //dd($response);
         return view('report.group_next',compact('type','response'));
     }
 

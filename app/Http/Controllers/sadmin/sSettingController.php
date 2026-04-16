@@ -5,13 +5,8 @@ namespace App\Http\Controllers\sadmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
-use App\Models\User;
-use App\Models\UserHistory;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\SadminUpdateNameRequest;
 use App\Http\Requests\SadminUpdateStatusRequest;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Log;
 use App\Services\upload\UploadService;
 
 

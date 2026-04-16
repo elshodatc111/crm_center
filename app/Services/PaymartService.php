@@ -1,9 +1,6 @@
 <?php
 namespace App\Services;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Group;
@@ -13,7 +10,7 @@ use App\Models\SettingPaymart;
 use App\Models\Paymart;
 use App\Models\UserHistory;
 use App\Models\MenegerChart;
-
+use Illuminate\Support\Facades\Auth;
 use App\Jobs\PaymartMessageWork;
 
 class PaymartService{
@@ -55,16 +52,15 @@ class PaymartService{
     }
 
     protected function addPay(int $user_id, string $group_id, int $price, string $type, string $description) {
-        //dd($type);
         $paymart = Paymart::create([
             'user_id' => $user_id,
             'group_id' => $group_id,
             'amount' => $price,
             'paymart_type' => $type,
             'description' => $description,
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
-        dispatch(new PaymartMessageWork($paymart->id, $type , $user_id, auth()->user()->id, 'pay_student_sms'));
+        dispatch(new PaymartMessageWork($paymart->id, $type , $user_id, Auth::id(), 'pay_student_sms'));
         return true;
     }
 
@@ -73,7 +69,7 @@ class PaymartService{
             'user_id' => $user_id,
             'type' => $type,
             'type_commit' => $type_commit,
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
     }
 
@@ -85,7 +81,7 @@ class PaymartService{
     }
 
     protected function updateMenegerChart(int $price, string $type) {
-        $User = MenegerChart::find(auth()->id());
+        $User = MenegerChart::find(Auth::id());
         if ($User) {
             if ($type == 'naqt') {
                 $User->increment('paymart_add_naqt', $price);
@@ -147,7 +143,6 @@ class PaymartService{
                 }
             }
         }
-
         return $data;
     }
 

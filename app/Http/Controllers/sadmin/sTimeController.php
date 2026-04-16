@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\sadmin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\LessenTimeRequest;
 use App\Models\LessenTime;
 use Carbon\Carbon;

@@ -1,20 +1,13 @@
 <?php
 namespace App\Services;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Group;
 use App\Models\Kassa;
-use App\Models\GroupUser;
-use App\Models\SettingPaymart;
 use App\Models\Paymart;
 use App\Models\Setting;
-use App\Models\UserHistory;
-use App\Models\MenegerChart;
 use App\Models\KassaHistory;
+use Illuminate\Support\Facades\Auth;
 
 class KassaService{
 
@@ -94,7 +87,7 @@ class KassaService{
         $Kassa = $this->getKassa();
         if($data['type']=='naqt'){
             KassaHistory::create([
-                'meneger_id' => auth()->user()->id,
+                'meneger_id' => Auth::id(),
                 'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
@@ -105,7 +98,7 @@ class KassaService{
             $Kassa->decrement('naqt',intval(str_replace(" ", "", $data['amount'])));
         }else{
             KassaHistory::create([
-                'meneger_id' => auth()->user()->id,
+                'meneger_id' => Auth::id(),
                 'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
@@ -122,7 +115,7 @@ class KassaService{
         $Kassa = $this->getKassa();
         if($data['type']=='naqt'){
             KassaHistory::create([
-                'meneger_id' => auth()->user()->id,
+                'meneger_id' => Auth::id(),
                 'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
@@ -133,7 +126,7 @@ class KassaService{
             $Kassa->decrement('naqt',intval(str_replace(" ", "", $data['amount'])));
         }else{
             KassaHistory::create([
-                'meneger_id' => auth()->user()->id,
+                'meneger_id' => Auth::id(),
                 'create_time' => date('Y-m-d H:i:s'),
                 'description' => $data['description'],
                 'amount' => intval(str_replace(" ", "", $data['amount'])),
@@ -198,7 +191,7 @@ class KassaService{
         $Kassa = $this->getKassa();
         $KassaHistory = KassaHistory::find($id);
         $KassaHistory->status = 'success';
-        $KassaHistory->admin_id = auth()->user()->id;
+        $KassaHistory->admin_id = Auth::id();
         $KassaHistory->succes_time = date('Y-m-d H:i:s');
         $type = $KassaHistory->type;
         if($type == 'naqt_chiq' OR $type == 'naqt_xar'){
@@ -231,7 +224,6 @@ class KassaService{
             $Setting->increment('balans_plastik',intval(str_replace(" ", "", $amount)));
             $Setting->increment('balans_exson',intval(str_replace(" ", "", $exson)));
         }
-        //dd($KassaHistory->amount);
         return $Setting->save();
     }
 

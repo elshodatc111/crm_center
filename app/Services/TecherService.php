@@ -1,8 +1,6 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\GroupUser;
@@ -153,7 +151,7 @@ class TecherService{
             'type' => $type,
             'amount' => $data['amount'],
             'comment' => $data['description'].'(O\'qituvchi)',
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::id(),
         ]);
         $paymart = TecherPaymart::create([
             'user_id'=> $data['techer_id'],
@@ -161,7 +159,7 @@ class TecherService{
             'amount'=> $data['amount'],
             'type'=> $data['type'],
             'description'=> $data['description'],
-            'admin_id'=> auth()->user()->id,
+            'admin_id'=> Auth::id(),
         ]);
         $Setting->save();
         return $paymart->id;

@@ -1,22 +1,10 @@
 <?php
 namespace App\Services\chart;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Social;
-use App\Models\Setting;
 use App\Models\GroupUser;
 use App\Models\Group;
-use App\Models\Paymart;
-use App\Models\Varonka;
-use App\Models\MoliyaHistory;
-use App\Services\SettingService;
-use App\Services\chart\VisedService;
-use App\Services\chart\TecherService;
-
 
 class TecherReytingServiceTwo{
 
@@ -64,7 +52,6 @@ class TecherReytingServiceTwo{
         $time = $this->getTime();
         $old = $time['oldMonth']['ym'];
         $now = $time['nowMonth']['ym'];
-        //dd($old);
         $data = [];
         foreach ($User as $key => $value) {
             $data[$key]['techer'] = $value->user_name;

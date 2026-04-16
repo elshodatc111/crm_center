@@ -1,21 +1,10 @@
 <?php
-
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
 use App\Models\User;
-use App\Models\Group;
-use App\Models\GroupUser;
-use App\Models\Social;
-use App\Models\Setting;
-use App\Models\TecherPaymart;
-use App\Models\MoliyaHistory;
 use App\Models\Varonka;
 use App\Models\VaronkaHistory;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 
 class VaronkaServise{
 
@@ -117,7 +106,7 @@ class VaronkaServise{
         VaronkaHistory::create([
             'varonka_id'=>$id,
             'comment'=>"Murojat bekor qilindi",
-            'admin_id'=>auth()->user()->id,
+            'admin_id'=>Auth::id(),
         ]);
         return $Varonka->save();
     }
@@ -133,7 +122,7 @@ class VaronkaServise{
         VaronkaHistory::create([
             'varonka_id'=>$id,
             'comment'=>$comment,
-            'admin_id'=>auth()->user()->id,
+            'admin_id'=>Auth::id(),
         ]);
         $Varonka = Varonka::where('id', $id)->first();
         if($Varonka->status != 'success'){

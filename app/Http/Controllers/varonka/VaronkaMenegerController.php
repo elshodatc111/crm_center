@@ -7,18 +7,11 @@ use Illuminate\Http\Request;
 use App\Services\StudentService;
 use App\Services\VaronkaServise;
 use App\Models\User;
-use App\Models\Group;
-use App\Models\GroupUser;
-use App\Models\Social;
-use App\Models\Setting;
-use App\Models\TecherPaymart;
-use App\Models\MoliyaHistory;
 use App\Models\Varonka;
 use App\Models\VaronkaHistory;
 use App\Jobs\SendMessageWork;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterVaronkaRequest;
+use Illuminate\Support\Facades\Auth;
 
 class VaronkaMenegerController extends Controller{
     private StudentService $studentService;
@@ -98,12 +91,12 @@ class VaronkaMenegerController extends Controller{
         VaronkaHistory::create([
             'varonka_id'=>$varonka_id,
             'comment'=>"Murojat ro'yhatga olindi.",
-            'admin_id'=>auth()->user()->id,
+            'admin_id'=>Auth::id(),
         ]);
         $varomka->status = 'success';
         $varomka->register_id = $users->id;
         $varomka->save();
-        dispatch(new SendMessageWork($users->id, 'new_student_sms',auth()->user()->id));
+        dispatch(new SendMessageWork($users->id, 'new_student_sms',Auth::id()));
         return redirect()->back()->with('success', 'Murojat ro\'yhatga olindi.');
     }
 

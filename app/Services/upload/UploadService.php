@@ -7,6 +7,7 @@ use App\Models\UserHistory;
 use App\Models\UploadUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UploadService {
 
@@ -75,7 +76,7 @@ class UploadService {
         $filePath = $file->storeAs('uploads', $fileName, 'public');
         UploadUser::create([
             'file_name' => $fileName,
-            'admin'=> auth()->user()->user_name,
+            'admin'=>Auth::user()->user_name,
         ]);
         return $filePath;
     }

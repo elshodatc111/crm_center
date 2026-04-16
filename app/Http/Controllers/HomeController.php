@@ -15,7 +15,6 @@ class HomeController extends Controller{
     }
     public function index(){
         $jadval = $this->homeService->getJadval();
-        //dd($jadval);
         return view('home',compact('jadval'));
     }
     

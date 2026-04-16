@@ -43,7 +43,7 @@
                         @forelse($users as $item)
                         <tr>
                             <td>{{ $loop->index+1 }}</td>
-                            <td>{{ $item['user_name'] }}</td>
+                            <td style="text-align: left">{{ $item['user_name'] }}</td>
                             <td>
                                 @if($item['type'] == 'admin')
                                     Drektor

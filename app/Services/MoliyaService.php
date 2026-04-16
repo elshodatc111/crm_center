@@ -1,14 +1,11 @@
 <?php
 namespace App\Services;
 
-use App\Models\Holiday;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\User;
-use App\Models\SettingPaymart;
 use App\Models\Setting;
 use App\Models\MoliyaHistory;
+use Illuminate\Support\Facades\Auth;
 
 class MoliyaService{
 
@@ -39,7 +36,7 @@ class MoliyaService{
                 'type' => $type,
                 'amount' => $amount,
                 'comment' => $data['discription'],
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
             ]);    
             return $Setting->save();
         });
@@ -63,7 +60,7 @@ class MoliyaService{
                 'type' => $type,
                 'amount' => $amount,
                 'comment' => $data['discription'],
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
             ]);
             return $Setting->save();
         });

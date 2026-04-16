@@ -15,7 +15,7 @@ use App\Models\UserHistory;
 use App\Models\MenegerChart;
 use App\Models\SettingChegirma;
 use App\Jobs\PaymartMessageWork;
-
+use Illuminate\Support\Facades\Auth;
 class AdminChegirmaService{
 
     public function getGroups(int $user_id) {
@@ -50,7 +50,7 @@ class AdminChegirmaService{
             'user_id' => $data['user_id'],
             'type' => 'chegirma_add',
             'type_commit' => "Admin tamonidan ".$data['chegirma']." so'm chegirma(".$data['description'].")",
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
         if ($User) {
             $User->increment('balans', $data['chegirma']);
@@ -61,7 +61,7 @@ class AdminChegirmaService{
             'amount' => $data['chegirma'],
             'paymart_type' => 'chegirma',
             'description' => $data['description'],
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
         return true;
     }
@@ -92,9 +92,9 @@ class AdminChegirmaService{
             'amount' => $price,
             'paymart_type' => $type,
             'description' => $description,
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
-        dispatch(new PaymartMessageWork($paymart->id, $type , $user_id, auth()->user()->id, 'pay_student_sms'));
+        dispatch(new PaymartMessageWork($paymart->id, $type , $user_id, Auth::id(), 'pay_student_sms'));
         return true;
     }
     protected function addHistory(int $user_id, string $type, string $type_commit) {
@@ -102,7 +102,7 @@ class AdminChegirmaService{
             'user_id' => $user_id,
             'type' => $type,
             'type_commit' => $type_commit,
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
         ]);
     }
     protected function updateUserBalance(int $user_id, int $price) {
@@ -112,7 +112,7 @@ class AdminChegirmaService{
         }
     }
     protected function updateMenegerChart(int $price, string $type) {
-        $User = MenegerChart::find(auth()->id());
+        $User = MenegerChart::find(Auth::id());
         if ($User) {
             if ($type == 'naqt') {
                 $User->increment('paymart_add_naqt', $price);

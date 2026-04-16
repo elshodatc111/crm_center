@@ -8,8 +8,6 @@ use App\Models\SettingRoom;
 use App\Models\GroupUser;
 use App\Models\LessenTime;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class HomeService{

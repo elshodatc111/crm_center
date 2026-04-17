@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminMiddlewar{
     public function handle(Request $request, Closure $next): Response{
-        if (Auth::check() && in_array(Auth::user()->type, ['sAdmin', 'admin'])) {
+        if (Auth::check()) {
             return $next($request);
         }
         return abort(403, 'Sizga bu sahifaga kirishga ruxsat yo‘q!');

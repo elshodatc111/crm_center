@@ -314,7 +314,7 @@
                                 <td>{{ $loop->index+1 }}</td>
                                 <td style="text-align:left">{{ $item['message'] }}</td>
                                 <td>{{ $item['created_at'] }}</td>
-                                <td>{{ $item['user_name'] }}</td>
+                                <td>{{ $item->admin->user_name }}</td>
                             </tr>
                             @empty
                             <tr>

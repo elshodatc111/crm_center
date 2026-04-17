@@ -17,7 +17,7 @@ class VaronkaServise{
             'phone1' => $data['phone1'],
             'phone2' => $data['phone2'] ?? null,
             'address' => $data['address'] ?? null,
-            'birthday' => $data['birth_date'] ?? null,
+            'birthday' => null,
             'status' => $type,
             'type_social' => $data['visited'] ?? null,
         ]));

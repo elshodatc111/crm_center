@@ -56,23 +56,21 @@
                     @csrf 
                     <input type="hidden" name="visited" value="{{ $visited }}" >
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <label for="name" class="mt-2">Ismingiz</label>
                             <input type="text" name="name"  required class="form-control my-1">
                         </div>
                         <div class="col-lg-6">
-                            <label for="surname" class="mt-2">Familyangiz</label>
-                            <input type="text" name="surname"  required class="form-control my-1">
+                            <input type="hidden" value="Lead" name="surname"  required class="form-control my-1">
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <label for="phone1" class="mt-2">Telefon raqamingiz</label>
                             <input type="text" name="phone1"  required class="form-control my-1 phone" value="+998">
                         </div>
-                        <div class="col-lg-6">
-                            <label for="phone2" class="mt-2">Qo'shimcha telefon raqamingiz</label>
-                            <input type="text" name="phone2"  required class="form-control my-1 phone" value="+998">
+                        <div class="col-lg-12">
+                            <input type="hidden" name="phone2" value="+998 90 123 4444">
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <label for="address" class="mt-2">Yashash manzilingiz</label>
                             <select name="address" required class="form-control my-1">
                                 <option value="">Tanlang</option>
@@ -81,9 +79,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-lg-6">
-                            <label for="birth_date" class="mt-2">Tug'ilgan kuningiz</label>
-                            <input type="date" name="birth_date"  required class="form-control my-1">
+                        <div class="col-lg-12">
+                            <input type="hidden" value="01-01-2002" name="birth_date"  required class="form-control my-1">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mt-3">Ro'yhatdan o'tish</button>

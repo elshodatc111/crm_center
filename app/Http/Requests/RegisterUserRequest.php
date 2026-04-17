@@ -17,7 +17,7 @@ class RegisterUserRequest extends FormRequest{
             'phone1' => 'required|string|regex:/^\+998 \d{2} \d{3} \d{4}$/',
             'phone2' => 'required|string|regex:/^\+998 \d{2} \d{3} \d{4}$/',
             'address' => 'required|string|max:255',
-            'birth_date' => 'required|date',
+            'birth_date' => 'required',
         ];
     }
     

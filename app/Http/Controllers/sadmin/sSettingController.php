@@ -12,6 +12,7 @@ use App\Services\upload\UploadService;
 
 
 class sSettingController extends Controller{
+    
     private UploadService $uploadService;
     public function __construct(UploadService $uploadService){
         $this->uploadService = $uploadService;

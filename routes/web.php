@@ -47,7 +47,7 @@ Route::get('/user/brithday', [UserBritisday::class, 'index'])->name('user_brithd
 Route::get('/user/eslatmalar', [UserBritisday::class, 'eslatmalar'])->name('user_eslatmalar');
 Route::post('/user/eslatmalar/trash', [UserBritisday::class, 'eslatmalar_trash'])->name('user_eslatmalar_trash');
 
-Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
+Route::prefix('meneger')->group(function () {
     Route::get('student', [StudentController::class, 'index'])->name('all_student');
     Route::get('/check-phone-exist', [StudentController::class, 'checkPhoneExist'])->name('checkPhoneExist');
     Route::post('/student/create', [StudentController::class, 'store'])->name('student_store');
@@ -85,7 +85,7 @@ Route::middleware(['auth', 'meneger'])->prefix('meneger')->group(function () {
 
 });
 
-Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
+Route::prefix('sadmin')->group(function () {
     Route::get('s/setting', [sSettingController::class, 'index'])->name('sadmin_setting');
     Route::post('s/update/name', [sSettingController::class, 'update_name'])->name('sadmin_update_name');
     Route::post('s/update/status', [sSettingController::class, 'update_status'])->name('sadmin_update_status');
@@ -103,7 +103,7 @@ Route::middleware(['auth', 'sadmin'])->prefix('sadmin')->group(function () {
     Route::post('/upload-run', [sSettingController::class, 'runExcel'])->name('run.excel');
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+Route::prefix('admin')->group(function () {
     Route::get('setting/holiday', [HolidayController::class, 'index'])->name('setting_holiday');
     Route::post('setting/holiday/update', [HolidayController::class, 'update'])->name('setting_holiday_update');
     Route::post('setting/holiday/create', [HolidayController::class, 'create'])->name('setting_holiday_create');

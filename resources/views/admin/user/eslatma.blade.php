@@ -45,8 +45,8 @@
                         @forelse($array as $item)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
-                                <td><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['name'] }}</a></td>
-                                <td>{{ $item['message'] }}</td>
+                                <td style="text-align: left"><a href="{{ route('student_show',$item['user_id']) }}">{{ $item['name'] }}</a></td>
+                                <td style="text-align: left">{{ $item['message'] }}</td>
                                 <td>{{ $item['created_at'] }}</td>
                                 <td>{{ $item['admin'] }}</td>
                                 <td>

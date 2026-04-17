@@ -67,9 +67,8 @@ class StudentController extends Controller{
         $paymarts = $this->paymartService->getPaymarts($id);
         $adminChegirmaGroup = $this->adminChegirmaService->getGroups($id);
         $holidayDiscount = $this->adminChegirmaService->holidayDiscount();
-        $eslatma = Eslatma::where('eslatmas.user_id', $id)
-            ->orderBy('eslatmas.created_at', 'desc')
-            ->join('users', 'eslatmas.admin_id', '=', 'users.id')
+        $eslatma = Eslatma::where('user_id', $id)
+            ->orderBy('created_at', 'desc')
             ->get();
         return view('student.show', compact('student','eslatma','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup','holidayDiscount'));
     }

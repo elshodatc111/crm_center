@@ -193,7 +193,7 @@
                             @forelse($groups as $item)
                             <tr> 
                                 <td>{{ $loop->index+1 }}</td>
-                                <td><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
+                                <td style="text-align: left"><a href="{{ route('create_show',$item['group_id']) }}">{{ $item['group_name'] }}</a></td>
                                 <td>{{ \Carbon\Carbon::parse($item['lessen_start'])->format('Y-m-d') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item['lessen_end'])->format('Y-m-d') }}</td>
                                 <td>

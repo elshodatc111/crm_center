@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AddStudentToGroupRequest extends FormRequest{
     public function authorize(): bool{
-        return auth()->check() && auth()->user()->isMineger();
+        return true;
     }
 
     public function rules(): array{

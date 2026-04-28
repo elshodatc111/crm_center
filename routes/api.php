@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\{AuthController, CoursController, GroupController, PaymentsController};
+use App\Http\Controllers\moliya\MoliyaController;
 
 Route::post('/v1/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
@@ -23,5 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/v1/cours/test/show/post', [CoursController::class, 'TestCheckPost']);
     # To'lovlar Ish haqlari
     Route::get('/v1/payment', [PaymentsController::class, 'index']);
+    # SUPER ADMIN MOLIYA
+    Route::get('/v1/moliya', [MoliyaController::class, 'index_api']);
 });
 

@@ -31,6 +31,30 @@ class MoliyaController extends Controller{
         return view('moliya.index',compact('service','kassa','chiqim','history','moliya'));
     }
 
+    public function index_api(){
+        $res = [];
+        $res['balans_naqt'] = $this->settingService->getSetting()->balans_naqt;
+        $res['balans_plastik'] = $this->settingService->getSetting()->balans_plastik;
+        $res['balans_exson'] = $this->settingService->getSetting()->balans_exson;
+        $res['exson_foiz'] = $this->settingService->getSetting()->exson_foiz;
+        $res['kassa_naqt'] = $this->kassaService->getKassa()->naqt;
+        $res['kassa_naqt_xar_pedding'] = $this->kassaService->getKassa()->naqt_xar_pedding;
+        $res['kassa_naqt_chiq_pedding'] = $this->kassaService->getKassa()->naqt_chiq_pedding;
+        $res['kassa_naqt_qayt_pedding'] = $this->kassaService->getKassa()->naqt_qayt_pedding;
+        $res['kassa_plastik'] = $this->kassaService->getKassa()->plastik;
+        $res['kassa_plastik_xar_pedding'] = $this->kassaService->getKassa()->plastik_xar_pedding;
+        $res['kassa_plastik_chiq_pedding'] = $this->kassaService->getKassa()->plastik_chiq_pedding;
+        $res['kassa_plastik_qayt_pedding'] = $this->kassaService->getKassa()->plastik_qayt_pedding;
+        $chiqim = $this->kassaService->successAllKassa();
+        $moliya = $this->moliyaService->MoliyaHistory(); 
+        $history = $this->moliyaService->history($chiqim, $moliya); 
+        return response()->json([
+            'success' => true,
+            'data' => $res,
+            'history' => $history
+        ], 200);
+    }
+
     public function updateExson(Request $request){
         $this->settingService->exsonUpdate($request->exson_percent);
         return redirect()->back()->with('success', 'Exson foizi taxrirlandi!');

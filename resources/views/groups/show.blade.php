@@ -486,14 +486,15 @@
                         <div id="seccond" style="display: none;">
                             <label for="">Yangi guruhga o'tadigan talabalarni tanlang</label>
                             @foreach($response['users'] as $key => $item)
+                                @if($item['balans']>0)
                                 <div class="form-check py-1">
                                     <input class="form-check-input" type="checkbox" name="students[]" value="{{ $item['id'] }}" id="gridCheck{{ $key }}">
                                     <label class="form-check-label" for="gridCheck{{ $key }}">
                                         {{ $item['user_name'] }} <i>(Balans: {{ number_format($item['balans'], 0, '.', ' ') }})</i>
                                     </label>
                                 </div>
-                            @endforeach
-
+                                @endif
+                            @endforeach 
                             <div class="row mt-2">
                                 <div class="col-6">
                                     <button type="button" class="btn btn-secondary w-100" id="back-btn">Orqaga</button>

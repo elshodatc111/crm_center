@@ -26,6 +26,31 @@
         </div>
     @endif
     <div class="card">
+        <div class="card-body pt-2">
+            <div class="row">
+                @if(auth()->user()->type=='admin' OR auth()->user()->type=='sAdmin')
+                    @if($response['message_status']==1)
+                        <div class="col-lg-3 mt-2">
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage"> <i class="bi bi-exclamation-circle"></i> Qarzdorlarga SMS</button>
+                        </div>
+                    @endif
+                    <div class="col-lg-3 mt-2">
+                        <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#updateGroups"><i class="bi bi-pencil-square"></i> Guruhni taxrirlash</button>
+                    </div>
+                    <div class="col-lg-3 mt-2">
+                        <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteGroups"><i class="bi bi-trash"></i> Guruhdan o'chirish</button>
+                    </div>
+                @endif
+                @if($response['group']['next']=='new')
+                    <div class="col-lg-3 mt-2">
+                        <button class="btn btn-warning w-100 text-white" data-bs-toggle="modal" data-bs-target="#nextGroup"><i class="bi bi-arrow-repeat"></i> Guruhni davom ettirish</button>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-body pt-4">
             <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
@@ -128,27 +153,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        @if(auth()->user()->type=='admin' OR auth()->user()->type=='sAdmin')
-                            @if($response['message_status']==1)
-                                <div class="col-lg-3 mt-2" style="display:none;">
-                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#sendmessage"><i class="bi bi-envelope"></i> Talabalarga SMS</button>
-                                </div>
-                                <div class="col-lg-3 mt-2">
-                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#debetsendmessage"> <i class="bi bi-exclamation-circle"></i> Qarzdorlarga SMS</button>
-                                </div>
-                            @endif
-                            <div class="col-lg-3 mt-2">
-                                <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#updateGroups"><i class="bi bi-pencil-square"></i> Guruhni taxrirlash</button>
-                            </div>
-                            <div class="col-lg-3 mt-2">
-                                <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteGroups"><i class="bi bi-trash"></i> Guruhdan o'chirish</button>
-                            </div>
-                        @endif
-                        @if($response['group']['next']=='new')
-                            <div class="col-lg-3 mt-2">
-                                <button class="btn btn-warning w-100 text-white" data-bs-toggle="modal" data-bs-target="#nextGroup"><i class="bi bi-arrow-repeat"></i> Guruhni davom ettirish</button>
-                            </div>
-                        @endif
+                        
                     </div>
                 </div>
                 <div class="tab-pane fade pt-2" id="dars-kunlari" role="tabpanel" aria-labelledby="profile-tab">

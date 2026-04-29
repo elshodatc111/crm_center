@@ -67,10 +67,10 @@ class StudentController extends Controller{
         $paymarts = $this->paymartService->getPaymarts($id);
         $adminChegirmaGroup = $this->adminChegirmaService->getGroups($id);
         $holidayDiscount = $this->adminChegirmaService->holidayDiscount();
-        $eslatma = Eslatma::where('user_id', $id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-        return view('student.show', compact('student','eslatma','history','addGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup','holidayDiscount'));
+        $eslatma = Eslatma::where('user_id', $id)->orderBy('created_at', 'desc')->get();
+        $endGroups = $this->studentService->addEndStudentGroup($id);
+        //dd($endGroups);
+        return view('student.show', compact('student','eslatma','history','addGroups','endGroups','user_groups','chegirma_groups','kassa','paymarts','adminChegirmaGroup','holidayDiscount'));
     }
 
     public function update_about(UserAboutUpdateRequest $request){

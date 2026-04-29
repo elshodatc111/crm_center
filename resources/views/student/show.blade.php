@@ -37,51 +37,78 @@
     <section class="section profile">
         <div class="row">
             <!-- Chap tomondagi tugmalar -->
-            <div class="col-xl-3">
+            <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                        <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#paymentModal">
-                            <i class="bi bi-credit-card"></i> TO'LOV QILISH
-                        </button>
-                        @if($holidayDiscount['status'] == 'true')
-                        <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#discountPaymentModal">
-                            <i class="bi bi-percent"></i> CHEGIRMALI TO'LOV
-                        </button>
-                        @endif
-                        @if($student['balans']>0)
-                        <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#refundModal">
-                            <i class="bi bi-arrow-counterclockwise"></i> To'lovni qaytarish
-                        </button>
-                        @endif
-                        @if($student['balans']>=0)
-                        <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-                            <i class="bi bi-people"></i> GURUHGA QO'SHISH
-                        </button>
-                        @elseif(auth()->user()->type=='sAdmin' || auth()->user()->type=='admin')
-                        <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-                            <i class="bi bi-people"></i> GURUHGA QO'SHISH
-                        </button>
-                        @endif
-                        @if(auth()->user()->type!='meneger')
-                        <button class="btn btn-dark w-100 mb-2" data-bs-toggle="modal" data-bs-target="#adminDiscountModal">
-                            <i class="bi bi-shield-lock"></i> ADMIN CHEGIRMA
-                        </button>
-                        @endif
-                        <button class="btn btn-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <i class="bi bi-pencil"></i> TAXRIRLASH
-                        </button>
-                        <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
-                            <i class="bi bi-key"></i> PAROLNI YANGILASH
-                        </button>
-                        <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#eslatma">
-                            <i class="bi bi-exclamation-triangle"></i> Eslatma qoldirish
-                        </button>
+                    <div class="card-body pt-3 pb-2">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                                    <i class="bi bi-credit-card"></i> TO'LOV QILISH
+                                </button>
+                            </div>
+                            @if($holidayDiscount['status'] == 'true')
+                            <div class="col-lg-3">
+                                <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#discountPaymentModal">
+                                    <i class="bi bi-percent"></i> CHEGIRMALI TO'LOV
+                                </button>
+                            </div>
+                            @endif
+                            @if($student['balans']>0)
+                            <div class="col-lg-3">
+                                <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#refundModal">
+                                    <i class="bi bi-arrow-counterclockwise"></i> To'lovni qaytarish
+                                </button>
+                            </div>
+                            @endif
+                            @if($student['balans']>=0)
+                            <div class="col-lg-3">
+                                <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+                                    <i class="bi bi-people"></i> GURUHGA QO'SHISH
+                                </button>
+                            </div>
+                            @elseif(auth()->user()->type=='sAdmin' || auth()->user()->type=='admin')
+                            <div class="col-lg-3">
+                                <button class="btn btn-info w-100 text-white mb-2" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+                                    <i class="bi bi-people"></i> GURUHGA QO'SHISH
+                                </button>
+                            </div>
+                            @endif
+                            @if(auth()->user()->type=='sAdmin' || auth()->user()->type=='admin')
+                            <div class="col-lg-6">
+                                <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#endAddGroupModal">
+                                    <i class="bi bi-people"></i> YAKUNLANGAN GURUHGA QO'SHISH
+                                </button>
+                            </div>
+                            @endif
+                            @if(auth()->user()->type!='meneger')
+                            <div class="col-lg-3">
+                                <button class="btn btn-dark w-100 mb-2" data-bs-toggle="modal" data-bs-target="#adminDiscountModal">
+                                    <i class="bi bi-shield-lock"></i> ADMIN CHEGIRMA
+                                </button>
+                            </div>
+                            @endif
+                            <div class="col-lg-3">
+                                <button class="btn btn-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="bi bi-pencil"></i> TAXRIRLASH
+                                </button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
+                                    <i class="bi bi-key"></i> PAROLNI YANGILASH
+                                </button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#eslatma">
+                                    <i class="bi bi-ex</div>clamation-triangle"></i> Eslatma qoldirish
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- O'ng tomondagi ma'lumotlar -->
-            <div class="col-xl-9">
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body pt-3">
                         <!-- Nav-tablari -->
@@ -327,6 +354,41 @@
             </div>
         </div>
     </section>
+
+    <div class="modal fade" id="endAddGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addGroupModalLabel">Yakunlangan guruhga qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('student_add_group') }}" method="POST" id="addGroupForm">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $student['id'] }}">
+                        <label for="group_id" class="form-label">Guruhni tanlang</label>
+                        <select class="form-select" name="group_id" required>
+                            <option value="" disabled selected>Tanlang...</option>
+                            @foreach($endGroups as $item)
+                                <option value="{{ $item['group_id'] }}">
+                                    {{ $item['group_name'].' | '.$item['lessen_end']." | ".$item['teacher'] }}</option>
+                            @endforeach
+                        </select>
+                        <label for="start_discription" class="form-label mt-2">Guruhdan qo'shish haqida</label>
+                        <textarea type="text" name="start_discription" class="form-control" required>...</textarea>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" onclick="this.style.display='none'" class="btn btn-primary w-100" id="saveEdit">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="eslatma" tabindex="-1">
         <div class="modal-dialog">

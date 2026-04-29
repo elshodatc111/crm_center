@@ -154,6 +154,28 @@ class StudentService{
         return $filteredGroups->values();
     }
 
+    public function addEndStudentGroup(int $id){
+        $ninetyDaysAgo = Carbon::today()->subDays(90)->toDateString();
+        $today = Carbon::today()->toDateString();
+        $groups = Group::whereBetween('lessen_end', [$ninetyDaysAgo, $today])->orderby('lessen_end', 'desc')->get();
+        $res = [];
+        foreach ($groups as $key => $value) {
+            $groupUser = GroupUser::where('group_id', $value->id)
+                ->where('user_id', $id)
+                ->where('status', true)
+                ->first();
+            if($groupUser){
+                
+            }else{
+                $res[$key]['group_id'] = $value->id;
+                $res[$key]['group_name'] = $value->group_name;
+                $res[$key]['lessen_end'] = \Carbon\Carbon::parse($value->lessen_end)->format('Y-m-d');
+                $res[$key]['teacher'] = $value->teacher->user_name;
+            }
+        }
+        return $res;
+    }
+
     public function addGroups(array $data){
         return $this->groupAddUserRepository->addGroups($data);
     }

@@ -1,8 +1,8 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center text-center justify-content-between">
       <a href="{{ route('home') }}" class="logo d-flex align-items-center text-center w-100" >
-        <img src="{{ asset('images/icon1.jpg') }}" class="d-block d-lg-none">
-        <img src="{{ asset('images/icon.jpg') }}" class="d-none d-lg-block">
+        <img src="{{ asset('images/icon1.png') }}" class="d-block d-lg-none">
+        <img src="{{ asset('images/icon.png') }}" class="d-none d-lg-block">
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
@@ -11,26 +11,26 @@
         @if(auth()->user()->type=='sAdmin')
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('all_student_return') }}">
-            <i class="bi bi-cash-stack text-danger"></i>
+            <i class="bi bi-arrow-left-right text-danger"></i>
             <span class="badge bg-success badge-number">@include('layouts.returnPaymart')</span>
           </a>
         </li>
         @endif
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('user_brithday') }}">
-            <i class="bi bi-cake2 text-primary"></i>
+            <i class="bi bi-cake text-primary"></i>
             <span class="badge bg-warning badge-number">@include('layouts.tkun')</span>
           </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('user_eslatmalar') }}">
-            <i class="bi bi-exclamation-triangle text-primary"></i>
+            <i class="bi bi-exclamation-triangle text-info"></i>
             <span class="badge bg-danger badge-number">@include('layouts.eslatma')</span>
           </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="{{ route('meneger_varonka_new') }}">
-            <i class="bi bi-bell"></i>
+            <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-primary badge-number">@include('layouts.murojat')</span>
           </a>
         </li>

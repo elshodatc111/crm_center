@@ -207,6 +207,7 @@
                                                 <b class="text-info">Plastik</b>
                                             @endif
                                         </td>
+                                        <td style="text-align: left">{{ $item['description'] }}</td>
                                         <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['user_name'] }}</td>
                                     </tr>

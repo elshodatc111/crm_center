@@ -8,6 +8,7 @@ use App\Models\{Davomad, Group, GroupDays, GroupUser};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class GroupController extends Controller{
 
@@ -76,34 +77,24 @@ class GroupController extends Controller{
         ], 200);
     }
 
-    public function hodim(){
-        $now = date("Y-m-d");        
-        $groups = Group::withCount([
-            'groupUsers' => function ($query) {
-                $query->where('status', true);
-            },
-            'groupDays'
-        ])->orderBy('created_at', 'desc')->get();
-        $todayGroupIds = GroupDays::where('date', $now)->pluck('group_id')->toArray();
-        $res = $groups->map(function ($group) use ($now, $todayGroupIds) {
-            if ($group->group_users_count <= 0) {
-                return null;
-            }
-            if ($now > $group->lessen_end) {
-                return null;
-            }
-            $status = ($now >= $group->lessen_start && $now <= $group->lessen_end) ? 'pending' : 'new';
+    public function hodim(): JsonResponse{
+        $now = now()->format('Y-m-d');   
+        $res = Group::withCount(['groupUsers' => function ($query) {$query->where('status', true);},'groupDays'])->has('groupUsers')
+        ->whereDate('lessen_end', '>=', $now)->orderBy('created_at', 'desc')->get()->map(function ($group) use ($now) {
+            $hasLessonToday = $group->groupDays()->whereDate('date', $now)->exists();
+            $isStarted = Carbon::parse($group->lessen_start)->startOfDay()->isPast() || Carbon::parse($group->lessen_start)->isSameDay($now);                        
+            $status = $isStarted ? 'pending' : 'new';
             return [
                 'group_id'     => $group->id,
                 'group_name'   => $group->group_name,
                 'status'       => $status,
-                'dav_status'   => in_array($group->id, $todayGroupIds),
+                'dav_status'   => $hasLessonToday,
                 'users_count'  => $group->group_users_count,
                 'lesson_count' => $group->group_days_count,
                 'lessen_start' => Carbon::parse($group->lessen_start)->format('Y-m-d'),
                 'lessen_end'   => Carbon::parse($group->lessen_end)->format('Y-m-d'),
             ];
-        })->filter()->values();
+        });
         return response()->json([
             'success' => true,
             'data' => $res

@@ -23,7 +23,7 @@ class HodimService{
 
     public function create(array $data){
         $data['address'] = Social::find($data['address_id'])->name;
-        $data['email'] =time()."@mail";
+        $data['email'] =time()."@mail.com";
         $data['password'] = Hash::make('password');
         $user = User::create($data);
         return MenegerChart::create([
